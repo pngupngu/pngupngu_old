@@ -45,7 +45,8 @@ export const CONFIG: AppConfig = {
 
   initialState: {
     raf: false,
-    modules: modules
+    modules: modules,
+    value: 50
   },
 
   views: {

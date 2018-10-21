@@ -41,7 +41,7 @@ const streamDrag = (el: HTMLElement) => {
 const slider = () => {
   let sub, left = 0, width = 0;
   return {
-    init(el: HTMLElement, _: any, { max, min, step, onchange = _ => { } }: SliderArgs) {
+    init(el: HTMLElement, _: any, { max, min, step, onchange = _ => { } }: SliderArgs, value: number) {
       const steps = Math.floor((max - min) / step);
       sub = streamDrag(el).subscribe({
         next({ pos, delta }) {
@@ -53,16 +53,16 @@ const slider = () => {
           onchange(val);
         }
       });
+
+      const b = el.getBoundingClientRect();
+      left = b.left;
+      width = b.width;
+      onchange(value);
     },
     render({ ui }: any, { max, min }: SliderArgs, value: number) {
       const w = fit(value, min, max, 0, width);
       return ['div', ui.sliderContainer,
-        ['div', {
-          style: {
-            width: `${w}px`
-          },
-          ...ui.sliderHandle
-        },
+        ['div', { style: { width: `${w}px` }, ...ui.sliderHandle },
           ['span', ui.sliderValue, value]]];
     },
     release() {
@@ -85,6 +85,6 @@ export const uiRoute = () => {
       [s, {
         min: 0, max: 100, step: 2,
         onchange: n => bus.dispatch([ev.SET_VALUE, n])
-      }, views.value.deref() || 0]
+      }, views.value.deref()]
     ];
 };
