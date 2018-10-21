@@ -1,11 +1,13 @@
-// import { gestureStream, GestureType } from '@thi.ng/rstream-gestures';
-// import { filter } from '@thi.ng/transducers/xform/filter';
+import { gestureStream, GestureType, GestureInfo } from '@thi.ng/rstream-gestures';
+import { merge } from '@thi.ng/rstream/stream-merge';
+import { filter } from '@thi.ng/transducers/xform/filter';
+import { map } from '@thi.ng/transducers/xform/map';
 import { button } from '@thi.ng/hdom-components/button';
 // import { fit } from '@thi.ng/math/fit';
 
 import { AppContext } from '../api';
 import { select } from './select';
-// import { takeUntil } from '../rstream/take-until';
+import { takeUntil } from '../rstream/take-until';
 
 const btn = button();
 
@@ -15,31 +17,28 @@ interface SliderArgs {
 }
 
 const slider = () => {
-  // let sub;
+  let sub;
   return {
-    init(_: HTMLElement) {
-      // const gesture = gestureStream(document.body);
-      // const down = gestureStream(el).transform(filter(g => g[0] == GestureType.START));
-      // const move = gesture.transform(filter(g => g[0] == GestureType.MOVE));
-      // const end = gesture.transform(filter(g => g[0] == GestureType.END));
-      // move.subscribe(takeUntil(down)).subscribe({
-      //   next(x) {
-      //     console.log('next', x);
-      //   },
-      //   done() {
-      //     console.log('bye')
-      //   }
-      // });
+    init(el: HTMLElement) {
+      const drag = gestureStream(el).transform(
+        filter(g => g[0] == GestureType.START),
+        map(d => {
+          const gesture = gestureStream(document.body);
+          const move = gesture.transform(filter(g => g[0] == GestureType.MOVE), 'move');
+          const end = gesture.transform(filter(g => g[0] == GestureType.END), 'end');
+          return move.subscribe(takeUntil(end))
+            .transform(map(m => {
+              const pos = d[1].pos;
+              const delta = [m[1].pos[0] - pos[0], m[1].pos[1] - pos[1]];
+              return <GestureInfo>{ pos, zoom: d[1].zoom, click: pos, delta };
+            }));
+        }));
 
-      // sub = gestureStream(el)
-      //   .transform(filter(g => g[0] == GestureType.DRAG))
-      //   .subscribe({
-      //     next({ 1: { pos, delta } }) {
-      //       console.log(pos, delta);
-      //       // const br = el.getBoundingClientRect();
-
-      //     }
-      //   })
+      sub = merge({ src: [drag] }).subscribe({
+        next(x) {
+          console.log(x);
+        }
+      });
     },
     render({ ui }: any, _: SliderArgs, value: number) {
       return ['div', ui.sliderContainer,
@@ -52,7 +51,7 @@ const slider = () => {
           ['span', ui.sliderValue, value]]];
     },
     release() {
-      // sub.done();
+      sub.done();
     }
   }
 };
