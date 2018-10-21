@@ -1,23 +1,23 @@
-// import { setIn, deleteIn } from "@thi.ng/paths";
-// import { FX_STATE } from "@thi.ng/interceptors/api";
-// import { reduce, reducer } from "@thi.ng/transducers/reduce";
+import { setIn, deleteIn } from "@thi.ng/paths";
+import { FX_STATE } from "@thi.ng/interceptors/api";
+import { reduce, reducer } from "@thi.ng/transducers/reduce";
 
 import { AppConfig } from './api';
 import { handlers } from './events';
 import * as routes from './routes';
 import { home } from './components/home';
-// import { testRoute } from './components/testroute';
+import { testRoute } from './components/testroute';
 // import { uiRoute } from './components/uiroute';
 
 const modules = {
-  // ca: {
-  //   load: () => import('./components/ca'),
-  //   init(state, { ca }) {
-  //     const rfn = reducer(() => state, (s, [p, v]) => setIn(s, p, v));
-  //     return { [FX_STATE]: reduce(rfn, [['ca', ca()]]) };
-  //   },
-  //   release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
-  // }
+  ca: {
+    load: () => import('./components/ca'),
+    init(state, { ca }) {
+      const rfn = reducer(() => state, (s, [p, v]) => setIn(s, p, v));
+      return { [FX_STATE]: reduce(rfn, [['ca', ca()]]) };
+    },
+    release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
+  }
 };
 
 export const CONFIG: AppConfig = {
@@ -37,7 +37,7 @@ export const CONFIG: AppConfig = {
 
   components: {
     [routes.HOME.id]: home,
-    // [routes.CA.id]: testRoute,
+    [routes.CA.id]: testRoute,
     // [routes.UI.id]: uiRoute(),
   },
 
