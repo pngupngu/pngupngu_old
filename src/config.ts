@@ -51,7 +51,8 @@ export const CONFIG: AppConfig = {
   views: {
     raf: 'raf',
     modules: 'modules',
-    ca: ['ca', v => v || ['div', 'loading']]
+    ca: ['ca', v => v || ['div', 'loading']],
+    value: 'value'
   },
 
   ui: {

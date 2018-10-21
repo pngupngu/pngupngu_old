@@ -31,6 +31,7 @@ export interface AppViews extends Record<keyof AppViews, IView<any>> {
   modules: IView<IObjectOf<Module>>;
   raf: IView<boolean>;
   ca: IView<any>;
+  value: IView<number>;
 }
 
 export interface UIAttrib {

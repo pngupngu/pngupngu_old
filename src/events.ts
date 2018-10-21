@@ -13,6 +13,8 @@ export const ev: IObjectOf<string> = {
   LOAD_MODULE: 'load-module',
   UNLOAD_MODULE: 'unload-module',
   SETUP_MODULE: 'loaded-module',
+
+  SET_VALUE: 'set-value',
 };
 
 export const fx: IObjectOf<string> = {
@@ -39,7 +41,9 @@ export const handlers: Handlers = {
 
     [ev.UNLOAD_MODULE]: (state, [_, { release }]) => release(state),
 
-    [ev.SETUP_MODULE]: (state, [_, [init, val]]) => init(state, val)
+    [ev.SETUP_MODULE]: (state, [_, [init, val]]) => init(state, val),
+
+    [ev.SET_VALUE]: valueSetter('value'),
   },
 
   effects: {
