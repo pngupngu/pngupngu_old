@@ -7,7 +7,7 @@ import { handlers } from './events';
 import * as routes from './routes';
 import { home } from './components/home';
 import { testRoute } from './components/testroute';
-// import { uiRoute } from './components/uiroute';
+import { uiRoute } from './components/uiroute';
 
 const modules = {
   ca: {
@@ -38,7 +38,7 @@ export const CONFIG: AppConfig = {
   components: {
     [routes.HOME.id]: home,
     [routes.CA.id]: testRoute,
-    // [routes.UI.id]: uiRoute(),
+    [routes.UI.id]: uiRoute(),
   },
 
   domRoot: 'app',
