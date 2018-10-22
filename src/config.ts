@@ -80,7 +80,7 @@ export const CONFIG: AppConfig = {
 
     ca: { class: 'w-100 h-100 absolute' },
 
-    panel: { class: 'w-50 bg-black-80 code f7 collapse' },
+    panel: { class: 'w-50 bg-black-80 code f7' },
     panelLabel: { class: 'w-1 no-select nowrap white' },
     panelControl: { class: 'pv0' },
   }
