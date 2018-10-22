@@ -108,12 +108,12 @@ code,
   border-right: 3px solid transparent;
   border-top: 4px solid rgba(255, 255, 255, 0.9);
   right: 4%;
-  top: 40%;
+  top: 42%;
 }
 
 .pv-2 {
   padding-top: 2px;
-  padding-bottom: 2px;
+  padding-bottom: 1px;
 }
 
 .mr-2 {
