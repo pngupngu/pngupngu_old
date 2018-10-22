@@ -43,8 +43,8 @@ export default class {
 
   constructor(
     readonly gl: WebGLRenderingContext,
-    options: TextureOptions = { width : 1, height: 1},
-    callback = _ => {}
+    options: TextureOptions = { width: 1, height: 1 },
+    callback = _ => { }
   ) {
     this.width = options.width;
     this.height = options.height;
@@ -62,7 +62,7 @@ export default class {
   randomize(gen) {
     let { buffer, gl, texture, width, height } = this;
     for (let y = 0, i = 0; y < height; y++) {
-      for (let x = 0; x < width; x++, i++) {
+      for (let x = 0; x < width; x++ , i++) {
         buffer[i * 4 + 3] = gen(x, y) ? 255 : 0
       }
     }

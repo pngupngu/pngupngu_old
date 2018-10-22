@@ -6,10 +6,9 @@ import { ev } from "../events";
 import canvas from './canvas-webgl';
 import App from '../scenes/ca';
 
-export const ca = () => {
-  const app = new App();
+const makeCanvas = (app) => {
   let sub;
-  const canvas_ = canvas({
+  return canvas({
     init(el: HTMLCanvasElement, gl: WebGLRenderingContext, { bus }: AppContext) {
       bus.dispatch([ev.SET_RAF, true]);
       sub = gestureStream(el)
@@ -30,5 +29,9 @@ export const ca = () => {
       sub.done();
     }
   }, {});
+}
+
+export const ca = () => {
+  const canvas_ = makeCanvas(new App());
   return ({ ui }: AppContext) => [canvas_, ui.ca];
 };

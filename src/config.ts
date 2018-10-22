@@ -67,17 +67,21 @@ export const CONFIG: AppConfig = {
 
     button: {
       class: 'input-reset dib f7 code button-reset outline-0 pointer no-select ' +
-        'ph1 ptb-12 bn white bg-gray hover-bg-mid-gray v-mid mh1'
+        'ph1 mh1 pv-2 bn white bg-gray hover-bg-mid-gray v-top'
     },
 
-    select: { class: 'relative dib bg-gray v-mid mh1 pr2' },
+    select: { class: 'relative dib bg-gray v-top pr2 mh1' },
     selectTriangle: { class: 'absolute select-triangle' },
-    dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-gray ph1 va-1' },
+    dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-gray ph1 pv-2' },
 
-    sliderContainer: { class: 'dib w4 h1 bg-near-black relative ew-resize v-mid mh1' },
+    sliderContainer: { class: 'dib h1 f6 w4 bg-near-black relative ew-resize v-top mh1' },
     sliderHandle: { class: 'h-100 absolute bg-gray tr' },
-    sliderValue: { class: 'f7 code absolute--fill no-select ph1 white va-1' },
+    sliderValue: { class: 'f7 code absolute--fill no-select ph1 white' },
 
     ca: { class: 'w-100 h-100 absolute' },
+
+    panel: { class: 'w5 bg-black-80 code f7 bs-1' },
+    panelLabel: { class: 'w-1 no-select nowrap white' },
+    panelControl: { class: 'pv0' },
   }
 };

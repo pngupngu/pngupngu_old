@@ -108,11 +108,11 @@ code,
   border-right: 3px solid transparent;
   border-top: 4px solid rgba(255, 255, 255, 0.9);
   right: 4%;
-  top: 35%;
+  top: 40%;
 }
 
-.ptb-12 {
-  padding-top: 1px;
+.pv-2 {
+  padding-top: 2px;
   padding-bottom: 2px;
 }
 
@@ -124,6 +124,6 @@ code,
   flex-grow: 1;
 }
 
-.va-1 {
-  vertical-align: 1px;
+.bs-1 {
+  border-spacing: 1px;
 }
