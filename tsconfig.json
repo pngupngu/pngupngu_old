@@ -2,12 +2,13 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es6",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "preserveConstEnums": true
   },
   "exclude": [
-    "./**/node_modules"
+    "node_modules"
   ]
 }

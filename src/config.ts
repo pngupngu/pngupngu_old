@@ -68,7 +68,7 @@ export const CONFIG: AppConfig = {
     ca: { class: 'w-100 h-100 absolute' },
 
     button: {
-      class: 'input-reset dib f7 code button-reset outline-0 pointer no-select ' +
+      class: 'input-reset dib f7 code button-reset outline-0 tc pointer no-select ' +
         'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
     },
 

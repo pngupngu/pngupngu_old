@@ -43,9 +43,9 @@ export interface AppViews extends Record<keyof AppViews, IView<any>> {
 export interface UIAttribs {
   [key: string]: Partial<UIAttrib> | ComponentAttrib;
 
-  select: SelectAttribs;
-  slider: SliderAttribs;
-  panel: PanelAttribs;
+  select?: SelectAttribs;
+  slider?: SliderAttribs;
+  panel?: PanelAttribs;
 }
 
 export interface AppContext {

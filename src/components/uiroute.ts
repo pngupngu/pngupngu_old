@@ -16,6 +16,14 @@ export const uiRoute = ({ ui }: AppContext) => {
   const s = slider();
   const s1 = slider();
   const btn = button({ attribs: ui.button });
+  const cbtn = (_: any, attribs: any, label: string) => {
+    return [btn, {
+      attribs: {
+        ...attribs,
+        class: cx(ui.button.class, ui.control.class)
+      }
+    }, label];
+  }
 
   return ({ ui, bus, views }: AppContext) =>
     ['div', ui.root,
@@ -41,11 +49,11 @@ export const uiRoute = ({ ui }: AppContext) => {
       ],
 
       [panel, ui.panel,
-        ['param1', [btn, {}, 'fuck'], [btn, {}, 'You']],
-        ['param2', [btn, {}, 'fuck']],
-        ['param3', [btn, {}, 'caoB']],
+        ['param1', [cbtn, { }, 'fuck'], [cbtn, {}, 'You']],
+        ['param2', [cbtn, {}, 'fuck']],
+        ['param3', [cbtn, {}, 'caoB']],
         ['param4', select_],
-        ['param3', [btn, {}, 'caoB']],
+        ['param3', [cbtn, {}, 'caoB']],
         ['param5', [s1, {
           min: 0, max: 100, step: 2,
           attribs: {
@@ -56,6 +64,6 @@ export const uiRoute = ({ ui }: AppContext) => {
           },
           onchange: n => bus.dispatch([ev.SET_VALUE, n])
         }, views.value.deref()]],
-        ['param3', [btn, {}, 'caoB']]]
+        ['param3', [cbtn, {}, 'caoB']]]
     ];
 };
