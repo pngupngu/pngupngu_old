@@ -12,7 +12,7 @@ const select_ = ({ ui }: AppContext) =>
     { attribs: ui.select, onchange: e => console.log(e.target.value) },
     [[1, 'fuck'], [2, 'hello 100 you']], 2];
 
-export const uiRoute = ({ ui }: AppContext) => {
+export const uiRoute = ({ ui, bus, views }: AppContext) => {
   const s = slider();
   const s1 = slider();
   const btn = button({ attribs: ui.button });
@@ -22,14 +22,25 @@ export const uiRoute = ({ ui }: AppContext) => {
   };
 
   const cslider = (_: any, args: any, value: number) => {
-    return [s1, { attribs: { ...ui.slider,
-      container: {
-        class: cx(ui.slider.container.class, ui.control.class)
-      },
-    }, ...args }, value];
+    const attribs = {
+      ...ui.slider,
+      container: { class: cx(ui.slider.container.class, ui.control.class) },
+    };
+    return [s1, { attribs, ...args }, value];
   };
 
-  return ({ ui, bus, views }: AppContext) =>
+  const setValue = n => bus.dispatch([ev.SET_VALUE, n]);
+  const cselect = () => {
+    const attribs = {
+      ...ui.select,
+      container: {
+        class: cx(ui.select.container.class, ui.control.class)
+      }
+    };
+    return [select, { attribs }, [[1, 'fuck'], [2, 'hello 100 you']], 2];
+  };
+
+  return () =>
     ['div', ui.root,
       ['div', 'fuck you Lorem ipsum dolor sit amet,'],
       ['div', 'fuck you Lorem ipsum dolor sit amet,'],
@@ -40,10 +51,7 @@ export const uiRoute = ({ ui }: AppContext) => {
         'select', select_,
 
         'slider',
-        [s, {
-          min: 0, max: 100, step: 2, attribs: ui.slider,
-          onchange: n => bus.dispatch([ev.SET_VALUE, n])
-        }, views.value.deref()],
+        [s, { min: 0, max: 100, step: 2, attribs: ui.slider, onchange: setValue }, views.value.deref()],
       ],
       ['div',
         'fuck me',
@@ -56,12 +64,9 @@ export const uiRoute = ({ ui }: AppContext) => {
         ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
         ['param2', [cbtn, {}, 'fuck']],
         ['param3', [cbtn, {}, 'caoB']],
-        ['param4', select_],
+        ['param4', cselect],
         ['param3', [cbtn, {}, 'caoB']],
-        ['param5', [cslider, {
-          min: 0, max: 100, step: 2,
-          onchange: n => bus.dispatch([ev.SET_VALUE, n])
-        }, views.value.deref()]],
+        ['param5', [cslider, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()]],
         ['param3', [cbtn, {}, 'caoB']]]
     ];
 };
