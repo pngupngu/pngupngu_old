@@ -34,10 +34,7 @@ export const handlers: Handlers = {
 
     [ev.SET_RAF]: valueSetter('raf'),
 
-    [ev.LOAD_MODULE]: (state, [__, mod]) => ({
-      [fx.LOAD_MODULE]: mod.value || mod,
-      [FX_STATE]: mod.value ? mod.init(state, mod.value) : null
-    }),
+    [ev.LOAD_MODULE]: forwardSideFx(fx.LOAD_MODULE),
 
     [ev.UNLOAD_MODULE]: (state, [_, { release }]) => release(state),
 

@@ -17,7 +17,6 @@ export interface Module {
   load(): Promise<any>;
   init(): InterceptorContext;
   release(): InterceptorContext;
-  value: any;
 }
 
 export interface AppConfig {
