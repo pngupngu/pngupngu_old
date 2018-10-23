@@ -15,16 +15,13 @@ const makeBtn = (btn: Button, klass) => ({ ui }: AppContext, args: ButtonArgs, l
 const makeSelect = klass => ({ ui }: AppContext, ...args: any[]) => {
   const attribs = {
     ...ui.select,
-    container: {
-      class: cx(ui.select.container.class, klass)
-    }
+    container: { class: cx(ui.select.container.class, klass) }
   };
   return [select, { attribs }, ...args];
 };
 
 const makeSlider = klass => {
   const slider_ = slider();
-  console.log('hi');
   return ({ ui }: AppContext, args: any, value: number) => {
     const attribs = {
       ...ui.slider,
@@ -46,7 +43,7 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
   const setValue = n => bus.dispatch([ev.SET_VALUE, n]);
 
   const tselect = makeSelect(ui.textControl.class);
-  const cselect = makeSelect('siht');
+  const cselect = makeSelect(ui.control.class);
 
   const options = [[1, 'fuck'], [2, 'hello 100 you']];
 
