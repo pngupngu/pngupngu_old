@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { button } from '@thi.ng/hdom-components/button';
 
 import { AppContext } from '../api';
@@ -6,11 +7,10 @@ import { select } from './select';
 import { slider } from './slider';
 import { panel } from './panel';
 
-const sel = ({ ui }: AppContext) =>
-  [select, {
-    attribs: ui.select,
-    onchange: e => console.log(e.target.value)
-  }, [[1, 'fuck'], [2, 'hello 100 you']], 2];
+const select_ = ({ ui }: AppContext) =>
+  [select,
+    { attribs: ui.select, onchange: e => console.log(e.target.value) },
+    [[1, 'fuck'], [2, 'hello 100 you']], 2];
 
 export const uiRoute = ({ ui }: AppContext) => {
   const s = slider();
@@ -25,7 +25,7 @@ export const uiRoute = ({ ui }: AppContext) => {
         'fuck you',
         [btn, { onclick: console.log }, 'hello 100 you'],
 
-        'select', sel,
+        'select', select_,
 
         'slider',
         [s, {
@@ -37,21 +37,21 @@ export const uiRoute = ({ ui }: AppContext) => {
         'fuck me',
         [btn, { onclick: console.log }, 'hello 100 you'],
 
-        'select you', sel,
+        'select you', select_,
       ],
 
       [panel, ui.panel,
         ['param1', [btn, {}, 'fuck'], [btn, {}, 'You']],
         ['param2', [btn, {}, 'fuck']],
         ['param3', [btn, {}, 'caoB']],
-        ['param4', sel],
+        ['param4', select_],
         ['param3', [btn, {}, 'caoB']],
         ['param5', [s1, {
           min: 0, max: 100, step: 2,
           attribs: {
             ...ui.slider,
             container: {
-              class: ui.slider.container.class + ' ' + ui.control.class
+              class: cx(ui.slider.container.class, ui.control.class)
             },
           },
           onchange: n => bus.dispatch([ev.SET_VALUE, n])

@@ -17,6 +17,7 @@
     "@thi.ng/rstream-gestures": "^0.5.14",
     "@thi.ng/transducers": "^2.1.6",
     "canvas-fit": "^1.5.0",
+    "classnames": "^2.2.6",
     "gl-matrix": "^2.8.1",
     "tachyons": "^4.11.1",
     "twgl.js": "^4.5.2",
@@ -45,7 +46,12 @@
       "node"
     ]
   },
-  "browserslist": [">2%", "last 1 edge versions", "not ie > 0", "not op_mini all"],
+  "browserslist": [
+    ">2%",
+    "last 1 edge versions",
+    "not ie > 0",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@types/gl-matrix": "^2.4.4",
     "@types/jest": "^23.3.3",
