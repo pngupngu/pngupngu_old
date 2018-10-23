@@ -123,3 +123,7 @@ code,
 .fg-1 {
   flex-grow: 1;
 }
+
+.talc {
+  text-align-last: center;
+}
