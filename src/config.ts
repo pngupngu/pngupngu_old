@@ -86,10 +86,11 @@ export const CONFIG: AppConfig = {
 
     panel: {
       container: { class: 'w5 bg-black-80 code f7' },
-      label: { class: 'w-1 no-select nowrap white pa0' },
+      label: { class: 'w-1 no-select nowrap white pa0 ph1' },
       content: { class: 'pv0 flex pa0' },
     },
 
     control: { class: 'fg-1 mr-2 ctrl' },
+    textControl: { class: 'mh1' },
   }
 };
