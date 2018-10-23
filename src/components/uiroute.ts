@@ -8,20 +8,14 @@ import { panel } from './panel';
 
 const sel = ({ ui }: AppContext) =>
   [select, {
-    ...ui.select,
-    dropdown: {
-      ...ui.select.dropdown,
-      onchange: e => console.log(e.target.value)
-    }
+    attribs: ui.select,
+    onchange: e => console.log(e.target.value)
   }, [[1, 'fuck'], [2, 'hello 100 you']], 2];
 
 export const uiRoute = ({ ui }: AppContext) => {
   const s = slider();
   const s1 = slider();
   const btn = button({ attribs: ui.button });
-  const slc = {
-    class: ui.slider.container.class + ' fg-1'
-  };
 
   return ({ ui, bus, views }: AppContext) =>
     ['div', ui.root,
@@ -35,8 +29,7 @@ export const uiRoute = ({ ui }: AppContext) => {
 
         'slider',
         [s, {
-          min: 0, max: 100, step: 2,
-          attribs: ui.slider,
+          min: 0, max: 100, step: 2, attribs: ui.slider,
           onchange: n => bus.dispatch([ev.SET_VALUE, n])
         }, views.value.deref()],
       ],
@@ -57,7 +50,9 @@ export const uiRoute = ({ ui }: AppContext) => {
           min: 0, max: 100, step: 2,
           attribs: {
             ...ui.slider,
-            container: slc,
+            container: {
+              class: ui.slider.container.class + ' ' + ui.control.class
+            },
           },
           onchange: n => bus.dispatch([ev.SET_VALUE, n])
         }, views.value.deref()]],

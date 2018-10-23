@@ -5,7 +5,12 @@ import { UIAttrib } from './api';
 type Keys = 'container' | 'triangle' | 'dropdown';
 export type SelectAttribs = Record<Keys, Partial<UIAttrib>>;
 
-export const select = (_: any, attribs: SelectAttribs, options: DropDownOption[], sel?: string | number) =>
+export interface SelectArgs {
+  attribs: SelectAttribs;
+  onchange?: (e: string | number) => void;
+}
+
+export const select = (_: any, { attribs, onchange = _ => {} }: SelectArgs, options: DropDownOption[], sel?: string | number) =>
   ['div', attribs.container,
     ['span', attribs.triangle],
-    [dropdown, attribs.dropdown, options, sel]];
+    [dropdown, { onchange, ...attribs.dropdown }, options, sel]];

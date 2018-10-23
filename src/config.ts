@@ -88,6 +88,8 @@ export const CONFIG: AppConfig = {
       container: { class: 'w5 bg-black-80 code f7' },
       label: { class: 'w-1 no-select nowrap white' },
       content: { class: 'pv0 flex' },
-    }
+    },
+
+    control: { class: 'fg-1' },
   }
 };
