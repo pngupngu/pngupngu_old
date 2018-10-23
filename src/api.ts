@@ -4,14 +4,19 @@ import { EventDef, EffectDef, InterceptorContext } from "@thi.ng/interceptors/ap
 import { EventBus } from "@thi.ng/interceptors/event-bus";
 import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
 
+import { UIAttrib, ComponentAttrib } from './components/api';
+import { SelectAttribs } from './components/select';
+import { SliderAttribs } from "./components/slider";
+
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
 export type ViewSpec = string | [string, ViewTransform<any>];
 
 export interface Module {
-  load: () => Promise<any>;
-  onload: () => InterceptorContext;
-  loaded: boolean;
+  load(): Promise<any>;
+  init(): InterceptorContext;
+  release(): InterceptorContext;
+  value: any;
 }
 
 export interface AppConfig {
@@ -34,12 +39,11 @@ export interface AppViews extends Record<keyof AppViews, IView<any>> {
   value: IView<number>;
 }
 
-export interface UIAttrib {
-  class: string;
-}
-
 export interface UIAttribs {
-  [key: string]: Partial<UIAttrib>;
+  [key: string]: Partial<UIAttrib> | ComponentAttrib;
+
+  select: SelectAttribs;
+  slider: SliderAttribs;
 }
 
 export interface AppContext {

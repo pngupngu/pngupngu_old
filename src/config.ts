@@ -38,7 +38,7 @@ export const CONFIG: AppConfig = {
   components: {
     [routes.HOME.id]: home,
     [routes.CA.id]: testRoute,
-    [routes.UI.id]: uiRoute(),
+    [routes.UI.id]: uiRoute,
   },
 
   domRoot: 'app',
@@ -70,18 +70,22 @@ export const CONFIG: AppConfig = {
         'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
     },
 
-    select: { class: 'relative dib bg-gray pr2 h1 f6' },
-    selectTriangle: { class: 'absolute select-triangle' },
-    dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-gray ph1' },
+    select: {
+      container: { class: 'relative dib bg-gray pr2 h1 f6' },
+      triangle: { class: 'absolute select-triangle' },
+      dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-gray ph1' }
+    },
 
-    sliderContainer: { class: 'dib h1 f6 w4 bg-near-black relative ew-resize v-btm' },
-    sliderHandle: { class: 'h-100 absolute bg-gray tr' },
-    sliderValue: { class: 'f7 code absolute--fill no-select ph1 white' },
+    slider: {
+      container: { class: 'dib h1 f6 w4 bg-near-black relative ew-resize v-btm' },
+      handle: { class: 'h-100 absolute bg-gray tr' },
+      value: { class: 'f7 code absolute--fill no-select ph1 white' },
+    },
 
     ca: { class: 'w-100 h-100 absolute' },
 
-    panel: { class: 'w-50 bg-black-80 code f7' },
+    panel: { class: 'w5 bg-black-80 code f7' },
     panelLabel: { class: 'w-1 no-select nowrap white' },
-    panelControl: { class: 'pv0' },
+    panelControl: { class: 'pv0 flex' },
   }
 };

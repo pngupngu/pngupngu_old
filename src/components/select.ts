@@ -1,9 +1,11 @@
-import { IObjectOf } from "@thi.ng/api/api";
 import { dropdown, DropDownOption } from "@thi.ng/hdom-components/dropdown";
 
-import { AppContext } from '../api';
+import { UIAttrib } from './api';
 
-export const select = ({ ui }: AppContext, attribs: IObjectOf<any>, options: DropDownOption[], sel?: string | number) =>
-  ['div', ui.select,
-    ['span', ui.selectTriangle],
-    [dropdown, { ...attribs, ...ui.dropdown }, options, sel]];
+type Keys = 'container' | 'triangle' | 'dropdown';
+export type SelectAttribs = Record<Keys, Partial<UIAttrib>>;
+
+export const select = (_: any, attribs: SelectAttribs, options: DropDownOption[], sel?: string | number) =>
+  ['div', attribs.container,
+    ['span', attribs.triangle],
+    [dropdown, attribs.dropdown, options, sel]];
