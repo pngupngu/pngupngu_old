@@ -12,5 +12,5 @@ export interface SelectArgs {
 
 export const select = (_: any, { attribs, onchange = _ => {} }: SelectArgs, options: DropDownOption[], sel?: string | number) =>
   ['div', attribs.container,
-    ['span', attribs.triangle],
-    [dropdown, { onchange, ...attribs.dropdown }, options, sel]];
+    [dropdown, { onchange, ...attribs.dropdown }, options, sel],
+    ['span', attribs.triangle]];
