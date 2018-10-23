@@ -75,7 +75,7 @@ export const CONFIG: AppConfig = {
     select: {
       container: { class: 'relative dib bg-gray h1 f6 hover-bg-mid-gray' },
       triangle: { class: 'absolute select-triangle' },
-      dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-transparent pl1 pr3 w-100 tc talc' }
+      dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-transparent pl1 pr3 w-100 tc tlc' }
     },
 
     slider: {
