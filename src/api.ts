@@ -7,6 +7,7 @@ import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
 import { UIAttrib, ComponentAttrib } from './components/api';
 import { SelectAttribs } from './components/select';
 import { SliderAttribs } from "./components/slider";
+import { PanelAttribs } from "./components/panel";
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
@@ -44,6 +45,7 @@ export interface UIAttribs {
 
   select: SelectAttribs;
   slider: SliderAttribs;
+  panel: PanelAttribs;
 }
 
 export interface AppContext {

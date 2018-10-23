@@ -1,9 +1,15 @@
-import { IObjectOf } from "@thi.ng/api";
+import { map } from "@thi.ng/transducers/xform/map";
 
-export const control = (_: any, attribs: IObjectOf<any>, label: string, ...children: any[]) =>
-  ['tr',
-    ['td', attribs.label, label],
-    ['td', attribs.control, ...children]];
+import { UIAttrib } from './api';
 
-export const panel = (_: any, attribs: IObjectOf<any>, ...controls: any[]) =>
-  ['table', attribs, ['tbody', ...controls]];
+type Keys = 'container' | 'label' | 'content';
+export type PanelAttribs = Record<Keys, Partial<UIAttrib>>;
+
+export const panel = (_: any, attribs: PanelAttribs, ...controls: any[]) =>
+  ['table', attribs.container,
+    ['tbody', map(
+      ([label, ...children]) =>
+        ['tr',
+          ['td', attribs.label, label],
+          ['td', attribs.content, ...children]],
+          controls)]];

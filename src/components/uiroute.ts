@@ -4,7 +4,7 @@ import { AppContext } from '../api';
 import { ev } from '../events';
 import { select } from './select';
 import { slider } from './slider';
-import { panel, control } from './panel';
+import { panel } from './panel';
 
 const sel = ({ ui }: AppContext) =>
   [select, {
@@ -48,29 +48,19 @@ export const uiRoute = ({ ui }: AppContext) => {
       ],
 
       [panel, ui.panel,
-        [control, { label: ui.panelLabel, control: ui.panelControl },
-          'param1', [btn, {}, 'fuck']],
-        [control, { label: ui.panelLabel, control: ui.panelControl },
-          'param2', [btn, {}, 'fuck']],
-        [control, { label: ui.panelLabel, control: ui.panelControl },
-          'param3', [btn, {}, 'caoB']],
-
-        [control, { label: ui.panelLabel, control: ui.panelControl },
-          'param4', sel],
-        [control, { label: ui.panelLabel, control: ui.panelControl },
-          'param3', [btn, {}, 'caoB']],
-        [control, { label: ui.panelLabel, control: ui.panelControl },
-          'param5',
-          [s1, {
-            min: 0, max: 100, step: 2,
-            attribs: {
-              ...ui.slider,
-              container: slc,
-            },
-            onchange: n => bus.dispatch([ev.SET_VALUE, n])
-          }, views.value.deref()]],
-        [control, { label: ui.panelLabel, control: ui.panelControl },
-          'param3', [btn, {}, 'caoB']],
-      ],
+        ['param1', [btn, {}, 'fuck'], [btn, {}, 'You']],
+        ['param2', [btn, {}, 'fuck']],
+        ['param3', [btn, {}, 'caoB']],
+        ['param4', sel],
+        ['param3', [btn, {}, 'caoB']],
+        ['param5', [s1, {
+          min: 0, max: 100, step: 2,
+          attribs: {
+            ...ui.slider,
+            container: slc,
+          },
+          onchange: n => bus.dispatch([ev.SET_VALUE, n])
+        }, views.value.deref()]],
+        ['param3', [btn, {}, 'caoB']]]
     ];
 };

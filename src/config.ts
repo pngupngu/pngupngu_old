@@ -65,6 +65,8 @@ export const CONFIG: AppConfig = {
     logo: { class: 'br-100 w3 h3' },
     title: { class: 'f1 fw4' },
 
+    ca: { class: 'w-100 h-100 absolute' },
+
     button: {
       class: 'input-reset dib f7 code button-reset outline-0 pointer no-select ' +
         'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
@@ -82,10 +84,10 @@ export const CONFIG: AppConfig = {
       value: { class: 'f7 code absolute--fill no-select ph1 white' },
     },
 
-    ca: { class: 'w-100 h-100 absolute' },
-
-    panel: { class: 'w5 bg-black-80 code f7' },
-    panelLabel: { class: 'w-1 no-select nowrap white' },
-    panelControl: { class: 'pv0 flex' },
+    panel: {
+      container: { class: 'w5 bg-black-80 code f7' },
+      label: { class: 'w-1 no-select nowrap white' },
+      content: { class: 'pv0 flex' },
+    }
   }
 };
