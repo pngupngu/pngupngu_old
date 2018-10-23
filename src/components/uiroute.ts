@@ -17,13 +17,17 @@ export const uiRoute = ({ ui }: AppContext) => {
   const s1 = slider();
   const btn = button({ attribs: ui.button });
   const cbtn = (_: any, attribs: any, label: string) => {
-    return [btn, {
-      attribs: {
-        ...attribs,
-        class: cx(ui.button.class, ui.control.class)
-      }
-    }, label];
-  }
+    const attr = { attribs: { ...attribs, class: cx(ui.button.class, ui.control.class) } };
+    return [btn, attr, label];
+  };
+
+  const cslider = (_: any, args: any, value: number) => {
+    return [s1, { attribs: { ...ui.slider,
+      container: {
+        class: cx(ui.slider.container.class, ui.control.class)
+      },
+    }, ...args }, value];
+  };
 
   return ({ ui, bus, views }: AppContext) =>
     ['div', ui.root,
@@ -49,19 +53,13 @@ export const uiRoute = ({ ui }: AppContext) => {
       ],
 
       [panel, ui.panel,
-        ['param1', [cbtn, { }, 'fuck'], [cbtn, {}, 'You']],
+        ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
         ['param2', [cbtn, {}, 'fuck']],
         ['param3', [cbtn, {}, 'caoB']],
         ['param4', select_],
         ['param3', [cbtn, {}, 'caoB']],
-        ['param5', [s1, {
+        ['param5', [cslider, {
           min: 0, max: 100, step: 2,
-          attribs: {
-            ...ui.slider,
-            container: {
-              class: cx(ui.slider.container.class, ui.control.class)
-            },
-          },
           onchange: n => bus.dispatch([ev.SET_VALUE, n])
         }, views.value.deref()]],
         ['param3', [cbtn, {}, 'caoB']]]
