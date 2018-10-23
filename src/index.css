@@ -127,3 +127,7 @@ code,
 .tlc {
   text-align-last: center;
 }
+
+.ctrl:last-child {
+  margin-right: 0;
+}

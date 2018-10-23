@@ -62,8 +62,8 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
 
       [panel, ui.panel,
         ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
-        ['param2', [cbtn, {}, 'fuck']],
-        ['param3', [cbtn, {}, 'caoB']],
+        ['param2', [cbtn, {}, 'Fuck']],
+        ['param3', [cbtn, {}, 'cao'], [btn, {}, 'B']],
         ['param4', cselect],
         ['param3', [cbtn, {}, 'caoB']],
         ['param5', [cslider, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()]],
