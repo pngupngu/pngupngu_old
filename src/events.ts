@@ -1,5 +1,5 @@
 import { IObjectOf } from "@thi.ng/api/api";
-import { EventDef, EffectDef, FX_STATE } from "@thi.ng/interceptors/api";
+import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
 import { forwardSideFx, trace, valueSetter } from "@thi.ng/interceptors/interceptors";
 
 export const ev: IObjectOf<string> = {

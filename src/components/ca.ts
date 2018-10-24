@@ -29,7 +29,7 @@ const makeCanvas = (app) => {
       sub.done();
     }
   }, {});
-}
+};
 
 export const ca = () => {
   const canvas_ = makeCanvas(new App());

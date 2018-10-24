@@ -65,8 +65,6 @@ export const CONFIG: AppConfig = {
     logo: { class: 'br-100 w3 h3' },
     title: { class: 'f1 fw4' },
 
-    ca: { class: 'w-100 h-100 absolute' },
-
     button: {
       class: 'input-reset dib f7 code button-reset outline-0 tc pointer no-select ' +
         'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
@@ -92,5 +90,7 @@ export const CONFIG: AppConfig = {
 
     control: { class: 'fg-1 mr-2 ctrl' },
     textControl: { class: 'mh1' },
+
+    ca: { class: 'w-100 h-100 absolute' },
   }
 };

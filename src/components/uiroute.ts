@@ -2,20 +2,25 @@ import cx from 'classnames';
 import { button, Button, ButtonArgs } from '@thi.ng/hdom-components/button';
 
 import { AppContext } from '../api';
+import { UIAttrib } from './api';
 import { ev } from '../events';
 import { select } from './select';
 import { slider } from './slider';
 import { panel } from './panel';
 
+const mergeClass = (attr1: UIAttrib, attr2: UIAttrib) => {
+  return { ...attr1, attr2, class: cx(attr1.class, attr2.class) };
+}
+
 const makeBtn = (btn: Button, klass) => ({ ui }: AppContext, args: ButtonArgs, label: string) => {
-  const attribs = { ...ui.button, class: cx(ui.button.class, klass) };
+  const attribs = mergeClass(<UIAttrib>ui.button, klass);
   return [btn, { attribs, ...args }, label];
 }
 
 const makeSelect = klass => ({ ui }: AppContext, ...args: any[]) => {
   const attribs = {
     ...ui.select,
-    container: { class: cx(ui.select.container.class, klass) }
+    container: mergeClass(<UIAttrib>ui.select.container, klass)
   };
   return [select, { attribs }, ...args];
 };
@@ -23,10 +28,7 @@ const makeSelect = klass => ({ ui }: AppContext, ...args: any[]) => {
 const makeSlider = klass => {
   const slider_ = slider();
   return ({ ui }: AppContext, args: any, value: number) => {
-    const attribs = {
-      ...ui.slider,
-      container: { class: cx(ui.slider.container.class, klass) },
-    };
+    const attribs = { ...ui.slider, container: mergeClass(<UIAttrib>ui.slider.container, klass) };
     return [slider_, { attribs, ...args }, value];
   }
 }
@@ -34,16 +36,16 @@ const makeSlider = klass => {
 export const uiRoute = ({ ui, bus, views }: AppContext) => {
   const btn = button({ attribs: ui.button });
 
-  const tbtn = makeBtn(btn, ui.textControl.class);
-  const cbtn = makeBtn(btn, ui.control.class);
+  const tbtn = makeBtn(btn, ui.textControl);
+  const cbtn = makeBtn(btn, ui.control);
 
-  const tslider = makeSlider(ui.textControl.class);
-  const cslider = makeSlider(ui.control.class);
+  const tslider = makeSlider(ui.textControl);
+  const cslider = makeSlider(ui.control);
 
   const setValue = n => bus.dispatch([ev.SET_VALUE, n]);
 
-  const tselect = makeSelect(ui.textControl.class);
-  const cselect = makeSelect(ui.control.class);
+  const tselect = makeSelect(ui.textControl);
+  const cselect = makeSelect(ui.control);
 
   const options = [[1, 'fuck'], [2, 'hello 100 you']];
 
