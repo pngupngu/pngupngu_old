@@ -9,19 +9,16 @@ import { slider } from './slider';
 import { panel } from './panel';
 
 const mergeClass = (attr1: UIAttrib, attr2: UIAttrib) => {
-  return { ...attr1, attr2, class: cx(attr1.class, attr2.class) };
-}
+  return { ...attr1, ...attr2, class: cx(attr1.class, attr2.class) };
+};
 
 const makeBtn = (btn: Button, klass) => ({ ui }: AppContext, args: ButtonArgs, label: string) => {
   const attribs = mergeClass(<UIAttrib>ui.button, klass);
   return [btn, { attribs, ...args }, label];
-}
+};
 
 const makeSelect = klass => ({ ui }: AppContext, ...args: any[]) => {
-  const attribs = {
-    ...ui.select,
-    container: mergeClass(<UIAttrib>ui.select.container, klass)
-  };
+  const attribs = { ...ui.select, container: mergeClass(<UIAttrib>ui.select.container, klass) };
   return [select, { attribs }, ...args];
 };
 
@@ -30,8 +27,8 @@ const makeSlider = klass => {
   return ({ ui }: AppContext, args: any, value: number) => {
     const attribs = { ...ui.slider, container: mergeClass(<UIAttrib>ui.slider.container, klass) };
     return [slider_, { attribs, ...args }, value];
-  }
-}
+  };
+};
 
 export const uiRoute = ({ ui, bus, views }: AppContext) => {
   const btn = button({ attribs: ui.button });

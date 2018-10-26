@@ -32,6 +32,7 @@ const makeCanvas = (app) => {
 };
 
 export const ca = () => {
-  const canvas_ = makeCanvas(new App());
+  const app = new App();
+  const canvas_ = makeCanvas(app);
   return ({ ui }: AppContext) => [canvas_, ui.ca];
 };
