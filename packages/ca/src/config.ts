@@ -1,58 +1,50 @@
-import { setIn, deleteIn } from "@thi.ng/paths";
-import { FX_STATE } from "@thi.ng/interceptors/api";
-import { reduce, reducer } from "@thi.ng/transducers/reduce";
-
 import { AppConfig } from './api';
 import { handlers } from './events';
-import * as routes from './routes';
-import { home } from './components/home';
-import { testRoute } from './components/testroute';
-import { uiRoute } from './components/uiroute';
+// import { home } from '../../../src/components/home';
+// import { testRoute } from '../../../src/components/testroute';
+// import { uiRoute } from '../../../src/components/uiroute';
 
-const modules = {
-  ca: {
-    load: () => import('./components/ca'),
-    init(state, { ca }) {
-      const rfn = reducer(() => state, (s, [p, v]) => setIn(s, p, v));
-      return { [FX_STATE]: reduce(rfn, [['ca', ca()]]) };
-    },
-    release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
-  }
-};
+// const modules = {
+//   ca: {
+//     load: () => import('./components/ca'),
+//     init(state, { ca }) {
+//       const rfn = reducer(() => state, (s, [p, v]) => setIn(s, p, v));
+//       return { [FX_STATE]: reduce(rfn, [['ca', ca()]]) };
+//     },
+//     release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
+//   }
+// };
 
 export const CONFIG: AppConfig = {
 
-  router: {
-    useFragment: true,
-    defaultRouteID: routes.HOME.id,
-    routes: [
-      routes.HOME,
-      routes.CA,
-      routes.UI,
-    ]
-  },
+  // router: {
+  //   useFragment: true,
+  //   defaultRouteID: routes.HOME.id,
+  //   routes: [
+  //     routes.HOME,
+  //     routes.CA,
+  //     routes.UI,
+  //   ]
+  // },
 
   events: handlers.events,
   effects: handlers.effects,
 
-  components: {
-    [routes.HOME.id]: home,
-    [routes.CA.id]: testRoute,
-    [routes.UI.id]: uiRoute,
-  },
+  // components: {
+  //   [routes.HOME.id]: home,
+  //   [routes.CA.id]: testRoute,
+  //   [routes.UI.id]: uiRoute,
+  // },
 
   domRoot: 'app',
 
   initialState: {
     raf: false,
-    modules: modules,
     value: 50
   },
 
   views: {
     raf: 'raf',
-    modules: 'modules',
-    ca: ['ca', v => v || ['div', 'loading']],
     value: 'value'
   },
 

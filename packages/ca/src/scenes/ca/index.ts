@@ -5,13 +5,13 @@ import {
   Application, Scene, Mesh, Material,
   // Camera,
   Command, Texture
-} from '../../gl';
+} from '@pngu/core/gl';
 import vert from './vert.glsl';
 import ca from './ca.frag';
 import copy from './copy.frag';
 
 import google from '../../assets/images/google.png';
-import nopro from '../../assets/images/no_pro.png';
+import nopro from '../assets/images/no_pro.png';
 
 export default class extends Application {
   cmd1: Command;

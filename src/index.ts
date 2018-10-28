@@ -1,5 +1,5 @@
-import { App } from "./app";
-import { CONFIG } from "./config";
+import { App } from "../packages/ca/src/app";
+import { CONFIG } from "../packages/ca/src/config";
 
 // export app to global var in dev mode
 // (for interaction via browser dev tools)

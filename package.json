@@ -6,8 +6,8 @@
   ],
   "scripts": {
     "bootstrap": "yarn install && lerna bootstrap",
-    "clean": "lerna run clean",
     "build": "lerna run build --sort",
+    "clean": "lerna run clean",
     "test": "jest --watch"
   },
   "jest": {

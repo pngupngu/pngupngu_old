@@ -20,4 +20,9 @@ yarn-error.log*
 lerna-debug.log*
 
 # build output
-packages/*/lib/
+*.js
+*.d.ts
+*.d.ts.map
+
+packages/core/components
+packages/core/gl

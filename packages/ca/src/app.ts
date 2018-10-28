@@ -3,19 +3,14 @@ import { Atom } from "@thi.ng/atom/atom";
 import { isArray } from "@thi.ng/checks/is-array";
 import { start } from "@thi.ng/hdom";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
-import { forwardSideFx, valueSetter } from "@thi.ng/interceptors/interceptors";
-import { EVENT_ROUTE_CHANGED } from "@thi.ng/router/api";
-import { HTMLRouter } from "@thi.ng/router/history";
 
 import { AppConfig, AppContext, AppViews, ViewSpec } from "./api";
-import { ev, fx } from "./events";
 
 export class App {
 
   config: AppConfig;
   ctx: AppContext;
   state: Atom<any>;
-  router: HTMLRouter;
 
   constructor(config: AppConfig) {
     this.config = config;
@@ -26,23 +21,6 @@ export class App {
       ui: config.ui,
     };
     this.addViews(this.config.views);
-    this.router = new HTMLRouter(config.router);
-    this.router.addListener(
-      EVENT_ROUTE_CHANGED,
-      (e) => this.ctx.bus.dispatch([EVENT_ROUTE_CHANGED, e.value])
-    );
-    this.ctx.bus.addHandlers({
-      [EVENT_ROUTE_CHANGED]: valueSetter("route"),
-      [ev.ROUTE_TO]: forwardSideFx(ev.ROUTE_TO),
-    });
-    this.ctx.bus.addEffect(
-      fx.ROUTE_TO,
-      ([id, params]) => this.router.routeTo(this.router.format(id, params))
-    );
-    this.addViews({
-      route: "route",
-      routeComponent: ["route.id", (id) => this.config.components[id](this.ctx)]
-    });
   }
 
   addViews(specs: IObjectOf<ViewSpec>) {
@@ -58,14 +36,10 @@ export class App {
   }
 
   start() {
-    this.init();
     start(
-      ({ bus, views: { raf, routeComponent } }) =>
-        bus.processQueue() || raf.deref() ? routeComponent : null,
+      () => ['div', 'fuck'],
+      // ({ bus, views: { raf, routeComponent } }) =>
+      //   bus.processQueue() || raf.deref() ? routeComponent : null,
       { root: this.config.domRoot, ctx: this.ctx });
-  }
-
-  init() {
-    this.router.start();
   }
 }

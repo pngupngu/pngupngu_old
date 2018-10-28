@@ -2,14 +2,18 @@
   "name": "@pngu/core",
   "private": true,
   "version": "1.0.0",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "index.js",
+  "typings": "index.d.ts",
   "license": "MIT",
   "scripts": {
     "build": "yarn run clean && tsc",
-    "clean": "rimraf lib"
+    "clean": "rimraf *.js *.d.ts *.d.ts.map components gl"
   },
   "dependencies": {
-    "@thi.ng/checks": "^1.5.13"
+    "@thi.ng/checks": "^1.5.13",
+    "@thi.ng/hdom-components": "^2.2.12",
+    "canvas-fit": "^1.5.0",
+    "gl-matrix": "^2.8.1",
+    "twgl.js": "^4.5.2"
   }
 }
