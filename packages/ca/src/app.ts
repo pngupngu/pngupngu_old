@@ -36,10 +36,17 @@ export class App {
   }
 
   start() {
+    const root = this.config.rootComponent(this.ctx);
+    let first = true;
     start(
-      () => ['div', 'fuck'],
-      // ({ bus, views: { raf, routeComponent } }) =>
-      //   bus.processQueue() || raf.deref() ? routeComponent : null,
+      ({ bus, views: { raf } }) => {
+        if (bus.processQueue() || raf.deref() || first) {
+          first = false;
+          return root;
+        } else {
+          return null;
+        }
+      },
       { root: this.config.domRoot, ctx: this.ctx });
   }
 }

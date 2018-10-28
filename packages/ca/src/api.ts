@@ -24,6 +24,7 @@ export interface Module {
 
 export interface AppConfig {
   domRoot: string | Element;
+  rootComponent: any;
   effects: IObjectOf<EffectDef>;
   events: IObjectOf<EventDef>;
   initialState: any;

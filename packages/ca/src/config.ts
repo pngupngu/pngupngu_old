@@ -1,5 +1,6 @@
 import { AppConfig } from './api';
 import { handlers } from './events';
+import { ca } from './ca';
 // import { home } from '../../../src/components/home';
 // import { testRoute } from '../../../src/components/testroute';
 // import { uiRoute } from '../../../src/components/uiroute';
@@ -38,6 +39,8 @@ export const CONFIG: AppConfig = {
 
   domRoot: 'app',
 
+  rootComponent: ca,
+
   initialState: {
     raf: false,
     value: 50
@@ -45,7 +48,7 @@ export const CONFIG: AppConfig = {
 
   views: {
     raf: 'raf',
-    value: 'value'
+    value: 'value',
   },
 
   ui: {
