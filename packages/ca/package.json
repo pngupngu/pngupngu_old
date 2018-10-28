@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@pngu/ca",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn run clean && parcel index.html -p 8080 --open --log-level 3",
+    "build": "yarn run clean && parcel build index.html -d out --no-source-maps --no-cache --detailed-report --public-url ./",
+    "clean": "rimraf out lib dist .cache"
+  },
+  "dependencies": {
+    "@pngu/core": "^1.0.0"
+  }
+}

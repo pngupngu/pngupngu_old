@@ -3,12 +3,22 @@
     "module": "esnext",
     "target": "es6",
     "moduleResolution": "node",
+    "build": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": true,
     "experimentalDecorators": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "preserveConstEnums": true
+    "preserveConstEnums": true,
+    "baseUrl": "./packages",
+    "paths": {
+      "@pngu/*": ["./*/src"]
+    },
+    "composite": true
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "compileOnSave": true
 }
