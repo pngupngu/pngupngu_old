@@ -15,9 +15,7 @@
     "@thi.ng/hdom": "^5.0.7",
     "@thi.ng/interceptors": "^1.8.17",
     "@thi.ng/rstream-gestures": "^0.5.17",
-    "gl-matrix": "^2.8.1",
-    "tachyons": "^4.11.1",
-    "twgl.js": "^4.5.2"
+    "tachyons": "^4.11.1"
   },
   "devDependencies": {
     "glslify-bundle": "^5.1.1",
