@@ -2,7 +2,7 @@ import { IObjectOf } from "@thi.ng/api/api";
 import { createFramebufferInfo } from 'twgl.js';
 import { vec2 } from 'gl-matrix';
 
-import { Application, Scene, Mesh, Material, Command, Texture } from '@pngu/core/gl';
+import { Application, Scene, Mesh, Material, Command, Texture } from '@pngu/gl';
 
 import vert from './vert.glsl';
 import ca from './ca.frag';

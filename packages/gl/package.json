@@ -1,5 +1,5 @@
 {
-  "name": "@pngu/core",
+  "name": "@pngu/gl",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
@@ -7,12 +7,10 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn run clean && tsc",
-    "clean": "rimraf *.js *.d.ts *.d.ts.map components rstream"
+    "clean": "rimraf *.js *.d.ts *.d.ts.map"
   },
   "dependencies": {
-    "@thi.ng/checks": "^1.5.13",
-    "@thi.ng/hdom-components": "^2.2.12",
-    "canvas-fit": "^1.5.0",
+    "gl-matrix": "^2.8.1",
     "twgl.js": "^4.5.2"
   }
 }
