@@ -32,6 +32,9 @@ export interface AppConfig {
 export interface AppViews extends Record<keyof AppViews, IView<any>> {
   raf: IView<boolean>;
   value: IView<number>;
+
+  presetOpts: IView<any>;
+  preset: IView<string>;
 }
 
 export interface UIAttribs {

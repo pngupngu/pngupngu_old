@@ -1,9 +1,12 @@
 import cx from 'classnames';
 import { updateIn } from '@thi.ng/paths';
+import { map } from "@thi.ng/transducers/xform/map";
+import { keys } from "@thi.ng/transducers/iter/keys";
 
 import { AppConfig } from './api';
 import { handlers } from './events';
 import { ca } from './ca';
+import App from './scenes/ca';
 
 // import { home } from '../../../src/components/home';
 // import { testRoute } from '../../../src/components/testroute';
@@ -71,12 +74,19 @@ export const CONFIG: AppConfig = {
 
   initialState: {
     raf: false,
-    value: 50
+    value: 50,
+    app: {
+      presets: App.presets,
+      preset: 'growth'
+    }
   },
 
   views: {
     raf: 'raf',
     value: 'value',
+
+    presetOpts: ['app.presets', vs => [...map(x => [x, x], keys(vs))]],
+    preset: 'app.preset'
   },
 
   ui: {

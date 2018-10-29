@@ -1,12 +1,8 @@
 import { IObjectOf } from "@thi.ng/api/api";
-
-import { createFramebufferInfo, } from 'twgl.js';
+import { createFramebufferInfo } from 'twgl.js';
 import { vec2 } from 'gl-matrix';
 
-import {
-  Application, Scene, Mesh, Material,
-  Command, Texture
-} from '@pngu/core/gl';
+import { Application, Scene, Mesh, Material, Command, Texture } from '@pngu/core/gl';
 
 import vert from './vert.glsl';
 import ca from './ca.frag';
@@ -24,7 +20,7 @@ export interface Params {
 type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
 export type Presets = Record<PresetKeys, Params>;
 
-export default class extends Application {
+export default class CA extends Application {
   cmd1: Command;
   cmd2: Command;
 
@@ -45,7 +41,7 @@ export default class extends Application {
   stamps: IObjectOf<string> = { google, nopro };
   stampTexs: IObjectOf<Texture> = {};
 
-  presets: Presets = {
+  static presets: Presets = {
     gol: { e1: 2, e2: 3, f1: 3 },
     growth: { e1: 2, e2: 5, f1: 3 },
     noise: { e1: 1, e2: 3, f1: 3 },
@@ -66,7 +62,7 @@ export default class extends Application {
 
   set preset(v) {
     this._preset = v;
-    let preset = this.presets[v];
+    let preset = CA.presets[v];
     this.e1 = preset.e1;
     this.e2 = preset.e2;
     this.f1 = preset.f1;

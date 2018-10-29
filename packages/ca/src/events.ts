@@ -15,6 +15,7 @@ export const ev: IObjectOf<string> = {
   SETUP_MODULE: 'loaded-module',
 
   SET_VALUE: 'set-value',
+  SET_PRESET: 'set-preset',
 };
 
 export const fx: IObjectOf<string> = {
@@ -41,6 +42,8 @@ export const handlers: Handlers = {
     [ev.SETUP_MODULE]: (state, [_, [init, val]]) => init(state, val),
 
     [ev.SET_VALUE]: valueSetter('value'),
+
+    [ev.SET_PRESET]: valueSetter('preset'),
   },
 
   effects: {
