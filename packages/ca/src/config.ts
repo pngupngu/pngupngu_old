@@ -42,6 +42,8 @@ const styles = {
   }
 };
 
+const addClass = klass => cls => cx(cls, klass);
+
 export const CONFIG: AppConfig = {
 
   // router: {
@@ -82,10 +84,10 @@ export const CONFIG: AppConfig = {
 
     ...styles,
 
-    panel: updateIn(styles.panel, 'container.class', cls => cx(cls, 'absolute')),
-    select: updateIn(styles.select, 'container.class', cls => cx(cls, 'fg-1 mr-2 ctrl')),
-    slider: updateIn(styles.slider, 'container.class', cls => cx(cls, 'fg-1 mr-2 ctrl')),
-    cbutton: updateIn(styles.button, 'class', cls => cx(cls, 'fg-1 mr-2 ctrl')),
+    panel: updateIn(styles.panel, 'container.class', addClass('absolute')),
+    select: updateIn(styles.select, 'container.class', addClass('fg-1 mr-2 ctrl')),
+    slider: updateIn(styles.slider, 'container.class', addClass('fg-1 mr-2 ctrl')),
+    cbutton: updateIn(styles.button, 'class', addClass('fg-1 mr-2 ctrl')),
 
     textControl: { class: 'mh1' },
 

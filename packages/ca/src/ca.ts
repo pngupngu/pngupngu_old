@@ -1,6 +1,8 @@
 import { button } from '@thi.ng/hdom-components/button';
 import { gestureStream, GestureType } from "@thi.ng/rstream-gestures";
 import { filter } from "@thi.ng/transducers/xform/filter";
+import { map } from "@thi.ng/transducers/xform/map";
+import { keys } from "@thi.ng/transducers/iter/keys";
 
 import canvas from '@pngu/core/components/canvas-webgl';
 import { panel } from '@pngu/core/components/panel';
@@ -53,7 +55,7 @@ export const ca = ({ ui, bus, views }: AppContext) => {
   const cbtn = button({ attribs: ui.cbutton });
   const cslider = makeSlider();
 
-  const options = [[1, 'fuck'], [2, 'hello 100 you']];
+  const options = [...map(x => [x, x], keys(app.presets))];
   const setValue = n => bus.dispatch([ev.SET_VALUE, n]);
 
   return () =>
@@ -63,7 +65,7 @@ export const ca = ({ ui, bus, views }: AppContext) => {
         ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
         ['param2', [cbtn, {}, 'Fuck']],
         ['param3', [cbtn, {}, 'cao'], [btn, {}, 'B']],
-        ['param4', [cselect, options, 1]],
+        ['param4', [cselect, options, app.preset]],
         ['param3', [cbtn, {}, 'caoB']],
         ['param5', [cslider, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()]],
         ['param3', [cbtn, {}, 'caoB']]

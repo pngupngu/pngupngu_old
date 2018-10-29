@@ -10,7 +10,9 @@ export interface SelectArgs {
   onchange?: (e: string | number) => void;
 }
 
-export const select = (_: any, { attribs, onchange = _ => {} }: SelectArgs, options: DropDownOption[], sel?: string | number) =>
+const NOOP = _ => { };
+
+export const select = (_: any, { attribs, onchange = NOOP }: SelectArgs, options: DropDownOption[], sel?: string | number) =>
   ['div', attribs.container,
     [dropdown, { onchange, ...attribs.dropdown }, options, sel],
     ['span', attribs.triangle]];

@@ -14,10 +14,12 @@ export interface SliderArgs {
   attribs: SliderAttribs;
 }
 
+const NOOP = _ => { };
+
 export const slider = () => {
   let sub, elm: HTMLElement;
   return {
-    init(el: HTMLElement, _: any, { max, min, step, onchange = _ => { } }: SliderArgs, value: number) {
+    init(el: HTMLElement, _: any, { max, min, step, onchange = NOOP }: SliderArgs, value: number) {
       const steps = Math.floor((max - min) / step);
       elm = el;
 
@@ -25,10 +27,9 @@ export const slider = () => {
         next({ pos, delta }) {
           const { left, width } = el.getBoundingClientRect();
           const pct = clamp(fit(pos[0] + delta[0] - left, 0, width, 0, steps), 0, steps);
-          const val = min + Math.floor(pct + 0.5) * step;
-          onchange(val);
+          return min + Math.floor(pct + 0.5) * step;
         }
-      });
+      }).subscribe({ next: onchange });
 
       onchange(value);
     },
