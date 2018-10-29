@@ -35,7 +35,7 @@ export const slider = () => {
     render(_: any, { max, min, attribs }: SliderArgs, value: number) {
       const w = elm ? fit(value, min, max, 0, elm.getBoundingClientRect().width) : 0;
       return ['div', attribs.container,
-        ['div', { style: { width: `${w}px` }, ...attribs.handle },
+        ['div', { style: { width: `${w.toFixed(3)}px` }, ...attribs.handle },
           ['span', attribs.value, value]]];
     },
     release() {

@@ -23,6 +23,8 @@ lerna-debug.log*
 *.js
 *.d.ts
 *.d.ts.map
+!types.d.ts
 
 packages/core/components
 packages/core/gl
+packages/core/rstream

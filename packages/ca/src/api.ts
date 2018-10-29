@@ -3,14 +3,11 @@ import { ViewTransform, IView } from "@thi.ng/atom/api";
 import { EventDef, EffectDef, InterceptorContext } from "@thi.ng/interceptors/api";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
 
-export interface UIAttrib {
-  class: string;
-}
+import { UIAttrib, ComponentAttrib } from '@pngu/core/components/api';
 
-export type ComponentAttrib = Record<string, Partial<UIAttrib>>;
-// import { SelectAttribs } from '../../../src/components/select';
-// import { SliderAttribs } from "../../../src/components/slider";
-// import { PanelAttribs } from "../../../src/components/panel";
+import { SelectAttribs } from '@pngu/core/components/select';
+import { SliderAttribs } from '@pngu/core/components/slider';
+import { PanelAttribs } from '@pngu/core/components/panel';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
@@ -40,9 +37,9 @@ export interface AppViews extends Record<keyof AppViews, IView<any>> {
 export interface UIAttribs {
   [key: string]: Partial<UIAttrib> | ComponentAttrib;
 
-  // select?: SelectAttribs;
-  // slider?: SliderAttribs;
-  // panel?: PanelAttribs;
+  select?: SelectAttribs;
+  slider?: SliderAttribs;
+  panel?: PanelAttribs;
 }
 
 export interface AppContext {

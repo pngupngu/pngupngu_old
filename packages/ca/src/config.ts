@@ -1,6 +1,9 @@
+import { addClass } from '@pngu/core/components/api';
+
 import { AppConfig } from './api';
 import { handlers } from './events';
 import { ca } from './ca';
+
 // import { home } from '../../../src/components/home';
 // import { testRoute } from '../../../src/components/testroute';
 // import { uiRoute } from '../../../src/components/uiroute';
@@ -15,6 +18,28 @@ import { ca } from './ca';
 //     release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
 //   }
 // };
+
+const styles = {
+  panel: {
+    container: { class: 'w5 bg-black-80 code f7' },
+    label: { class: 'w-1 no-select nowrap white pa0 ph1' },
+    content: { class: 'pv0 flex pa0' },
+  },
+  select: {
+    container: { class: 'relative dib bg-gray h1 f6 hover-bg-mid-gray' },
+    triangle: { class: 'absolute select-triangle' },
+    dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-transparent pl1 pr3 w-100 tc tlc' }
+  },
+  button: {
+    class: 'input-reset dib f7 code button-reset outline-0 tc pointer no-select ' +
+      'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
+  },
+  slider: {
+    container: { class: 'dib h1 f6 w4 bg-near-black relative ew-resize v-btm' },
+    handle: { class: 'bg-gray tr' },
+    value: { class: 'f7 code absolute--fill no-select ph1 white' },
+  }
+};
 
 export const CONFIG: AppConfig = {
 
@@ -53,34 +78,24 @@ export const CONFIG: AppConfig = {
 
   ui: {
     root: { class: 'wv-100 hv-100 pa0 sans-serif f6 fw2 barlow bg-white98 relative' },
-    state: { class: 'pa3 ma0 code f7 absolute right-0 top-0 bg-black-05' },
-    header: { class: 'h5 pa4 tc bg-dark-gray white' },
-    nav: { class: 'list ma0 pa0' },
-    link: { class: 'pointer link red' },
-    logo: { class: 'br-100 w3 h3' },
-    title: { class: 'f1 fw4' },
 
-    button: {
-      class: 'input-reset dib f7 code button-reset outline-0 tc pointer no-select ' +
-        'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
+    ...styles,
+
+    panel: {
+      ...styles.panel,
+      container: addClass(styles.panel.container, 'absolute')
     },
 
+    cbutton: addClass(styles.button, 'fg-1 mr-2 ctrl'),
+
     select: {
-      container: { class: 'relative dib bg-gray h1 f6 hover-bg-mid-gray' },
-      triangle: { class: 'absolute select-triangle' },
-      dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-transparent pl1 pr3 w-100 tc tlc' }
+      ...styles.select,
+      container: addClass(styles.select.container, 'fg-1 mr-2 ctrl')
     },
 
     slider: {
-      container: { class: 'dib h1 f6 w4 bg-near-black relative ew-resize v-btm' },
-      handle: { class: 'bg-gray tr' },
-      value: { class: 'f7 code absolute--fill no-select ph1 white' },
-    },
-
-    panel: {
-      container: { class: 'w5 bg-black-80 code f7' },
-      label: { class: 'w-1 no-select nowrap white pa0 ph1' },
-      content: { class: 'pv0 flex pa0' },
+      ...styles.slider,
+      container: addClass(styles.slider.container, 'fg-1 mr-2 ctrl')
     },
 
     control: { class: 'fg-1 mr-2 ctrl' },
