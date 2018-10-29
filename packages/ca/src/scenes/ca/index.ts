@@ -1,17 +1,28 @@
+import { IObjectOf } from "@thi.ng/api/api";
+
 import { createFramebufferInfo, } from 'twgl.js';
 import { vec2 } from 'gl-matrix';
 
 import {
   Application, Scene, Mesh, Material,
-  // Camera,
   Command, Texture
 } from '@pngu/core/gl';
+
 import vert from './vert.glsl';
 import ca from './ca.frag';
 import copy from './copy.frag';
 
 import google from '../../assets/images/google.png';
 import nopro from '../../assets/images/no_pro.png';
+
+export interface Params {
+  e1: number;
+  e2: number;
+  f1: number;
+}
+
+type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
+export type Presets = Record<PresetKeys, Params>;
 
 export default class extends Application {
   cmd1: Command;
@@ -31,10 +42,10 @@ export default class extends Application {
   f1: number;
   fade: number = 1.0;
 
-  stamps: { [key: string]: string } = { google, nopro };
-  stampTexs: { [key: string]: Texture } = {};
+  stamps: IObjectOf<string> = { google, nopro };
+  stampTexs: IObjectOf<Texture> = {};
 
-  presets: { [key: string]: any } = {
+  presets: Presets = {
     gol: { e1: 2, e2: 3, f1: 3 },
     growth: { e1: 2, e2: 5, f1: 3 },
     noise: { e1: 1, e2: 3, f1: 3 },

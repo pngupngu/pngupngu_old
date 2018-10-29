@@ -50,7 +50,6 @@ export const ca = ({ ui, bus, views }: AppContext) => {
   const canvas_ = makeCanvas(app);
 
   const btn = button({ attribs: ui.button });
-
   const cbtn = button({ attribs: ui.cbutton });
   const cslider = makeSlider();
 

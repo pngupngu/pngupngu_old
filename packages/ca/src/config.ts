@@ -1,4 +1,5 @@
-import { addClass } from '@pngu/core/components/api';
+import cx from 'classnames';
+import { updateIn } from '@thi.ng/paths';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
@@ -81,24 +82,11 @@ export const CONFIG: AppConfig = {
 
     ...styles,
 
-    panel: {
-      ...styles.panel,
-      container: addClass(styles.panel.container, 'absolute')
-    },
+    panel: updateIn(styles.panel, 'container.class', cls => cx(cls, 'absolute')),
+    select: updateIn(styles.select, 'container.class', cls => cx(cls, 'fg-1 mr-2 ctrl')),
+    slider: updateIn(styles.slider, 'container.class', cls => cx(cls, 'fg-1 mr-2 ctrl')),
+    cbutton: updateIn(styles.button, 'class', cls => cx(cls, 'fg-1 mr-2 ctrl')),
 
-    cbutton: addClass(styles.button, 'fg-1 mr-2 ctrl'),
-
-    select: {
-      ...styles.select,
-      container: addClass(styles.select.container, 'fg-1 mr-2 ctrl')
-    },
-
-    slider: {
-      ...styles.slider,
-      container: addClass(styles.slider.container, 'fg-1 mr-2 ctrl')
-    },
-
-    control: { class: 'fg-1 mr-2 ctrl' },
     textControl: { class: 'mh1' },
 
     ca: { class: 'w-100 h-100 absolute' },

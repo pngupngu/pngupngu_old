@@ -13,7 +13,6 @@
     "@thi.ng/checks": "^1.5.13",
     "@thi.ng/hdom-components": "^2.2.12",
     "canvas-fit": "^1.5.0",
-    "classnames": "^2.2.6",
     "gl-matrix": "^2.8.1",
     "twgl.js": "^4.5.2"
   }
