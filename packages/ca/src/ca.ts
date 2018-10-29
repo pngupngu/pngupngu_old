@@ -27,7 +27,8 @@ const makeCanvas = app => {
 
       app.init(gl);
     },
-    update(_: HTMLCanvasElement, __: WebGLRenderbuffer, ___: AppContext, time: number, ____: number) {
+    update(_: HTMLCanvasElement, __: WebGLRenderbuffer, { views }: AppContext, time: number, ____: number) {
+      app.params = views.params.deref();
       app.render(time);
     },
     release(_: HTMLCanvasElement, __: WebGLRenderingContext, { bus }: AppContext) {
@@ -53,15 +54,20 @@ export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContex
   const cbtn = button({ attribs: ui.cbutton });
 
   const setParam = name => val => bus.dispatch([ev.SET_PARAM, [name, val]]);
-
-  const s1 = makeSlider();
-  const s2 = makeSlider();
-  const s3 = makeSlider();
-
   const setPreset = v => bus.dispatch([ev.SET_PRESET, v]);
 
-  const paramSlider = (name, s) =>
-    [name, [s, { min: 0, max: 8, step: 1, onchange: setParam(name) }, getIn(params.deref(), name)]];
+  const paramSlider = name => {
+    const s = makeSlider();
+    const onchange = setParam(name);
+    return () =>
+      [name, [s,
+        { min: 0, max: 8, step: 1, onchange },
+        getIn(params.deref(), name)]];
+  };
+
+  const e1 = paramSlider('e1');
+  const e2 = paramSlider('e2');
+  const f1 = paramSlider('f1');
 
   return () =>
     ['div', ui.root,
@@ -69,9 +75,7 @@ export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContex
       [panel, ui.panel,
         ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
         ['preset', [select_, { onchange: setPreset }, presetOpts.deref(), preset.deref()]],
-        paramSlider('e1', s1),
-        paramSlider('e2', s2),
-        paramSlider('f1', s3)
+        e1(), e2(), f1()
       ]
     ];
 };

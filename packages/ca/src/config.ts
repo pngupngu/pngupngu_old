@@ -74,7 +74,6 @@ export const CONFIG: AppConfig = {
 
   initialState: {
     raf: false,
-    value: 50,
     app: {
       presets: presets,
       preset: 'growth',
@@ -84,7 +83,6 @@ export const CONFIG: AppConfig = {
 
   views: {
     raf: 'raf',
-    value: 'value',
 
     preset: 'app.preset',
     presetOpts: ['app.presets', vs => [...map(x => [x, x], keys(vs))]],

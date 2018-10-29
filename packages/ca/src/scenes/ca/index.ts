@@ -20,7 +20,6 @@ export interface Params {
 type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
 export type Presets = Record<PresetKeys, Params>;
 
-
 export const presets: Presets = {
   gol: { e1: 2, e2: 3, f1: 3 },
   growth: { e1: 2, e2: 5, f1: 3 },

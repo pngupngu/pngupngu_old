@@ -15,7 +15,6 @@ export const ev: IObjectOf<string> = {
   UNLOAD_MODULE: 'unload-module',
   SETUP_MODULE: 'loaded-module',
 
-  SET_VALUE: 'set-value',
   SET_PRESET: 'set-preset',
   SET_PARAMS: 'set-params',
   SET_PARAM: 'set-param',
@@ -43,8 +42,6 @@ export const handlers: Handlers = {
     [ev.UNLOAD_MODULE]: (state, [_, { release }]) => release(state),
 
     [ev.SETUP_MODULE]: (state, [_, [init, val]]) => init(state, val),
-
-    [ev.SET_VALUE]: valueSetter('value'),
 
     [ev.SET_PRESET]: (state, [_, preset]) => ({
       [FX_DISPATCH_NOW]: [ev.SET_PARAMS, getIn(state, ['app', 'presets', preset])]

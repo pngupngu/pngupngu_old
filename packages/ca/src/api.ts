@@ -21,7 +21,6 @@ export interface Module {
 
 interface Views {
   raf: boolean;
-  value: number;
 
   presetOpts: any;
   preset: string;
@@ -30,7 +29,7 @@ interface Views {
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };
 
-export type ViewSpec = string | [string, ViewTransform<any>];
+type ViewSpec = string | [string, ViewTransform<any>];
 
 export interface AppConfig {
   domRoot: string | Element;
