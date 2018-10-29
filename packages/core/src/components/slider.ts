@@ -1,5 +1,7 @@
 import { clamp } from '@thi.ng/math/interval';
 import { fit } from '@thi.ng/math/fit';
+import { map } from "@thi.ng/transducers/xform/map";
+import { dedupe } from "@thi.ng/transducers/xform/dedupe";
 
 import { UIAttrib } from './api';
 import { streamDrag } from '../rstream/stream-drag';
@@ -23,13 +25,13 @@ export const slider = () => {
       const steps = Math.floor((max - min) / step);
       elm = el;
 
-      sub = streamDrag(el).subscribe({
-        next({ pos, delta }) {
+      sub = streamDrag(el).transform(
+        map(({ pos, delta }) => {
           const { left, width } = el.getBoundingClientRect();
           const pct = clamp(fit(pos[0] + delta[0] - left, 0, width, 0, steps), 0, steps);
           return min + Math.floor(pct + 0.5) * step;
-        }
-      }).subscribe({ next: onchange });
+        }),
+        dedupe()).subscribe({ next: onchange });
 
       onchange(value);
     },

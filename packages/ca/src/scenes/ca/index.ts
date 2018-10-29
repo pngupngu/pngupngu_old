@@ -20,7 +20,17 @@ export interface Params {
 type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
 export type Presets = Record<PresetKeys, Params>;
 
-export default class CA extends Application {
+
+export const presets: Presets = {
+  gol: { e1: 2, e2: 3, f1: 3 },
+  growth: { e1: 2, e2: 5, f1: 3 },
+  noise: { e1: 1, e2: 3, f1: 3 },
+  brush: { e1: 2, e2: 7, f1: 4 },
+  tim: { e1: 2, e2: 4, f1: 1 },
+  gus: { e1: 2, e2: 5, f1: 0 }
+};
+
+export class CA extends Application {
   cmd1: Command;
   cmd2: Command;
 
@@ -33,41 +43,20 @@ export default class CA extends Application {
   width: number;
   height: number;
 
-  e1: number;
-  e2: number;
-  f1: number;
+  params: Params;
+
   fade: number = 1.0;
 
   stamps: IObjectOf<string> = { google, nopro };
   stampTexs: IObjectOf<Texture> = {};
 
-  static presets: Presets = {
-    gol: { e1: 2, e2: 3, f1: 3 },
-    growth: { e1: 2, e2: 5, f1: 3 },
-    noise: { e1: 1, e2: 3, f1: 3 },
-    brush: { e1: 2, e2: 7, f1: 4 },
-    tim: { e1: 2, e2: 4, f1: 1 },
-    gus: { e1: 2, e2: 5, f1: 0 }
-  };
-
-  private _preset: string;
-
   mat1: Material;
   mat2: Material;
 
-  constructor() {
+  constructor(params: Params = presets.growth) {
     super();
-    this.preset = 'growth';
+    this.params = params;
   }
-
-  set preset(v) {
-    this._preset = v;
-    let preset = CA.presets[v];
-    this.e1 = preset.e1;
-    this.e2 = preset.e2;
-    this.f1 = preset.f1;
-  }
-  get preset() { return this._preset; }
 
   init(gl) {
     super.init(gl);
@@ -126,7 +115,7 @@ export default class CA extends Application {
 
     const scene1 = new Scene();
     this.mat1 = new Material(vert, ca, {
-      e1: this.e1, e2: this.e2, f1: this.f1,
+      e1: this.params.e1, e2: this.params.e2, f1: this.params.f1,
       fade: this.fade,
       useStamp: 0
       // stamp: this.stampTexs[0].texture,
@@ -149,9 +138,9 @@ export default class CA extends Application {
 
     let uni1 = this.mat1.uniforms;
     uni1.state = state.texture;
-    uni1.e1 = this.e1;
-    uni1.e2 = this.e2;
-    uni1.f1 = this.f1;
+    uni1.e1 = this.params.e1;
+    uni1.e2 = this.params.e2;
+    uni1.f1 = this.params.f1;
     uni1.fade = this.fade;
 
     let uni2 = this.mat2.uniforms;

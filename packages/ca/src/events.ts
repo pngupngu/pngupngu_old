@@ -1,5 +1,6 @@
 import { IObjectOf } from "@thi.ng/api/api";
-import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
+import { getIn, setIn } from '@thi.ng/paths';
+import { EventDef, EffectDef, FX_DISPATCH_NOW, FX_STATE } from "@thi.ng/interceptors/api";
 import { forwardSideFx, trace, valueSetter } from "@thi.ng/interceptors/interceptors";
 
 export const ev: IObjectOf<string> = {
@@ -16,6 +17,8 @@ export const ev: IObjectOf<string> = {
 
   SET_VALUE: 'set-value',
   SET_PRESET: 'set-preset',
+  SET_PARAMS: 'set-params',
+  SET_PARAM: 'set-param',
 };
 
 export const fx: IObjectOf<string> = {
@@ -43,7 +46,15 @@ export const handlers: Handlers = {
 
     [ev.SET_VALUE]: valueSetter('value'),
 
-    [ev.SET_PRESET]: valueSetter('preset'),
+    [ev.SET_PRESET]: (state, [_, preset]) => ({
+      [FX_DISPATCH_NOW]: [ev.SET_PARAMS, getIn(state, ['app', 'presets', preset])]
+    }),
+
+    [ev.SET_PARAMS]: valueSetter('app.params'),
+
+    [ev.SET_PARAM]: (state, [_, [name, value]]) => ({
+      [FX_STATE]: setIn(state, ['app', 'params', name], value)
+    })
   },
 
   effects: {

@@ -9,15 +9,28 @@ import { SelectAttribs } from '@pngu/core/components/select';
 import { SliderAttribs } from '@pngu/core/components/slider';
 import { PanelAttribs } from '@pngu/core/components/panel';
 
-export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
+import { Params } from './scenes/ca';
 
-export type ViewSpec = string | [string, ViewTransform<any>];
+export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
 export interface Module {
   load(): Promise<any>;
   init(): InterceptorContext;
   release(): InterceptorContext;
 }
+
+interface Views {
+  raf: boolean;
+  value: number;
+
+  presetOpts: any;
+  preset: string;
+  params: Params;
+}
+
+export type AppViews = { [P in keyof Views]: IView<Views[P]> };
+
+export type ViewSpec = string | [string, ViewTransform<any>];
 
 export interface AppConfig {
   domRoot: string | Element;
@@ -27,14 +40,6 @@ export interface AppConfig {
   initialState: any;
   ui: UIAttribs;
   views: Partial<Record<keyof AppViews, ViewSpec>>;
-}
-
-export interface AppViews extends Record<keyof AppViews, IView<any>> {
-  raf: IView<boolean>;
-  value: IView<number>;
-
-  presetOpts: IView<any>;
-  preset: IView<string>;
 }
 
 export interface UIAttribs {

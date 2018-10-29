@@ -14,5 +14,5 @@ const NOOP = _ => { };
 
 export const select = (_: any, { attribs, onchange = NOOP }: SelectArgs, options: DropDownOption[], sel?: string | number) =>
   ['div', attribs.container,
-    [dropdown, { onchange, ...attribs.dropdown }, options, sel],
+    [dropdown, { onchange: e => onchange(e.target.value), ...attribs.dropdown }, options, sel],
     ['span', attribs.triangle]];

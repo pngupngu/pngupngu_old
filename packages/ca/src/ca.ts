@@ -9,7 +9,7 @@ import { slider } from '@pngu/core/components/slider';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
-import App from './scenes/ca';
+import { CA } from './scenes/ca';
 
 const makeCanvas = app => {
   let sub;
@@ -46,27 +46,22 @@ const makeSlider = () => {
 };
 
 export const ca = ({ ui, bus, views }: AppContext) => {
-  const app = new App();
+  const app = new CA();
   const canvas_ = makeCanvas(app);
 
-  const btn = button({ attribs: ui.button });
   const cbtn = button({ attribs: ui.cbutton });
   const cslider = makeSlider();
 
-  const setValue = n => bus.dispatch([ev.SET_VALUE, n]);
   const setPreset = v => bus.dispatch([ev.SET_PRESET, v]);
+  const setParam = name => val => bus.dispatch([ev.SET_PARAM, [name, val]]);
 
   return () =>
     ['div', ui.root,
       [canvas_, ui.ca],
       [panel, ui.panel,
         ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
-        ['param2', [cbtn, {}, 'Fuck']],
-        ['param3', [cbtn, {}, 'cao'], [btn, {}, 'B']],
         ['param4', [select_, { onchange: setPreset }, views.presetOpts.deref(), views.preset.deref()]],
-        ['param3', [cbtn, {}, 'caoB']],
-        ['param5', [cslider, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()]],
-        ['param3', [cbtn, {}, 'caoB']]
+        ['e1', [cslider, { min: 0, max: 8, step: 1, onchange: setParam('e1') }, views.params.deref().e1]],
       ]
     ];
 };

@@ -6,7 +6,7 @@ import { keys } from "@thi.ng/transducers/iter/keys";
 import { AppConfig } from './api';
 import { handlers } from './events';
 import { ca } from './ca';
-import App from './scenes/ca';
+import { presets } from './scenes/ca';
 
 // import { home } from '../../../src/components/home';
 // import { testRoute } from '../../../src/components/testroute';
@@ -76,8 +76,9 @@ export const CONFIG: AppConfig = {
     raf: false,
     value: 50,
     app: {
-      presets: App.presets,
-      preset: 'growth'
+      presets: presets,
+      preset: 'growth',
+      params: presets.growth
     }
   },
 
@@ -85,8 +86,9 @@ export const CONFIG: AppConfig = {
     raf: 'raf',
     value: 'value',
 
+    preset: 'app.preset',
     presetOpts: ['app.presets', vs => [...map(x => [x, x], keys(vs))]],
-    preset: 'app.preset'
+    params: 'app.params'
   },
 
   ui: {
