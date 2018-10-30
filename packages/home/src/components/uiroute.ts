@@ -19,15 +19,15 @@ const makeSlider = attribs => {
 
 export const uiRoute = ({ ui, bus, views }: AppContext) => {
   const btn = button({ attribs: ui.button });
-  const tbtn = button({ attribs: ui.tbutton });
+  const ibtn = button({ attribs: ui.inlineButton });
   const cbtn = button({ attribs: ui.cbutton });
 
   const setValue = n => bus.dispatch([ev.SET_VALUE, n]);
 
   const options = [[1, 'fuck'], [2, 'hello 100 you']];
-  const tselect = makeSelect(ui.tselect);
+  const iselect = makeSelect(ui.inlineSelect);
   const cselect = makeSelect(ui.cselect);
-  const slider1 = makeSlider(ui.tslider);
+  const slider1 = makeSlider(ui.inlineSlider);
   const slider2 = makeSlider(ui.cslider);
 
   return () =>
@@ -36,18 +36,18 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
       ['div', 'Lorem ipsum dolor sit amet,'],
       ['div',
         'a button',
-        [tbtn, { onclick: console.log }, 'hello 100 you'],
+        [ibtn, { onclick: console.log }, 'hello 100 you'],
 
-        'select', [tselect, options, 1],
+        'select', [iselect, options, 1],
 
         'slider',
         [slider1, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()],
       ],
       ['div',
         'another button',
-        [tbtn, { onclick: console.log }, 'hello 100 you'],
+        [ibtn, { onclick: console.log }, 'hello 100 you'],
 
-        'select you', [tselect, options, 2],
+        'select you', [iselect, options, 2],
       ],
 
       [panel, ui.panel,

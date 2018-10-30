@@ -1,4 +1,8 @@
-import { panel, select, button, slider, inline, addClass } from '@pngu/ui/styles';
+import {
+  panel, select, button, slider,
+  inlineButton, inlineSelect, inlineSlider,
+  addClass
+} from '@pngu/ui/styles';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
@@ -55,10 +59,7 @@ export const CONFIG: AppConfig = {
     link: { class: 'pointer link red' },
 
     button, panel,
-
-    tbutton: inline(button),
-    tslider: inline(slider, 'container'),
-    tselect: inline(select, 'container'),
+    inlineButton, inlineSelect, inlineSlider,
 
     cbutton: addClass(button, 'fg-1 mr-2 ctrl'),
     cselect: addClass(select, 'fg-1 mr-2 ctrl', 'container'),

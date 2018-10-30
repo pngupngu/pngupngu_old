@@ -6,6 +6,9 @@ import { UIAttrib, ComponentAttrib, SelectAttribs, SliderAttribs, PanelAttribs }
 export const addClass = (attribs, klass, path?: string) =>
   updateIn(attribs, path ? toPath(path).concat(['class']) : 'class', cls => cx(cls, klass));
 
+export const inline = (attribs: UIAttrib | ComponentAttrib, path?: string) =>
+  addClass(attribs, 'mh1', path);
+
 export const panel: PanelAttribs = {
   container: { class: 'w5 bg-black-80 code f7' },
   label: { class: 'w-1 no-select nowrap white pa0 ph1' },
@@ -29,5 +32,6 @@ export const slider: SliderAttribs = {
   value: { class: 'f7 code absolute--fill no-select ph1 white' },
 };
 
-export const inline = (attribs: UIAttrib | ComponentAttrib, path?: string) =>
-  addClass(attribs, 'mh1', path);
+export const inlineButton: UIAttrib = inline(button);
+export const inlineSelect: UIAttrib = inline(select, 'container');
+export const inlineSlider: UIAttrib = inline(slider, 'container');
