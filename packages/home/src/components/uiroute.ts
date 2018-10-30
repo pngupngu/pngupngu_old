@@ -1,7 +1,7 @@
 import { button } from '@thi.ng/hdom-components/button';
 
 import { SliderArgs } from '@pngu/ui/api';
-// import { panel } from '@pngu/ui/panel';
+import { panel } from '@pngu/ui/panel';
 import { select } from '@pngu/ui/select';
 import { slider } from '@pngu/ui/slider';
 
@@ -18,21 +18,25 @@ const makeSlider = attribs => {
 };
 
 export const uiRoute = ({ ui, bus, views }: AppContext) => {
-  const btn = button({ attribs: ui.tbutton });
+  const btn = button({ attribs: ui.button });
+  const tbtn = button({ attribs: ui.tbutton });
+  const cbtn = button({ attribs: ui.cbutton });
 
   const setValue = n => bus.dispatch([ev.SET_VALUE, n]);
 
   const options = [[1, 'fuck'], [2, 'hello 100 you']];
   const tselect = makeSelect(ui.tselect);
+  const cselect = makeSelect(ui.cselect);
   const slider1 = makeSlider(ui.tslider);
+  const slider2 = makeSlider(ui.cslider);
 
   return () =>
     ['div', ui.root,
-      ['div', 'fuck you Lorem ipsum dolor sit amet,'],
-      ['div', 'fuck you Lorem ipsum dolor sit amet,'],
+      ['div', 'Lorem ipsum dolor sit amet,'],
+      ['div', 'Lorem ipsum dolor sit amet,'],
       ['div',
-        'fuck you',
-        [btn, { onclick: console.log }, 'hello 100 you'],
+        'a button',
+        [tbtn, { onclick: console.log }, 'hello 100 you'],
 
         'select', [tselect, options, 1],
 
@@ -40,19 +44,19 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
         [slider1, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()],
       ],
       ['div',
-        'fuck me',
-        [btn, { onclick: console.log }, 'hello 100 you'],
+        'another button',
+        [tbtn, { onclick: console.log }, 'hello 100 you'],
 
         'select you', [tselect, options, 2],
       ],
 
-      // [panel, ui.panel,
-      //   ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
-      //   ['param2', [cbtn, {}, 'Fuck']],
-      //   ['param3', [cbtn, {}, 'cao'], [btn, {}, 'B']],
-      //   ['param4', [cselect, options, 1]],
-      //   ['param3', [cbtn, {}, 'caoB']],
-      //   ['param5', [cslider, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()]],
-      //   ['param3', [cbtn, {}, 'caoB']]]
+      [panel, ui.panel,
+        ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
+        ['param2', [cbtn, {}, 'Fuck']],
+        ['param3', [cbtn, {}, 'cao'], [btn, {}, 'B']],
+        ['param4', [cselect, options, 1]],
+        ['param3', [cbtn, {}, 'caoB']],
+        ['param5', [slider2, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()]],
+        ['param3', [cbtn, {}, 'caoB']]]
     ];
 };
