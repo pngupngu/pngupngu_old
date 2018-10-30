@@ -1,11 +1,11 @@
-import uuid from 'uuid/v4';
+import * as uuid from 'uuid/v4';
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
 import { Geometry } from './geom';
-import Node from './Node';
+import { Node } from './Node';
 import Camera from './Camera';
-import Texture from './Texture';
+import { Texture } from './Texture';
 
 type Uniforms = IObjectOf<any>;
 

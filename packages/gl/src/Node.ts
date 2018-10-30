@@ -1,6 +1,6 @@
 import { mat4, vec3 } from 'gl-matrix';
 
-export default class Node {
+export class Node {
   protected _position: vec3 = vec3.create();
 
   children: Array<Node> = [];

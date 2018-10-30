@@ -24,7 +24,11 @@ lerna-debug.log*
 *.d.ts
 *.d.ts.map
 !types.d.ts
+.nyc_output
 
 packages/core/components
 packages/core/gl
 packages/core/rstream
+
+packages/*/build
+packages/*/node_modules

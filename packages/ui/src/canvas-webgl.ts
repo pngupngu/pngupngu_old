@@ -1,7 +1,7 @@
 import { CanvasHandlers } from "@thi.ng/hdom-components/canvas";
-import fit from 'canvas-fit';
+import * as fit from 'canvas-fit';
 
-export default function({ init, update, release }: Partial<CanvasHandlers<WebGLRenderingContext>>, getContext) {
+export function canvas({ init, update, release }: Partial<CanvasHandlers<WebGLRenderingContext>>, getContext) {
   let el, ctx, resize;
   let frame = 0;
   let time = 0;

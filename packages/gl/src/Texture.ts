@@ -34,7 +34,7 @@ interface TextureOptions {
   crossOrigin?: string;
 }
 
-export default class {
+export class Texture {
   width: number;
   height: number;
   texture: WebGLTexture;

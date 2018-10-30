@@ -1,6 +1,6 @@
 import { mat4, vec3 } from 'gl-matrix';
 
-import Node from './Node';
+import { Node } from './Node';
 
 export default class Camera extends Node {
   isPerspective: boolean = true;

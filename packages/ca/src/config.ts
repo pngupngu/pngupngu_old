@@ -1,4 +1,3 @@
-import { updateIn } from '@thi.ng/paths';
 import { map } from "@thi.ng/transducers/xform/map";
 import { keys } from "@thi.ng/transducers/iter/keys";
 
@@ -40,10 +39,10 @@ export const CONFIG: AppConfig = {
 
     button,
 
-    panel: updateIn(panel, 'container.class', addClass('absolute')),
-    select: updateIn(select, 'container.class', addClass('fg-1 mr-2 ctrl')),
-    slider: updateIn(slider, 'container.class', addClass('fg-1 mr-2 ctrl')),
-    cbutton: updateIn(button, 'class', addClass('fg-1 mr-2 ctrl')),
+    panel: addClass(panel, 'absolute', 'container'),
+    select: addClass(select, 'fg-1 mr-2 ctrl', 'container'),
+    slider: addClass(slider, 'fg-1 mr-2 ctrl', 'container'),
+    cbutton: addClass(button, 'fg-1 mr-2 ctrl'),
 
     ca: { class: 'w-100 h-100 absolute' },
   }

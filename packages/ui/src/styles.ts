@@ -1,9 +1,10 @@
 import cx from 'classnames';
-import { updateIn } from '@thi.ng/paths';
+import { updateIn, toPath } from '@thi.ng/paths';
 
 import { UIAttrib, ComponentAttrib, SelectAttribs, SliderAttribs, PanelAttribs } from './api';
 
-export const addClass = klass => cls => cx(cls, klass);
+export const addClass = (attribs, klass, path?: string) =>
+  updateIn(attribs, path ? toPath(path).concat(['class']) : 'class', cls => cx(cls, klass));
 
 export const panel: PanelAttribs = {
   container: { class: 'w5 bg-black-80 code f7' },
@@ -28,5 +29,5 @@ export const slider: SliderAttribs = {
   value: { class: 'f7 code absolute--fill no-select ph1 white' },
 };
 
-export const inline = (attribs: UIAttrib | ComponentAttrib, path = 'class') =>
-  updateIn(attribs, path, addClass('mh1'));
+export const inline = (attribs: UIAttrib | ComponentAttrib, path?: string) =>
+  addClass(attribs, 'mh1', path);

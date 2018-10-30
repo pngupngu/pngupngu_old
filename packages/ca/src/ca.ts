@@ -4,8 +4,8 @@ import { gestureStream, GestureType } from "@thi.ng/rstream-gestures";
 import { filter } from "@thi.ng/transducers/xform/filter";
 
 import { getContext } from '@pngu/gl';
-import canvas from '@pngu/ui/canvas-webgl';
 import { SelectArgs, SliderArgs } from '@pngu/ui/api';
+import { canvas } from '@pngu/ui/canvas-webgl';
 import { panel } from '@pngu/ui/panel';
 import { select } from '@pngu/ui/select';
 import { slider } from '@pngu/ui/slider';

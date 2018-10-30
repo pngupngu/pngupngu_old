@@ -10,23 +10,6 @@
     "clean": "lerna run clean",
     "test": "jest --watch"
   },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "test/.*(test|spec)\\.(jsx?|tsx?)$",
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
   "browserslist": [
     ">2%",
     "last 1 edge versions",
@@ -34,7 +17,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/mocha": "^5.2.5",
     "lerna": "^3.4.3",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "parcel-bundler": "^1.10.3",
     "rimraf": "^2.6.2",
     "typescript": "^3.1.3"

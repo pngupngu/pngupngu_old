@@ -57,7 +57,7 @@ export const CONFIG: AppConfig = {
     button, panel,
 
     tbutton: inline(button),
-    tslider: inline(slider, 'container.class'),
-    tselect: inline(select, 'container.class'),
+    tslider: inline(slider, 'container'),
+    tselect: inline(select, 'container'),
   }
 };
