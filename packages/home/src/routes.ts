@@ -1,9 +1,9 @@
-// import { Route } from '@thi.ng/router/api';
+import { Route } from '@thi.ng/router/api';
 
-// export const HOME: Route = {
-//   id: 'home',
-//   match: ['home'],
-// };
+export const HOME: Route = {
+  id: 'home',
+  match: ['home'],
+};
 
 // export const CA: Route = {
 //   id: 'ca',
@@ -16,7 +16,7 @@
 //   // }
 // };
 
-// export const UI: Route = {
-//   id: 'ui',
-//   match: ['ui'],
-// };
+export const UI: Route = {
+  id: 'ui',
+  match: ['ui'],
+};

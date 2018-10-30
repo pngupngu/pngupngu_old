@@ -1347,6 +1347,16 @@
     "@thi.ng/checks" "^1.5.13"
     "@thi.ng/errors" "^0.1.11"
 
+"@thi.ng/router@^0.1.27":
+  version "0.1.27"
+  resolved "https://registry.yarnpkg.com/@thi.ng/router/-/router-0.1.27.tgz#d754982b843d789d451a3301409fabf1f01c1b7b"
+  integrity sha512-K5b6buHBVKYNUTnztkfc6IxVoSJwsPNthCZc9GIUlvZififmI2pdIy82lC6o7Cb6KycQ97HzXfj5OFAlp4YbRA==
+  dependencies:
+    "@thi.ng/api" "^4.2.3"
+    "@thi.ng/checks" "^1.5.13"
+    "@thi.ng/equiv" "^0.1.13"
+    "@thi.ng/errors" "^0.1.11"
+
 "@thi.ng/rstream-gestures@^0.5.17":
   version "0.5.17"
   resolved "https://registry.yarnpkg.com/@thi.ng/rstream-gestures/-/rstream-gestures-0.5.17.tgz#9eb083d499f6c996086ebf6ab992f4e4552b4bf6"

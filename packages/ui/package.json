@@ -1,0 +1,16 @@
+{
+  "name": "@pngu/ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "style": "css/index.css",
+  "license": "MIT",
+  "private": true,
+  "files": ["css", "src"],
+  "scripts": {
+    "build": "yarn run clean && tsc",
+    "clean": "rimraf *.js *.d.ts *.d.ts.map"
+  },
+  "dependencies": {
+    "tachyons": "^4.11.1"
+  }
+}
