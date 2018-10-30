@@ -3,7 +3,7 @@ import { Atom } from "@thi.ng/atom/atom";
 import { isArray } from "@thi.ng/checks/is-array";
 import { start } from "@thi.ng/hdom";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
-import { trace, valueSetter } from "@thi.ng/interceptors/interceptors";
+import { valueSetter } from "@thi.ng/interceptors/interceptors";
 import { EVENT_ROUTE_CHANGED } from "@thi.ng/router/api";
 import { HTMLRouter } from "@thi.ng/router/history";
 
@@ -44,7 +44,7 @@ export class App {
       fx.ROUTE_TO,
       ([id, params]) => this.router.routeTo(this.router.format(id, params))
     );
-    this.ctx.bus.instrumentWith([trace]);
+    // this.ctx.bus.instrumentWith([trace]);
     this.addViews({
       route: "route",
       routeComponent: [

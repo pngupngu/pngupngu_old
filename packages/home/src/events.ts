@@ -1,9 +1,10 @@
 import { IObjectOf } from "@thi.ng/api/api";
 import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
-import { forwardSideFx, trace } from "@thi.ng/interceptors/interceptors";
+import { forwardSideFx, valueSetter } from "@thi.ng/interceptors/interceptors";
 
 export const ev: IObjectOf<string> = {
   ALERT: 'alert',
+  SET_VALUE: 'set-value',
 };
 
 export const fx: IObjectOf<string> = {
@@ -18,7 +19,8 @@ type Handlers = {
 
 export const handlers: Handlers = {
   events: {
-    [ev.ALERT]: [trace, forwardSideFx(fx.ALERT)],
+    [ev.ALERT]: forwardSideFx(fx.ALERT),
+    [ev.SET_VALUE]: valueSetter('value')
   },
 
   effects: {

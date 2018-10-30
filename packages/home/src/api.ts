@@ -20,6 +20,7 @@ interface Views {
   route: RouteMatch;
   routeComponent: any;
   raf: boolean;
+  value: number;
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };

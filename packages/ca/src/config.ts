@@ -9,17 +9,6 @@ import { handlers } from './events';
 import { ca } from './ca';
 import { presets } from './scenes/ca';
 
-// const modules = {
-//   ca: {
-//     load: () => import('./components/ca'),
-//     init(state, { ca }) {
-//       const rfn = reducer(() => state, (s, [p, v]) => setIn(s, p, v));
-//       return { [FX_STATE]: reduce(rfn, [['ca', ca()]]) };
-//     },
-//     release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
-//   }
-// };
-
 export const CONFIG: AppConfig = {
 
   events: handlers.events,
