@@ -15,6 +15,10 @@
   },
   "dependencies": {
     "@pngu/core": "^1.0.0",
+    "@thi.ng/hdom-components": "^2.2.12",
+    "@thi.ng/math": "^0.2.0",
+    "@thi.ng/rstream": "^1.13.7",
+    "@thi.ng/rstream-gestures": "^0.5.17",
     "@thi.ng/transducers": "^2.2.1",
     "tachyons": "^4.11.1"
   }

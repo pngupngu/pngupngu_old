@@ -12,6 +12,7 @@
   "dependencies": {
     "@thi.ng/checks": "^1.5.13",
     "@thi.ng/hdom-components": "^2.2.12",
+    "@thi.ng/rstream": "^1.13.7",
     "canvas-fit": "^1.5.0",
     "twgl.js": "^4.5.2"
   }
