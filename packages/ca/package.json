@@ -19,7 +19,6 @@
     "@thi.ng/math": "^0.2.0",
     "@thi.ng/paths": "^1.6.5",
     "@thi.ng/rstream-gestures": "^0.5.17",
-    "classnames": "^2.2.6",
     "tachyons": "^4.11.1"
   },
   "devDependencies": {

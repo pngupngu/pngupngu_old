@@ -1,9 +1,8 @@
-import cx from 'classnames';
 import { updateIn } from '@thi.ng/paths';
 import { map } from "@thi.ng/transducers/xform/map";
 import { keys } from "@thi.ng/transducers/iter/keys";
 
-import { panel, select, button, slider } from '@pngu/ui/styles';
+import { panel, select, button, slider, addClass } from '@pngu/ui/styles';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
@@ -20,8 +19,6 @@ import { presets } from './scenes/ca';
 //     release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
 //   }
 // };
-
-const addClass = klass => cls => cx(cls, klass);
 
 export const CONFIG: AppConfig = {
 

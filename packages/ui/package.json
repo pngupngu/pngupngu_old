@@ -20,6 +20,7 @@
     "@thi.ng/rstream": "^1.13.7",
     "@thi.ng/rstream-gestures": "^0.5.17",
     "@thi.ng/transducers": "^2.2.1",
+    "classnames": "^2.2.6",
     "tachyons": "^4.11.1"
   }
 }

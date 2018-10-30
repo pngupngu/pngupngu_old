@@ -1,4 +1,7 @@
+import cx from 'classnames';
 import { UIAttrib, SelectAttribs, SliderAttribs, PanelAttribs } from './api';
+
+export const addClass = klass => cls => cx(cls, klass);
 
 export const panel: PanelAttribs = {
   container: { class: 'w5 bg-black-80 code f7' },
