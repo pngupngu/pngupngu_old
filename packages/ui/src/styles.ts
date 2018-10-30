@@ -1,4 +1,4 @@
-import { SelectAttribs, SliderAttribs, PanelAttribs } from './api';
+import { UIAttrib, SelectAttribs, SliderAttribs, PanelAttribs } from './api';
 
 export const panel: PanelAttribs = {
   container: { class: 'w5 bg-black-80 code f7' },
@@ -12,7 +12,7 @@ export const select: SelectAttribs = {
   dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-transparent pl1 pr3 w-100 tc tlc' }
 };
 
-export const button = {
+export const button: UIAttrib = {
   class: 'input-reset dib f7 code button-reset outline-0 tc pointer no-select ' +
     'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
 };

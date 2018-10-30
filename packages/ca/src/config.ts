@@ -3,7 +3,7 @@ import { updateIn } from '@thi.ng/paths';
 import { map } from "@thi.ng/transducers/xform/map";
 import { keys } from "@thi.ng/transducers/iter/keys";
 
-import { panel, select, button, slider } from '@pngu/ui';
+import { panel, select, button, slider } from '@pngu/ui/styles';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
@@ -20,8 +20,6 @@ import { presets } from './scenes/ca';
 //     release: state => ({ [FX_STATE]: deleteIn(state, 'ca') })
 //   }
 // };
-
-const styles = { panel, select, button, slider };
 
 const addClass = klass => cls => cx(cls, klass);
 
@@ -54,12 +52,12 @@ export const CONFIG: AppConfig = {
   ui: {
     root: { class: 'wv-100 hv-100 pa0 sans-serif f6 fw2 barlow bg-white98 relative' },
 
-    ...styles,
+    button,
 
-    panel: updateIn(styles.panel, 'container.class', addClass('absolute')),
-    select: updateIn(styles.select, 'container.class', addClass('fg-1 mr-2 ctrl')),
-    slider: updateIn(styles.slider, 'container.class', addClass('fg-1 mr-2 ctrl')),
-    cbutton: updateIn(styles.button, 'class', addClass('fg-1 mr-2 ctrl')),
+    panel: updateIn(panel, 'container.class', addClass('absolute')),
+    select: updateIn(select, 'container.class', addClass('fg-1 mr-2 ctrl')),
+    slider: updateIn(slider, 'container.class', addClass('fg-1 mr-2 ctrl')),
+    cbutton: updateIn(button, 'class', addClass('fg-1 mr-2 ctrl')),
 
     textControl: { class: 'mh1' },
 
