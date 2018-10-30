@@ -3,14 +3,12 @@ import { updateIn } from '@thi.ng/paths';
 import { map } from "@thi.ng/transducers/xform/map";
 import { keys } from "@thi.ng/transducers/iter/keys";
 
+import { panel, select, button, slider } from '@pngu/ui';
+
 import { AppConfig } from './api';
 import { handlers } from './events';
 import { ca } from './ca';
 import { presets } from './scenes/ca';
-
-// import { home } from '../../../src/components/home';
-// import { testRoute } from '../../../src/components/testroute';
-// import { uiRoute } from '../../../src/components/uiroute';
 
 // const modules = {
 //   ca: {
@@ -23,50 +21,14 @@ import { presets } from './scenes/ca';
 //   }
 // };
 
-const styles = {
-  panel: {
-    container: { class: 'w5 bg-black-80 code f7' },
-    label: { class: 'w-1 no-select nowrap white pa0 ph1' },
-    content: { class: 'pv0 flex pa0' },
-  },
-  select: {
-    container: { class: 'relative dib bg-gray h1 f6 hover-bg-mid-gray' },
-    triangle: { class: 'absolute select-triangle' },
-    dropdown: { class: 'outline-0 input-reset pointer br0 bn code f7 white bg-transparent pl1 pr3 w-100 tc tlc' }
-  },
-  button: {
-    class: 'input-reset dib f7 code button-reset outline-0 tc pointer no-select ' +
-      'ph1 bn white bg-gray hover-bg-mid-gray v-btm pv-2'
-  },
-  slider: {
-    container: { class: 'dib h1 f6 w4 bg-near-black relative ew-resize v-btm' },
-    handle: { class: 'bg-gray tr' },
-    value: { class: 'f7 code absolute--fill no-select ph1 white' },
-  }
-};
+const styles = { panel, select, button, slider };
 
 const addClass = klass => cls => cx(cls, klass);
 
 export const CONFIG: AppConfig = {
 
-  // router: {
-  //   useFragment: true,
-  //   defaultRouteID: routes.HOME.id,
-  //   routes: [
-  //     routes.HOME,
-  //     routes.CA,
-  //     routes.UI,
-  //   ]
-  // },
-
   events: handlers.events,
   effects: handlers.effects,
-
-  // components: {
-  //   [routes.HOME.id]: home,
-  //   [routes.CA.id]: testRoute,
-  //   [routes.UI.id]: uiRoute,
-  // },
 
   domRoot: 'app',
 
