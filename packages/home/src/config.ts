@@ -1,5 +1,4 @@
-import { updateIn } from '@thi.ng/paths';
-import { panel, select, button, slider, addClass } from '@pngu/ui/styles';
+import { panel, select, button, slider, inline } from '@pngu/ui/styles';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
@@ -57,8 +56,8 @@ export const CONFIG: AppConfig = {
 
     button, panel,
 
-    tbutton: updateIn(button, 'class', addClass('mh1')),
-    tslider: updateIn(slider, 'container.class', addClass('mh1')),
-    tselect: updateIn(select, 'container.class', addClass('mh1')),
+    tbutton: inline(button),
+    tslider: inline(slider, 'container.class'),
+    tselect: inline(select, 'container.class'),
   }
 };

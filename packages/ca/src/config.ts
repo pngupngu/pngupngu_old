@@ -45,8 +45,6 @@ export const CONFIG: AppConfig = {
     slider: updateIn(slider, 'container.class', addClass('fg-1 mr-2 ctrl')),
     cbutton: updateIn(button, 'class', addClass('fg-1 mr-2 ctrl')),
 
-    textControl: { class: 'mh1' },
-
     ca: { class: 'w-100 h-100 absolute' },
   }
 };

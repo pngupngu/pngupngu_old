@@ -5,6 +5,7 @@ import { filter } from "@thi.ng/transducers/xform/filter";
 
 import { getContext } from '@pngu/gl';
 import canvas from '@pngu/ui/canvas-webgl';
+import { SelectArgs, SliderArgs } from '@pngu/ui/api';
 import { panel } from '@pngu/ui/panel';
 import { select } from '@pngu/ui/select';
 import { slider } from '@pngu/ui/slider';
@@ -39,12 +40,12 @@ const makeCanvas = app => {
   }, getContext());
 };
 
-const select_ = ({ ui }: AppContext, attrs: any, ...args: any[]) =>
+const select_ = ({ ui }: AppContext, attrs: SelectArgs, ...args: any[]) =>
   [select, { attribs: ui.select, ...attrs }, ...args];
 
 const makeSlider = () => {
   const slider_ = slider();
-  return ({ ui }: AppContext, args: any, value: number) =>
+  return ({ ui }: AppContext, args: SliderArgs, value: number) =>
     [slider_, { attribs: ui.slider, ...args }, value];
 };
 

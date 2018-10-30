@@ -1,5 +1,7 @@
 import cx from 'classnames';
-import { UIAttrib, SelectAttribs, SliderAttribs, PanelAttribs } from './api';
+import { updateIn } from '@thi.ng/paths';
+
+import { UIAttrib, ComponentAttrib, SelectAttribs, SliderAttribs, PanelAttribs } from './api';
 
 export const addClass = klass => cls => cx(cls, klass);
 
@@ -25,3 +27,6 @@ export const slider: SliderAttribs = {
   handle: { class: 'bg-gray tr' },
   value: { class: 'f7 code absolute--fill no-select ph1 white' },
 };
+
+export const inline = (attribs: UIAttrib | ComponentAttrib, path = 'class') =>
+  updateIn(attribs, path, addClass('mh1'));
