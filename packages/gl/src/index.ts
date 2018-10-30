@@ -1,20 +1,20 @@
 import uuid from 'uuid/v4';
 import * as twgl from 'twgl.js';
+import { IObjectOf } from "@thi.ng/api/api";
 
 import { Geometry } from './geom';
 import Node from './Node';
 import Camera from './Camera';
 import Texture from './Texture';
 
-interface Uniforms {
-  [key: string]: any
-}
+type Uniforms = IObjectOf<any>;
 
 export class Material {
   id: string = uuid();
 
   constructor(
-    readonly vert: String, readonly frag: String,
+    readonly vert: String,
+    readonly frag: String,
     readonly uniforms: Uniforms = {}) { }
 }
 

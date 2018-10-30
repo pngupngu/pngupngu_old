@@ -9,7 +9,7 @@ import { SelectAttribs } from '@pngu/core/components/select';
 import { SliderAttribs } from '@pngu/core/components/slider';
 import { PanelAttribs } from '@pngu/core/components/panel';
 
-import { Params } from './scenes/ca';
+import { Params } from './scenes/ca/api';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
@@ -29,7 +29,7 @@ interface Views {
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };
 
-type ViewSpec = string | [string, ViewTransform<any>];
+export type ViewSpec = string | [string, ViewTransform<any>];
 
 export interface AppConfig {
   domRoot: string | Element;

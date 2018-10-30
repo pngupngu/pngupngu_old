@@ -4,21 +4,12 @@ import { vec2 } from 'gl-matrix';
 
 import { Application, Scene, Mesh, Material, Command, Texture } from '@pngu/gl';
 
+import { Presets, Params } from './api';
 import vert from './vert.glsl';
 import ca from './ca.frag';
 import copy from './copy.frag';
-
 import google from '../../assets/images/google.png';
 import nopro from '../../assets/images/no_pro.png';
-
-export interface Params {
-  e1: number;
-  e2: number;
-  f1: number;
-}
-
-type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
-export type Presets = Record<PresetKeys, Params>;
 
 export const presets: Presets = {
   gol: { e1: 2, e2: 3, f1: 3 },
