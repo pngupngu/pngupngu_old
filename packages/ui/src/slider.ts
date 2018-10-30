@@ -3,18 +3,8 @@ import { fit } from '@thi.ng/math/fit';
 import { map } from "@thi.ng/transducers/xform/map";
 import { dedupe } from "@thi.ng/transducers/xform/dedupe";
 
-import { UIAttrib } from './api';
-import { streamDrag } from '../rstream/stream-drag';
-
-export type SliderAttribs = Record<'container' | 'handle' | 'value', Partial<UIAttrib>>;
-
-export interface SliderArgs {
-  min: number;
-  max: number;
-  step: number;
-  onchange?: (e: number) => void;
-  attribs: SliderAttribs;
-}
+import { SliderArgs } from './api';
+import { streamDrag } from './utils';
 
 const NOOP = _ => { };
 

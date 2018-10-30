@@ -5,9 +5,7 @@ import { EventBus } from "@thi.ng/interceptors/event-bus";
 
 import { UIAttrib, ComponentAttrib } from '@pngu/core/components/api';
 
-import { SelectAttribs } from '@pngu/core/components/select';
-import { SliderAttribs } from '@pngu/core/components/slider';
-import { PanelAttribs } from '@pngu/core/components/panel';
+import { SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
 
 import { Params } from './scenes/ca/api';
 

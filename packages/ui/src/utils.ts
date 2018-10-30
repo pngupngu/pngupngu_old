@@ -3,7 +3,7 @@ import { merge } from '@thi.ng/rstream/stream-merge';
 import { filter } from '@thi.ng/transducers/xform/filter';
 import { map } from '@thi.ng/transducers/xform/map';
 
-import { takeUntil } from './take-until';
+import { takeUntil } from '@pngu/core/rstream/take-until';
 
 export const streamDrag = (el: HTMLElement) => {
   const drag = gestureStream(el)

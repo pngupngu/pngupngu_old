@@ -1,7 +1,4 @@
-import { SelectAttribs } from '@pngu/core/components/select';
-import { SliderAttribs } from '@pngu/core/components/slider';
-import { PanelAttribs } from '@pngu/core/components/panel';
-
+import { SelectAttribs, SliderAttribs, PanelAttribs } from './api';
 
 export const panel: PanelAttribs = {
   container: { class: 'w5 bg-black-80 code f7' },

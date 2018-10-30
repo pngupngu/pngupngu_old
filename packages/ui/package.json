@@ -5,13 +5,17 @@
   "style": "css/index.css",
   "license": "MIT",
   "private": true,
-  "files": ["css", "src"],
+  "files": [
+    "css",
+    "src"
+  ],
   "scripts": {
     "build": "yarn run clean && tsc",
     "clean": "rimraf *.js *.d.ts *.d.ts.map"
   },
   "dependencies": {
     "@pngu/core": "^1.0.0",
+    "@thi.ng/transducers": "^2.2.1",
     "tachyons": "^4.11.1"
   }
 }

@@ -1,9 +1,6 @@
 import { map } from "@thi.ng/transducers/xform/map";
 
-import { UIAttrib } from './api';
-
-type Keys = 'container' | 'label' | 'content';
-export type PanelAttribs = Record<Keys, Partial<UIAttrib>>;
+import { PanelAttribs } from './api';
 
 export const panel = (_: any, attribs: PanelAttribs, ...controls: any[]) =>
   ['table', attribs.container,
