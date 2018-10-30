@@ -3,7 +3,7 @@ import { ViewTransform, IView } from "@thi.ng/atom/api";
 import { EventDef, EffectDef, InterceptorContext } from "@thi.ng/interceptors/api";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
 
-import { UIAttrib, ComponentAttrib } from '@pngu/core/components/api';
+import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
 
 import { SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
 

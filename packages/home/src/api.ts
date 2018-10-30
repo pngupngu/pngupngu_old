@@ -4,11 +4,9 @@ import { EventDef, EffectDef, InterceptorContext } from "@thi.ng/interceptors/ap
 import { EventBus } from "@thi.ng/interceptors/event-bus";
 import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
 
-import { UIAttrib, ComponentAttrib } from '@pngu/core/components/api';
+import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
 
-import { SelectAttribs } from '@pngu/core/components/select';
-import { SliderAttribs } from '@pngu/core/components/slider';
-import { PanelAttribs } from '@pngu/core/components/panel';
+import { SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
