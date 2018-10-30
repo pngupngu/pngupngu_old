@@ -92,3 +92,5 @@ export class Application {
 }
 
 export { Camera, Texture };
+
+export const getContext = (opts?: any) => (el: HTMLCanvasElement) => twgl.getContext(el, opts);

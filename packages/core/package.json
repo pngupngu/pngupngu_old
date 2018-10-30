@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn run clean && tsc",
-    "clean": "rimraf *.js *.d.ts *.d.ts.map components rstream"
+    "clean": "rimraf *.js *.d.ts *.d.ts.map rstream"
   },
   "dependencies": {
     "@thi.ng/checks": "^1.5.13",

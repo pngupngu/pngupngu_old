@@ -1,8 +1,7 @@
 import { CanvasHandlers } from "@thi.ng/hdom-components/canvas";
-import { getContext } from 'twgl.js';
 import fit from 'canvas-fit';
 
-export default function({ init, update, release }: Partial<CanvasHandlers<WebGLRenderingContext>>, opts) {
+export default function({ init, update, release }: Partial<CanvasHandlers<WebGLRenderingContext>>, getContext) {
   let el, ctx, resize;
   let frame = 0;
   let time = 0;
@@ -12,7 +11,7 @@ export default function({ init, update, release }: Partial<CanvasHandlers<WebGLR
       resize = fit(el);
       resize();
 
-      ctx = getContext(el, opts);
+      ctx = getContext(el);
       time = Date.now();
       init && init(el, ctx, hctx, ...args);
       update && update(el, ctx, hctx, time, frame++, ...args);

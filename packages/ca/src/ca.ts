@@ -3,7 +3,8 @@ import { button } from '@thi.ng/hdom-components/button';
 import { gestureStream, GestureType } from "@thi.ng/rstream-gestures";
 import { filter } from "@thi.ng/transducers/xform/filter";
 
-import canvas from '@pngu/core/components/canvas-webgl';
+import { getContext } from '@pngu/gl';
+import canvas from '@pngu/ui/canvas-webgl';
 import { panel } from '@pngu/ui/panel';
 import { select } from '@pngu/ui/select';
 import { slider } from '@pngu/ui/slider';
@@ -35,7 +36,7 @@ const makeCanvas = app => {
       bus.dispatch([ev.SET_RAF, false]);
       sub.done();
     }
-  }, {});
+  }, getContext());
 };
 
 const select_ = ({ ui }: AppContext, attrs: any, ...args: any[]) =>
