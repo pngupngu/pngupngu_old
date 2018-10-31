@@ -38,10 +38,10 @@ export class Scene extends Node {
 
 export class Command {
   scene: Scene;
-  programInfos: { [key: string]: any } = {};
+  programInfos: IObjectOf<any> = {};
   objects: Array<any> = [];
 
-  constructor(readonly gl: WebGLRenderingContext, scene) {
+  constructor(readonly gl: WebGLRenderingContext, scene: Scene) {
     scene.children.forEach((mesh: Mesh) => {
       const { geometry, material: { id, vert, frag } } = mesh;
       let programInfo = this.programInfos[id];
@@ -50,8 +50,8 @@ export class Command {
         this.programInfos[id] = programInfo;
       }
 
-      let bufferInfo = twgl.createBufferInfoFromArrays(gl, geometry.attributes);
-      let vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, bufferInfo);
+      const bufferInfo = twgl.createBufferInfoFromArrays(gl, geometry.attributes);
+      const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, bufferInfo);
 
       this.objects.push({ programInfo, vertexArrayInfo, mesh });
     });

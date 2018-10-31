@@ -12,13 +12,14 @@
   },
   "dependencies": {
     "@pngu/core": "^1.0.0",
-    "@pngu/ui": "^1.0.0",
     "@pngu/gl": "^1.0.0",
+    "@pngu/ui": "^1.0.0",
     "@thi.ng/hdom": "^5.0.7",
     "@thi.ng/interceptors": "^1.8.17",
     "@thi.ng/math": "^0.2.0",
     "@thi.ng/paths": "^1.6.5",
     "@thi.ng/rstream-gestures": "^0.5.17",
+    "gl-matrix": "^2.8.1",
     "tachyons": "^4.11.1"
   },
   "devDependencies": {

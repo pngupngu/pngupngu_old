@@ -12,8 +12,8 @@ export class Cube extends Geometry {
 }
 
 export class Plane extends Geometry {
-  constructor(width, depth, subdivWidth = 1, subdivDepth = 1) {
+  constructor(width, depth, subdivWidth = 1, subdivDepth = 1, matrix?) {
     super();
-    this.attributes = primitives.createPlaneVertices(width, depth, subdivWidth, subdivDepth);
+    this.attributes = primitives.createPlaneVertices(width, depth, subdivWidth, subdivDepth, matrix);
   }
 }

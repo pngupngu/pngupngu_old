@@ -1,8 +1,10 @@
 import { IObjectOf } from "@thi.ng/api/api";
-import { createFramebufferInfo } from 'twgl.js';
+import { rad } from "@thi.ng/math/angle";
+import { createFramebufferInfo, m4 } from 'twgl.js';
 import { vec2 } from 'gl-matrix';
 
 import { Application, Scene, Mesh, Material, Command, Texture } from '@pngu/gl';
+import { Plane } from '@pngu/gl/geom';
 
 import { Presets, Params } from './api';
 import vert from './vert.glsl';
@@ -61,29 +63,7 @@ export class CA extends Application {
       return a;
     }, {});
 
-    const plane = {
-      attributes: {
-        position: [
-          -1, -1, 0,
-          1, -1, 0,
-          -1, 1, 0,
-          -1, 1, 0,
-          1, -1, 0,
-          1, 1, 0
-        ],
-        uv: {
-          numComponents: 2,
-          data: [
-            0, 0,
-            1, 0,
-            0, 1,
-            0, 1,
-            1, 0,
-            1, 1
-          ]
-        }
-      }
-    };
+    const plane = new Plane(2, 2, 1, 1, m4.rotationX(rad(90)));
 
     const scale = 1;
     this.width = gl.canvas.clientWidth / scale;
