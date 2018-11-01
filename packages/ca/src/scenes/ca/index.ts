@@ -101,8 +101,6 @@ export class CA extends Application {
   }
 
   render(time) {
-    const gl = this.gl;
-
     let rtt = this.isFront ? this.frontFbo : this.backFbo;
     let state = this.isFront ? this.backTex : this.frontTex;
 
@@ -118,7 +116,7 @@ export class CA extends Application {
 
     this.cmd1.draw(time, this.width, this.height, rtt);
     uni1.useStamp = 0;
-    this.cmd2.draw(time, gl.canvas.clientWidth, gl.canvas.clientHeight);
+    this.cmd2.draw(time);
 
     this.isFront = !this.isFront;
   }

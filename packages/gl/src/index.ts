@@ -71,13 +71,8 @@ export class Command {
 
   constructor(readonly gl: WebGLRenderingContext, scene: Scene) {
     scene.children.forEach((mesh: Mesh) => {
-      const { geometry, material: { id, vert, frag } } = mesh;
-      let programInfo = this.programInfos[id];
-      if (programInfo == undefined) {
-        programInfo = twgl.createProgramInfo(gl, [vert, frag]);
-        this.programInfos[id] = programInfo;
-      }
-
+      const { geometry, material } = mesh;
+      const programInfo = this.getProgram(material);
       const bufferInfo = twgl.createBufferInfoFromArrays(gl, geometry.attributes);
       const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, bufferInfo);
 
@@ -85,13 +80,14 @@ export class Command {
     });
   }
 
-  draw(_, vw, vh, fbo = null) {
+  draw(_,
+    vw = this.gl.canvas.width,
+    vh = this.gl.canvas.height,
+    fbo = null) {
     const gl = this.gl;
     gl.viewport(0, 0, vw, vh);
 
     twgl.bindFramebufferInfo(gl, fbo);
-
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     gl.disable(gl.DEPTH_TEST);
     gl.clearColor(0, 0, 0, 0);
@@ -101,14 +97,18 @@ export class Command {
 
     this.objects.forEach(obj => {
       const { mesh: { material } } = obj;
-      obj.uniforms = {
-        ...material.uniforms,
-        screen: [vw, vh]
-      };
+      obj.uniforms = { ...material.uniforms, screen: [vw, vh] };
       // uniforms.u_worldViewProjection = m4.multiply(viewProjection, mesh.model);
     });
 
     twgl.drawObjectList(gl, this.objects);
+  }
+
+  getProgram({ id, vert, frag }: Material) {
+    if (!this.programInfos[id]) {
+      this.programInfos[id] = twgl.createProgramInfo(this.gl, [vert, frag]);
+    }
+    return this.programInfos[id];
   }
 }
 
