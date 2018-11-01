@@ -3,8 +3,8 @@ import { rad } from "@thi.ng/math/angle";
 import { createFramebufferInfo, m4 } from 'twgl.js';
 import { vec2 } from 'gl-matrix';
 
-import { Application, Scene, Mesh, Material, Command, Texture } from '@pngu/gl';
-import { Plane } from '@pngu/gl/geom';
+import { Application, Scene, Mesh, Material, Command, Plane } from '@pngu/gl';
+import { Texture } from '@pngu/gl/texture';
 
 import { Presets, Params } from './api';
 import vert from './vert.glsl';

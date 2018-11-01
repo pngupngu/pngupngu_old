@@ -1,11 +1,25 @@
 import * as uuid from 'uuid/v4';
+import { mat4, vec3 } from 'gl-matrix';
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
-import { Geometry } from './geom';
-import { Node } from './Node';
-import Camera from './Camera';
-import { Texture } from './Texture';
+export class Geometry {
+  attributes: IObjectOf<any>;
+}
+
+export class Cube extends Geometry {
+  constructor(size) {
+    super();
+    this.attributes = twgl.primitives.createCubeVertices(size);
+  }
+}
+
+export class Plane extends Geometry {
+  constructor(width, depth, subdivWidth = 1, subdivDepth = 1, matrix?) {
+    super();
+    this.attributes = twgl.primitives.createPlaneVertices(width, depth, subdivWidth, subdivDepth, matrix);
+  }
+}
 
 type Uniforms = IObjectOf<any>;
 
@@ -16,6 +30,20 @@ export class Material {
     readonly vert: String,
     readonly frag: String,
     readonly uniforms: Uniforms = {}) { }
+}
+
+export class Node {
+  protected _position: vec3 = vec3.create();
+
+  children: Array<Node> = [];
+  model: mat4 = mat4.create();
+
+  set position(val: vec3) { this._position = val; }
+  get position() { return this._position; }
+
+  add(node) {
+    this.children.push(node);
+  }
 }
 
 export class Mesh extends Node {
@@ -63,7 +91,7 @@ export class Command {
 
     twgl.bindFramebufferInfo(gl, fbo);
 
-    // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     gl.disable(gl.DEPTH_TEST);
     gl.clearColor(0, 0, 0, 0);
@@ -90,7 +118,5 @@ export class Application {
   init(gl) { this.gl = gl }
   render(_) { }
 }
-
-export { Camera, Texture };
 
 export const getContext = (opts?: any) => (el: HTMLCanvasElement) => twgl.getContext(el, opts);

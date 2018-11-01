@@ -1,8 +1,8 @@
 import { mat4, vec3 } from 'gl-matrix';
 
-import { Node } from './Node';
+import { Node } from '.';
 
-export default class Camera extends Node {
+export class Camera extends Node {
   isPerspective: boolean = true;
 
   private _fov: number = Math.PI / 6;
