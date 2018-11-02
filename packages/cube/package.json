@@ -21,7 +21,8 @@
     "@thi.ng/rstream-gestures": "^0.5.17",
     "@thi.ng/transducers": "^2.2.1",
     "bunny": "^1.0.1",
-    "gl-matrix": "^2.8.1"
+    "gl-matrix": "^2.8.1",
+    "primitive-torus": "^1.0.4"
   },
   "devDependencies": {
     "glslify-bundle": "^5.1.1",
