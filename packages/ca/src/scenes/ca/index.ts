@@ -103,6 +103,8 @@ export class CA extends Application {
   render(time) {
     const gl = this.gl;
     gl.disable(gl.DEPTH_TEST);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     let rtt = this.isFront ? this.frontFbo : this.backFbo;
     let state = this.isFront ? this.backTex : this.frontTex;

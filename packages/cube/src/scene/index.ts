@@ -61,6 +61,8 @@ export class App extends Application {
     const gl = this.gl;
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     mat3.normalFromMat4(this.matNormal, mat4.multiply(this.matViewModel, this.camera.view, this.matModel));
     this.mat.uniforms.matView = this.camera.view;
