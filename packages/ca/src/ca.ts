@@ -7,7 +7,7 @@ import { getContext } from '@pngu/gl';
 import { SelectArgs } from '@pngu/ui/api';
 import { canvas } from '@pngu/ui/canvas-webgl';
 import { panel } from '@pngu/ui/panel';
-import { select } from '@pngu/ui/select';
+import { create as createSelect } from '@pngu/ui/select';
 import { create as createSlider } from '@pngu/ui/slider';
 
 import { AppContext } from "./api";
@@ -40,9 +40,6 @@ const makeCanvas = app => {
   }, getContext());
 };
 
-const select_ = ({ ui }: AppContext, attrs: SelectArgs, ...args: any[]) =>
-  [select, { attribs: ui.select, ...attrs }, ...args];
-
 export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContext) => {
   const app = new CA();
   const canvas_ = makeCanvas(app);
@@ -51,6 +48,7 @@ export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContex
 
   const setParam = name => val => bus.dispatch([ev.SET_PARAM, [name, val]]);
   const setPreset = v => bus.dispatch([ev.SET_PRESET, v]);
+  const select = createSelect(ui.select);
 
   const paramSlider = name => {
     const slider = createSlider(ui.slider);
@@ -70,7 +68,7 @@ export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContex
       [canvas_, ui.ca],
       [panel, ui.panel,
         ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
-        ['preset', [select_, { onchange: setPreset }, presetOpts.deref(), preset.deref()]],
+        ['preset', [select, { onchange: setPreset }, presetOpts.deref(), preset.deref()]],
         e1(), e2(), f1()
       ]
     ];
