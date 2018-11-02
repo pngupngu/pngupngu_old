@@ -3,21 +3,25 @@ import { mat4, vec3 } from 'gl-matrix';
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
+type GeomAttribs = IObjectOf<number[]>;
+
 export class Geometry {
-  attributes: IObjectOf<any>;
+  attributes: GeomAttribs;
+
+  constructor(attribs: GeomAttribs) {
+    this.attributes = attribs;
+  }
 }
 
 export class Cube extends Geometry {
   constructor(size) {
-    super();
-    this.attributes = twgl.primitives.createCubeVertices(size);
+    super(twgl.primitives.createCubeVertices(size));
   }
 }
 
 export class Plane extends Geometry {
   constructor(width, depth, subdivWidth = 1, subdivDepth = 1, matrix?) {
-    super();
-    this.attributes = twgl.primitives.createPlaneVertices(width, depth, subdivWidth, subdivDepth, matrix);
+    super(twgl.primitives.createPlaneVertices(width, depth, subdivWidth, subdivDepth, matrix));
   }
 }
 

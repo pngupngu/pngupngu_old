@@ -55,14 +55,12 @@ export class CameraUI {
     vec3.cross(this.side, this.up, this.viewDir);
     vec3.normalize(this.side, this.side);
     vec3.scale(this.side, this.side, curPos[0] - this.clickPos[0]);
-
     vec3.scale(this.upScaled, this.up, curPos[1] - this.clickPos[1]);
-
     vec3.add(this.move, this.upScaled, this.side);
     vec3.cross(this.axis, this.move, this.viewDir);
     vec3.normalize(this.axis, this.axis);
 
-    let angle = vec3.squaredLength(
+    const angle = vec3.squaredLength(
       vec3.fromValues(curPos[0] - this.clickPos[0], curPos[1] - this.clickPos[1], 0));
     quat.setAxisAngle(this.q, this.axis, angle * this.speed);
     vec3.transformQuat(this.vd, this.viewDir, this.q);

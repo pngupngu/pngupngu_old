@@ -1327,6 +1327,15 @@
     "@thi.ng/errors" "^0.1.11"
     "@thi.ng/paths" "^1.6.5"
 
+"@thi.ng/iterators@^4.1.34":
+  version "4.1.34"
+  resolved "https://registry.yarnpkg.com/@thi.ng/iterators/-/iterators-4.1.34.tgz#fdacf2f8918e6d9318c319f80d579a363227091a"
+  integrity sha512-HUO8fq94ZD/8yhTT1scZArG1VBDeFEcvjizSG7l4o2gS3+tOwbR3YQhOM1bSrdvS6aNJsM/FsJGWq5IMroPPwQ==
+  dependencies:
+    "@thi.ng/api" "^4.2.3"
+    "@thi.ng/dcons" "^1.1.13"
+    "@thi.ng/errors" "^0.1.11"
+
 "@thi.ng/math@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@thi.ng/math/-/math-0.2.0.tgz#47e099f97848d8a01348ecfec31d5c8a324dd240"
@@ -1937,6 +1946,11 @@ builtins@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/builtins/-/builtins-1.0.3.tgz#cb94faeb61c8696451db36534e1422f94f0aee88"
   integrity sha1-y5T662HIaWRR2zZTThQi+U8K7og=
+
+bunny@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/bunny/-/bunny-1.0.1.tgz#86383da45ab7a99571a5a572b7be0e3564815f9e"
+  integrity sha1-hjg9pFq3qZVxpaVyt74ONWSBX54=
 
 byline@^5.0.0:
   version "5.0.0"
