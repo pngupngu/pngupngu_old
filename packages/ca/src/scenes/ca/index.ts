@@ -101,6 +101,9 @@ export class CA extends Application {
   }
 
   render(time) {
+    const gl = this.gl;
+    gl.disable(gl.DEPTH_TEST);
+
     let rtt = this.isFront ? this.frontFbo : this.backFbo;
     let state = this.isFront ? this.backTex : this.frontTex;
 

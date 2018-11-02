@@ -58,6 +58,10 @@ export class App extends Application {
   }
 
   render(time) {
+    const gl = this.gl;
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
+
     mat3.normalFromMat4(this.matNormal, mat4.multiply(this.matViewModel, this.camera.view, this.matModel));
     this.mat.uniforms.matView = this.camera.view;
     this.mat.uniforms.matProj = this.camera.projection;
