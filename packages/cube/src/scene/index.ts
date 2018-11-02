@@ -1,4 +1,4 @@
-import { m4 } from 'twgl.js';
+import { mat3, mat4 } from 'gl-matrix';
 import createTorusMesh from 'primitive-torus';
 import { flatten } from '@thi.ng/iterators/flatten';
 
@@ -12,6 +12,10 @@ export class App extends Application {
   mat: Material;
   cmd: Command;
   camera: Camera;
+
+  matModel: mat4 = mat4.identity(mat4.create());
+  matViewModel: mat4 = mat4.create();
+  matNormal: mat3 = mat3.create();
 
   init(gl) {
     super.init(gl);
@@ -29,13 +33,23 @@ export class App extends Application {
     const cube = new Geometry({
       position: [...flatten(attribs.positions)],
       indices: [...flatten(attribs.cells)],
-      uv: [...flatten(attribs.uvs)],
+      uv: {
+        numComponents: 2,
+        data: [...flatten(attribs.uvs)]
+      },
       normal: [...flatten(attribs.normals)]
     });
     this.mat = new Material(vert, frag, {
-      model: m4.identity(),
-      view: this.camera.view,
-      proj: this.camera.projection
+      matModel: this.matModel,
+      matView: this.camera.view,
+      matProj: this.camera.projection,
+      lightPos: [0, 1, 0],
+      f0: [0.04, 0.04, 0.04],
+      albedo: [0.9, 0.9, 0.9],
+      roughness: 0.1,
+      metallic: 0.0,
+      ambColor: [0.03, 0.03, 0.03],
+      lightColor: [1, 1, 1],
     });
     const scene = new Scene();
     scene.add(new Mesh(cube, this.mat));
@@ -44,8 +58,12 @@ export class App extends Application {
   }
 
   render(time) {
-    this.mat.uniforms.proj = this.camera.projection;
-    this.mat.uniforms.view = this.camera.view;
+    mat3.normalFromMat4(this.matNormal, mat4.multiply(this.matViewModel, this.camera.view, this.matModel));
+    this.mat.uniforms.matView = this.camera.view;
+    this.mat.uniforms.matProj = this.camera.projection;
+    this.mat.uniforms.matViewModel = this.matViewModel;
+    this.mat.uniforms.matNormal = this.matNormal;
+
     this.cmd.draw(time);
   }
 }

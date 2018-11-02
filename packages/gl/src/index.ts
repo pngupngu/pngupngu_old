@@ -3,7 +3,11 @@ import { mat4, vec3 } from 'gl-matrix';
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
-type GeomAttribs = IObjectOf<number[]>;
+interface GeomAttrib {
+  numComponents: number;
+  data: number[]
+}
+type GeomAttribs = IObjectOf<number[] | GeomAttrib>;
 
 export class Geometry {
   attributes: GeomAttribs;
