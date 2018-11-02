@@ -36,3 +36,9 @@ export const slider = () => {
     }
   };
 };
+
+export const create = attribs => {
+  const slider_ = slider();
+  return (_: any, args: SliderArgs, value: number) =>
+    [slider_, { attribs, ...args }, value];
+};

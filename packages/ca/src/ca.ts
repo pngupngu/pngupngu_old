@@ -4,11 +4,11 @@ import { gestureStream, GestureType } from "@thi.ng/rstream-gestures";
 import { filter } from "@thi.ng/transducers/xform/filter";
 
 import { getContext } from '@pngu/gl';
-import { SelectArgs, SliderArgs } from '@pngu/ui/api';
+import { SelectArgs } from '@pngu/ui/api';
 import { canvas } from '@pngu/ui/canvas-webgl';
 import { panel } from '@pngu/ui/panel';
 import { select } from '@pngu/ui/select';
-import { slider } from '@pngu/ui/slider';
+import { create as createSlider } from '@pngu/ui/slider';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
@@ -43,12 +43,6 @@ const makeCanvas = app => {
 const select_ = ({ ui }: AppContext, attrs: SelectArgs, ...args: any[]) =>
   [select, { attribs: ui.select, ...attrs }, ...args];
 
-const makeSlider = () => {
-  const slider_ = slider();
-  return ({ ui }: AppContext, args: SliderArgs, value: number) =>
-    [slider_, { attribs: ui.slider, ...args }, value];
-};
-
 export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContext) => {
   const app = new CA();
   const canvas_ = makeCanvas(app);
@@ -59,10 +53,10 @@ export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContex
   const setPreset = v => bus.dispatch([ev.SET_PRESET, v]);
 
   const paramSlider = name => {
-    const s = makeSlider();
+    const slider = createSlider(ui.slider);
     const onchange = setParam(name);
     return () =>
-      [name, [s,
+      [name, [slider,
         { min: 0, max: 8, step: 1, onchange },
         getIn(params.deref(), name)]];
   };
