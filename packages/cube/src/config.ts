@@ -32,10 +32,10 @@ export const CONFIG: AppConfig = {
 
     button, select, slider,
 
-    panel: addClass(panel, 'absolute', 'container'),
+    panel: addClass(panel, 'absolute w5', 'container'),
 
-    container: { class: 'flex' },
-    cslider: addClass(slider, 'fg-1 mr-2 ctrl', 'container'),
+    container: { class: 'dg gtc3' },
+    cslider: addClass(slider, 'mr-2 ctrl', 'container'),
 
     ca: { class: 'w-100 h-100 absolute' },
   }

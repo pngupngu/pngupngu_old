@@ -12,13 +12,13 @@ import { App } from './scene';
 
 const multiSlider = (name, attribs) => {
   const s1 = createSlider(attribs);
-  // const s2 = createSlider(ui.cslider);
-  // const s3 = createSlider(ui.cslider);
+  const s2 = createSlider(attribs);
+  const s3 = createSlider(attribs);
   return ({ ui, bus }: AppContext, value: Vec3) =>
     ['div', ui.container,
       [s1, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(v, value[1], value[2])]]) }, value.x],
-      // [s2, { min: 0, max: 1, step: 0.01, onchange: console.log}, value.y],
-      // [s3, { min: 0, max: 1, step: 0.01, onchange: console.log}, value.z],
+      [s2, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(value[0], v, value[2])]]) }, value.y],
+      [s3, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(value[0], value[1], v)]]) }, value.z],
     ];
 
 };

@@ -10,7 +10,7 @@ export const inline = (attribs: UIAttrib | ComponentAttrib, path?: string) =>
   addClass(attribs, 'mh1', path);
 
 export const panel: PanelAttribs = {
-  container: { class: 'w5 bg-black-80 code f7' },
+  container: { class: 'bg-black-80 code f7' },
   label: { class: 'w-1 no-select nowrap white pa0 ph1' },
   content: { class: 'pv0 pa0' },
 };
@@ -27,7 +27,7 @@ export const button: UIAttrib = {
 };
 
 export const slider: SliderAttribs = {
-  container: { class: 'dib h1 f6 w4 bg-near-black relative ew-resize v-btm' },
+  container: { class: 'dib h1 f6 bg-near-black relative ew-resize v-btm' },
   handle: { class: 'bg-gray tr' },
   value: { class: 'f7 code absolute--fill no-select ph1 white' },
 };
