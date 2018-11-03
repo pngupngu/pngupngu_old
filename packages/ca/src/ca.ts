@@ -40,7 +40,7 @@ const makeCanvas = app => {
 };
 
 export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContext) => {
-  const app = new CA();
+  const app = new CA(params.deref());
   const canvas_ = makeCanvas(app);
 
   const cbtn = button({ attribs: ui.cbutton });

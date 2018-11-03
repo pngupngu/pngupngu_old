@@ -19,19 +19,17 @@ export const CONFIG: AppConfig = {
 
   initialState: {
     raf: false,
-    app: {
-      presets: presets,
-      preset: 'growth',
-      params: presets.growth
-    }
+    presets: presets,
+    preset: 'growth',
+    params: presets.growth
   },
 
   views: {
     raf: 'raf',
 
-    preset: 'app.preset',
-    presetOpts: ['app.presets', vs => [...map(x => [x, x], keys(vs))]],
-    params: 'app.params'
+    preset: 'preset',
+    presetOpts: ['presets', vs => [...map(x => [x, x], keys(vs))]],
+    params: 'params'
   },
 
   ui: {

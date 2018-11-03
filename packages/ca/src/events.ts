@@ -43,14 +43,14 @@ export const handlers: Handlers = {
 
     [ev.SETUP_MODULE]: (state, [_, [init, val]]) => init(state, val),
 
-    [ev.SET_PRESET]: (state, [_, preset]) => ({
-      [FX_DISPATCH_NOW]: [ev.SET_PARAMS, getIn(state, ['app', 'presets', preset])]
+    [ev.SET_PRESET]: (state, [_, name]) => ({
+      [FX_DISPATCH_NOW]: [ev.SET_PARAMS, getIn(state, ['presets', name])]
     }),
 
-    [ev.SET_PARAMS]: valueSetter('app.params'),
+    [ev.SET_PARAMS]: valueSetter('params'),
 
     [ev.SET_PARAM]: (state, [_, [name, value]]) => ({
-      [FX_STATE]: setIn(state, ['app', 'params', name], value)
+      [FX_STATE]: setIn(state, ['params', name], value)
     })
   },
 

@@ -20,7 +20,6 @@ const multiSlider = (name, attribs) => {
       [s2, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(value[0], v, value[2])]]) }, value.y],
       [s3, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(value[0], value[1], v)]]) }, value.z],
     ];
-
 };
 
 const makeCanvas = app => {
