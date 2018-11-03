@@ -66,7 +66,7 @@ export const ca = ({ ui, bus, views: { params, presetOpts, preset } }: AppContex
     ['div', ui.root,
       [canvas_, ui.ca],
       [panel, ui.panel,
-        ['param1', [cbtn, {}, 'fuck'], [cbtn, {}, 'You']],
+        ['param1', ['div', ui.container2, [cbtn, {}, 'fuck'], [cbtn, {}, 'You']]],
         ['preset', [select, { onchange: setPreset }, presetOpts.deref(), preset.deref()]],
         e1(), e2(), f1()
       ]

@@ -58,11 +58,15 @@ export const CONFIG: AppConfig = {
     nav: { class: 'list ma0 pa0' },
     link: { class: 'pointer link red' },
 
-    button, panel,
+    button,
     inlineButton, inlineSelect, inlineSlider,
 
-    cbutton: addClass(button, 'fg-1 mr-2 ctrl'),
-    cselect: addClass(select, 'fg-1 mr-2 ctrl', 'container'),
-    cslider: addClass(slider, 'fg-1 mr-2 ctrl', 'container'),
+    panel: addClass(panel, 'w5', 'container'),
+
+    container2: { class: 'dg gtc2' },
+
+    cbutton: addClass(button, 'mr-2 ctrl'),
+    cselect: addClass(select, 'mr-2 ctrl', 'container'),
+    cslider: addClass(slider, 'mr-2 ctrl', 'container'),
   }
 };

@@ -118,6 +118,14 @@ code,
   padding-bottom: 1px;
 }
 
+.pa-1 {
+  padding: 1px;
+}
+
+.ma-1 {
+  margin: 1px;
+}
+
 .mr-2 {
   margin-right: 2px;
 }
@@ -132,4 +140,20 @@ code,
 
 .ctrl:last-child {
   margin-right: 0;
+}
+
+.dg {
+  display: grid;
+}
+
+.gtc-af {
+  grid-template-columns: auto 1fr;
+}
+
+.gtc2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.gtc3 {
+  grid-template-columns: repeat(3, 1fr);
 }

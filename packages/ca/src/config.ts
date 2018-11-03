@@ -39,10 +39,12 @@ export const CONFIG: AppConfig = {
 
     button,
 
-    panel: addClass(panel, 'absolute', 'container'),
-    select: addClass(select, 'fg-1 mr-2 ctrl', 'container'),
-    slider: addClass(slider, 'fg-1 mr-2 ctrl', 'container'),
-    cbutton: addClass(button, 'fg-1 mr-2 ctrl'),
+    panel: addClass(panel, 'absolute w5', 'container'),
+    container2: { class: 'dg gtc2' },
+
+    select: addClass(select, 'mr-2 ctrl', 'container'),
+    slider: addClass(slider, 'mr-2 ctrl', 'container'),
+    cbutton: addClass(button, 'mr-2 ctrl'),
 
     ca: { class: 'w-100 h-100 absolute' },
   }

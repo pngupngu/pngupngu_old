@@ -10,9 +10,9 @@ export const inline = (attribs: UIAttrib | ComponentAttrib, path?: string) =>
   addClass(attribs, 'mh1', path);
 
 export const panel: PanelAttribs = {
-  container: { class: 'bg-black-80 code f7' },
-  label: { class: 'w-1 no-select nowrap white pa0 ph1' },
-  content: { class: 'pv0 pa0' },
+  container: { class: 'bg-black-80 code f7 dg gtc-af pa-1' },
+  label: { class: 'no-select nowrap white pa0 ph1 ma-1' },
+  content: { class: 'pa0 pv0 ma-1 dg' },
 };
 
 export const select: SelectAttribs = {
