@@ -20,6 +20,7 @@
     "@thi.ng/paths": "^1.6.5",
     "@thi.ng/rstream-gestures": "^0.5.17",
     "@thi.ng/transducers": "^2.2.1",
+    "@thi.ng/vectors": "^1.4.1",
     "bunny": "^1.0.1",
     "gl-matrix": "^2.8.1",
     "primitive-torus": "^1.0.4"

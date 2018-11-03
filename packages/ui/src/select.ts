@@ -9,6 +9,5 @@ export const select = (_: any, { attribs, onchange = NOOP }: SelectArgs, options
     [dropdown, { onchange: e => onchange(e.target.value), ...attribs.dropdown }, options, sel],
     ['span', attribs.triangle]];
 
-export const create = attribs =>
-  (_: any, attrs: SelectArgs, ...args: any[]) =>
+export const create = attribs => (_: any, attrs: SelectArgs, ...args: any[]) =>
     [select, { attribs, ...attrs }, ...args];

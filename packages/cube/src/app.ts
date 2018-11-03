@@ -3,6 +3,7 @@ import { Atom } from "@thi.ng/atom/atom";
 import { isArray } from "@thi.ng/checks/is-array";
 import { start } from "@thi.ng/hdom";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
+// import { trace } from "@thi.ng/interceptors/interceptors";
 
 import { AppConfig, AppContext, AppViews, ViewSpec } from "./api";
 
@@ -21,6 +22,7 @@ export class App {
       ui: config.ui,
     };
     this.addViews(this.config.views);
+    // this.ctx.bus.instrumentWith([trace]);
   }
 
   addViews(specs: IObjectOf<ViewSpec>) {

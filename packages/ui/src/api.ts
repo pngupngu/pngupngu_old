@@ -20,5 +20,6 @@ export interface SliderArgs {
   max: number;
   step: number;
   onchange?: (e: number) => void;
+  precision: number;
   attribs: SliderAttribs;
 }

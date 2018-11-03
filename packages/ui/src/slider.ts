@@ -25,11 +25,11 @@ export const slider = () => {
 
       onchange(value);
     },
-    render(_: any, { max, min, attribs }: SliderArgs, value: number) {
+    render(_: any, { max, min, attribs, precision = 2 }: SliderArgs, value: number) {
       const w = elm ? fit(value, min, max, 0, elm.getBoundingClientRect().width) : 0;
       return ['div', attribs.container,
         ['div', { style: { width: `${w.toFixed(3)}px` }, ...attribs.handle },
-          ['span', attribs.value, value]]];
+          ['span', attribs.value, value.toFixed(precision)]]];
     },
     release() {
       sub.done();

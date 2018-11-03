@@ -1,12 +1,17 @@
 import { mat3, mat4 } from 'gl-matrix';
 import createTorusMesh from 'primitive-torus';
 import { flatten } from '@thi.ng/iterators/flatten';
+import { Vec3 } from '@thi.ng/vectors/vec3';
 
 import { Application, Scene, Mesh, Material, Command, Geometry } from '@pngu/gl';
 import { Camera } from '@pngu/gl/camera';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
+
+export interface Params {
+  f0: Vec3;
+}
 
 export class App extends Application {
   mat: Material;
@@ -16,6 +21,13 @@ export class App extends Application {
   matModel: mat4 = mat4.identity(mat4.create());
   matViewModel: mat4 = mat4.create();
   matNormal: mat3 = mat3.create();
+
+  params: Params;
+
+  constructor(params: Params) {
+    super();
+    this.params = params;
+  }
 
   init(gl) {
     super.init(gl);
@@ -44,7 +56,7 @@ export class App extends Application {
       matView: this.camera.view,
       matProj: this.camera.projection,
       lightPos: [0, 1, 0],
-      f0: [0.04, 0.04, 0.04],
+      f0: this.params.f0,
       albedo: [0.9, 0.9, 0.9],
       roughness: 0.1,
       metallic: 0.0,

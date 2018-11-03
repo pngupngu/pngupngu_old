@@ -4,9 +4,9 @@ import { EventDef, EffectDef, InterceptorContext } from "@thi.ng/interceptors/ap
 import { EventBus } from "@thi.ng/interceptors/event-bus";
 
 import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
-
 import { SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
 
+import { Params } from './scene';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
@@ -18,6 +18,7 @@ export interface Module {
 
 interface Views {
   raf: boolean;
+  params: Params;
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };

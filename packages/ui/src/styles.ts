@@ -12,7 +12,7 @@ export const inline = (attribs: UIAttrib | ComponentAttrib, path?: string) =>
 export const panel: PanelAttribs = {
   container: { class: 'w5 bg-black-80 code f7' },
   label: { class: 'w-1 no-select nowrap white pa0 ph1' },
-  content: { class: 'pv0 flex pa0' },
+  content: { class: 'pv0 pa0' },
 };
 
 export const select: SelectAttribs = {

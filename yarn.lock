@@ -1409,6 +1409,17 @@
     "@thi.ng/errors" "^0.1.11"
     "@thi.ng/strings" "^0.5.2"
 
+"@thi.ng/vectors@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@thi.ng/vectors/-/vectors-1.4.1.tgz#35024f855c912e0a7425e242343e449e5c3deecb"
+  integrity sha512-v2mbWK6ABEFgEpiYMui+9X/anbldLp2adlXlgvyWUivtKbKN5haH2WRnZG2bfHxWNz/oeHcpxjnVfRQqcrRIdw==
+  dependencies:
+    "@thi.ng/api" "^4.2.3"
+    "@thi.ng/checks" "^1.5.13"
+    "@thi.ng/errors" "^0.1.11"
+    "@thi.ng/math" "^0.2.0"
+    "@thi.ng/transducers" "^2.2.1"
+
 "@types/mocha@^5.2.5":
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
