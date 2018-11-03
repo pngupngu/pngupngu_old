@@ -79,9 +79,8 @@ export class Command {
 
   constructor(readonly gl: WebGLRenderingContext, scene: Scene) {
     scene.children.forEach((mesh: Mesh) => {
-      const { geometry, material } = mesh;
-      const programInfo = this.getProgram(material);
-      const bufferInfo = twgl.createBufferInfoFromArrays(gl, geometry.attributes);
+      const programInfo = this.getProgram(mesh.material);
+      const bufferInfo = twgl.createBufferInfoFromArrays(gl, mesh.geometry.attributes);
       const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, bufferInfo);
 
       this.objects.push({ programInfo, vertexArrayInfo, mesh });

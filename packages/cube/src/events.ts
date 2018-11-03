@@ -5,7 +5,7 @@ import { setIn } from '@thi.ng/paths';
 
 export const ev: IObjectOf<string> = {
   SET_RAF: 'set-raf',
-  SET_VALUE: 'set-value',
+  SET_PARAM: 'set-param',
 };
 
 export const fx: IObjectOf<string> = {
@@ -19,7 +19,7 @@ type Handlers = {
 export const handlers: Handlers = {
   events: {
     [ev.SET_RAF]: valueSetter('raf'),
-    [ev.SET_VALUE]: (state, [_, [name, v]]) => ({
+    [ev.SET_PARAM]: (state, [_, [name, v]]) => ({
       [FX_STATE]: setIn(state, ['params', name], v)
     })
   },
