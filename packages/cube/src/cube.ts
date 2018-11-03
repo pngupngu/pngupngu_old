@@ -10,15 +10,16 @@ import { AppContext } from "./api";
 import { ev } from "./events";
 import { App } from './scene';
 
-const multiSlider = (name, attribs) => {
+const multiSlider = (name, attribs, opts) => {
   const s1 = createSlider(attribs);
   const s2 = createSlider(attribs);
   const s3 = createSlider(attribs);
+  const onchange = (n, bus, value) => v => bus.dispatch([ev.SET_PARAM, [name, (value[n] = v, value)]]);
   return ({ ui, bus }: AppContext, value: Vec3) =>
     ['div', ui.container,
-      [s1, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(v, value[1], value[2])]]) }, value.x],
-      [s2, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(value[0], v, value[2])]]) }, value.y],
-      [s3, { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, [name, value.setS(value[0], value[1], v)]]) }, value.z],
+      [s1, { ...opts, onchange: onchange(0, bus, value) }, value.x],
+      [s2, { ...opts, onchange: onchange(1, bus, value) }, value.y],
+      [s3, { ...opts, onchange: onchange(2, bus, value) }, value.z],
     ];
 };
 
@@ -46,8 +47,8 @@ export const cube = ({ ui, views }: AppContext) => {
   const app = new App(views.params.deref());
   const canvas_ = makeCanvas(app);
 
-  const msF0 = multiSlider('f0', ui.cslider);
-  const msLIghtPos = multiSlider('lightPos', ui.cslider);
+  const msF0 = multiSlider('f0', ui.cslider, { min: 0, max: 1, step: 0.01 });
+  const msLIghtPos = multiSlider('lightPos', ui.cslider, { min: -2, max: 2, step: 0.01 });
 
   return () =>
     ['div', ui.root,

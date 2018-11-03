@@ -34,4 +34,4 @@ export const slider: SliderAttribs = {
 
 export const inlineButton: UIAttrib = inline(button);
 export const inlineSelect: UIAttrib = inline(select, 'container');
-export const inlineSlider: UIAttrib = inline(slider, 'container');
+export const inlineSlider: UIAttrib = addClass(inline(slider, 'container'), 'w4', 'container');
