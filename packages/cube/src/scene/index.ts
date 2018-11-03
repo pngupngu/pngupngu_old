@@ -11,6 +11,8 @@ import frag from './frag.glsl';
 
 export interface Params {
   f0: Vec3;
+  lightPos: Vec3;
+  metalic: number;
 }
 
 export class App extends Application {
@@ -55,11 +57,13 @@ export class App extends Application {
       matModel: this.matModel,
       matView: this.camera.view,
       matProj: this.camera.projection,
-      lightPos: [0, 1, 0],
+
+      lightPos: this.params.lightPos,
       f0: this.params.f0,
+      metallic: this.params.metalic,
+
       albedo: [0.9, 0.9, 0.9],
       roughness: 0.1,
-      metallic: 0.0,
       ambColor: [0.03, 0.03, 0.03],
       lightColor: [1, 1, 1],
     });

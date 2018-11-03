@@ -18,7 +18,9 @@ export const CONFIG: AppConfig = {
   initialState: {
     raf: false,
     params: {
-      f0: new Vec3([0.04, 0.04, 0.04])
+      lightPos: new Vec3([0, 1, 0]),
+      f0: new Vec3([0.04, 0.04, 0.04]),
+      metalic: 0.0
     }
   },
 

@@ -45,12 +45,15 @@ const makeCanvas = app => {
 export const cube = ({ ui, views }: AppContext) => {
   const app = new App(views.params.deref());
   const canvas_ = makeCanvas(app);
-  const ms = multiSlider('f0', ui.cslider);
+
+  const msF0 = multiSlider('f0', ui.cslider);
+  const msLIghtPos = multiSlider('lightPos', ui.cslider);
 
   return () =>
     ['div', ui.root,
       [canvas_, ui.ca],
       [panel, ui.panel,
-        ['f0', [ms, views.params.deref().f0]
-        ]]];
+        ['f0', [msF0, views.params.deref().f0]],
+        ['lightPos', [msLIghtPos, views.params.deref().lightPos]],
+      ]];
 };
