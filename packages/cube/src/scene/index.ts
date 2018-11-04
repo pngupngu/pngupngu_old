@@ -15,6 +15,8 @@ export interface Params {
   lightPos: Vec3;
   metalic: number;
   roughness: number;
+  ambColor: Vec3;
+  lightColor: Vec3;
 }
 
 export class App extends Application {
@@ -49,10 +51,7 @@ export class App extends Application {
     const cube = new Geometry({
       position: [...flatten(attribs.positions)],
       indices: [...flatten(attribs.cells)],
-      uv: {
-        numComponents: 2,
-        data: [...flatten(attribs.uvs)]
-      },
+      uv: { numComponents: 2, data: [...flatten(attribs.uvs)] },
       normal: [...flatten(attribs.normals)]
     });
     this.mat = new Material(vert, frag, {
@@ -65,9 +64,8 @@ export class App extends Application {
       metallic: this.params.metalic,
       albedo: this.params.albedo,
       roughness: this.params.roughness,
-
-      ambColor: [0.03, 0.03, 0.03],
-      lightColor: [1, 1, 1],
+      ambColor: this.params.ambColor,
+      lightColor: this.params.lightColor,
     });
     const scene = new Scene();
     scene.add(new Mesh(cube, this.mat));
@@ -93,6 +91,8 @@ export class App extends Application {
     this.mat.uniforms.lightPos = this.params.lightPos;
     this.mat.uniforms.metalic = this.params.metalic;
     this.mat.uniforms.roughness = this.params.roughness;
+    this.mat.uniforms.ambColor = this.params.ambColor;
+    this.mat.uniforms.lightColor = this.params.lightColor;
 
     this.cmd.draw(time);
   }
