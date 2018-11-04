@@ -1,7 +1,7 @@
 import { map } from "@thi.ng/transducers/xform/map";
 import { keys } from "@thi.ng/transducers/iter/keys";
 
-import { panel, select, button, slider, addClass } from '@pngu/ui/styles';
+import { root, panel, select, button, slider, addClass } from '@pngu/ui/styles';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
@@ -33,7 +33,7 @@ export const CONFIG: AppConfig = {
   },
 
   ui: {
-    root: { class: 'wv-100 hv-100 pa0 sans-serif f6 fw2 barlow bg-white98 relative' },
+    root,
 
     button,
 

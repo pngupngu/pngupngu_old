@@ -1,4 +1,5 @@
 import {
+  root,
   panel, select, button, slider,
   inlineButton, inlineSelect, inlineSlider,
   addClass
@@ -54,7 +55,8 @@ export const CONFIG: AppConfig = {
   },
 
   ui: {
-    root: { class: 'wv-100 hv-100 pa0 sans-serif f6 fw2 barlow bg-white98 relative' },
+    root,
+
     nav: { class: 'list ma0 pa0' },
     link: { class: 'pointer link red' },
 

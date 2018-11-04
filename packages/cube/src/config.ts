@@ -1,6 +1,6 @@
 import { Vec3 } from '@thi.ng/vectors/vec3';
 
-import { panel, select, button, slider, addClass } from '@pngu/ui/styles';
+import { root, panel, select, button, slider, addClass } from '@pngu/ui/styles';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
@@ -30,9 +30,7 @@ export const CONFIG: AppConfig = {
   },
 
   ui: {
-    root: { class: 'wv-100 hv-100 pa0 sans-serif f6 fw2 barlow bg-white98 relative' },
-
-    button, select, slider,
+    root, button, select, slider,
 
     panel: addClass(panel, 'absolute w5', 'container'),
 
