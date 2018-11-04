@@ -11,8 +11,10 @@ import frag from './frag.glsl';
 
 export interface Params {
   f0: Vec3;
+  albedo: Vec3;
   lightPos: Vec3;
   metalic: number;
+  roughness: number;
 }
 
 export class App extends Application {
@@ -61,9 +63,9 @@ export class App extends Application {
       lightPos: this.params.lightPos,
       f0: this.params.f0,
       metallic: this.params.metalic,
+      albedo: this.params.albedo,
+      roughness: this.params.roughness,
 
-      albedo: [0.9, 0.9, 0.9],
-      roughness: 0.1,
       ambColor: [0.03, 0.03, 0.03],
       lightColor: [1, 1, 1],
     });
@@ -85,6 +87,12 @@ export class App extends Application {
     this.mat.uniforms.matProj = this.camera.projection;
     this.mat.uniforms.matViewModel = this.matViewModel;
     this.mat.uniforms.matNormal = this.matNormal;
+
+    this.mat.uniforms.albedo = this.params.albedo;
+    this.mat.uniforms.f0 = this.params.f0;
+    this.mat.uniforms.lightPos = this.params.lightPos;
+    this.mat.uniforms.metalic = this.params.metalic;
+    this.mat.uniforms.roughness = this.params.roughness;
 
     this.cmd.draw(time);
   }

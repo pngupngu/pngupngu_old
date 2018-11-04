@@ -33,7 +33,8 @@ const makeCanvas = app => {
       camUI = new CameraUI(el, app.camera);
       camUI.speed = 3;
     },
-    update(_: HTMLCanvasElement, __: WebGLRenderbuffer, ___: AppContext, time: number, ____: number) {
+    update(_: HTMLCanvasElement, __: WebGLRenderbuffer, { views }: AppContext, time: number, ____: number) {
+      app.params = views.params.deref();
       app.render(time);
     },
     release(_: HTMLCanvasElement, __: WebGLRenderingContext, { bus }: AppContext) {
@@ -43,18 +44,28 @@ const makeCanvas = app => {
   }, getContext());
 };
 
-export const cube = ({ ui, views }: AppContext) => {
+export const cube = ({ ui, views, bus }: AppContext) => {
   const app = new App(views.params.deref());
   const canvas_ = makeCanvas(app);
 
   const msF0 = multiSlider('f0', ui.cslider, { min: 0, max: 1, step: 0.01 });
+  const msAlbedo = multiSlider('albedo', ui.cslider, { min: 0, max: 1, step: 0.01 });
   const msLIghtPos = multiSlider('lightPos', ui.cslider, { min: -2, max: 2, step: 0.01 });
+  const metalicCtrl = createSlider(ui.cslider);
+  const roughnessCtrl = createSlider(ui.cslider);
 
   return () =>
     ['div', ui.root,
       [canvas_, ui.ca],
       [panel, ui.panel,
         ['f0', [msF0, views.params.deref().f0]],
+        ['albedo', [msAlbedo, views.params.deref().albedo]],
         ['lightPos', [msLIghtPos, views.params.deref().lightPos]],
+        ['metalic', [metalicCtrl,
+          { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, ['metalic', v]]) },
+          views.params.deref().metalic]],
+        ['roughness', [roughnessCtrl,
+          { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, ['roughness', v]]) },
+          views.params.deref().roughness]],
       ]];
 };
