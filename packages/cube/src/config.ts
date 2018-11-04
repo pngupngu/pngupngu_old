@@ -24,7 +24,7 @@ export const CONFIG: AppConfig = {
       metalic: 0.0,
       roughness: 0.1,
       ambColor: new Vec3([0.03, 0.03, 0.03]),
-      lightColor: new Vec3([1, 1, 1])
+      lightColor: new Vec3([1, 1, 1]),
     }
   },
 

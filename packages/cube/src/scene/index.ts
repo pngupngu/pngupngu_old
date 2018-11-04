@@ -44,7 +44,7 @@ export class App extends Application {
     this.camera.aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     this.camera.near = 0.5;
     this.camera.far = 100;
-    this.camera.position = [1, 4, -10];
+    this.camera.position = [1, 4, 10];
     this.camera.target = [0, 0, 0];
     this.camera.up = [0, 1, 0];
 
@@ -58,7 +58,6 @@ export class App extends Application {
     this.mat = new Material(vert, frag, {
       matView: this.camera.view,
       matProj: this.camera.projection,
-
       lightPos: this.params.lightPos,
       f0: this.params.f0,
       metallic: this.params.metalic,

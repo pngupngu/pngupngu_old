@@ -67,6 +67,7 @@ export class Node {
   }
 
   add(node) {
+    node.parent = this;
     this.children.push(node);
   }
 }

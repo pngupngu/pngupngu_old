@@ -70,6 +70,6 @@ export const cube = ({ ui, views, bus }: AppContext) => {
           { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, ['roughness', v]]) },
           views.params.deref().roughness]],
         ['ambColor', [msAmbColor, views.params.deref().ambColor]],
-        ['lightColor', [msLightColor, views.params.deref().lightColor]],
+        ['lightColor', [msLightColor, views.params.deref().lightColor]]
       ]];
 };
