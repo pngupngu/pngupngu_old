@@ -24,12 +24,12 @@ export const select: SelectAttribs = {
 };
 
 export const button: UIAttrib = {
-  class: 'input-reset dib f7 code button-reset outline-0 tc pointer no-select ' +
+  class: 'input-reset f7 code button-reset outline-0 tc pointer no-select ' +
     'ph1 bn white bg-gray hover-bg-mid-gray v-top btn'
 };
 
 export const slider: SliderAttribs = {
-  container: { class: 'f6 bg-near-black relative ew-resize v-btm' },
+  container: { class: 'f6 bg-black relative ew-resize v-btm' },
   handle: { class: 'bg-gray tr' },
   value: { class: 'f7 code absolute--fill no-select ph1 white' },
 };

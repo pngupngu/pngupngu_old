@@ -67,7 +67,7 @@ export const CONFIG: AppConfig = {
 
     container2: { class: 'dg gtc2' },
 
-    cbutton: addClass(button, 'mr-2 ctrl'),
+    cbutton: addClass(button, 'db mr-2 ctrl'),
     cselect: addClass(select, 'mr-2 ctrl', 'container'),
     cslider: addClass(slider, 'mr-2 ctrl', 'container'),
   }
