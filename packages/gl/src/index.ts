@@ -1,5 +1,5 @@
 import * as uuid from 'uuid/v4';
-import { mat4, vec3 } from 'gl-matrix';
+import { mat4, vec3, quat } from 'gl-matrix';
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
@@ -42,12 +42,29 @@ export class Material {
 
 export class Node {
   protected _position: vec3 = vec3.create();
+  protected _rotation: quat = quat.identity(quat.create());
+  protected _scale: vec3 = vec3.fromValues(1, 1, 1);
 
+  protected _model: mat4 = mat4.identity(mat4.create());
+  protected _modelDirty: boolean = true;
+
+  parent: Node;
   children: Array<Node> = [];
-  model: mat4 = mat4.create();
 
-  set position(val: vec3) { this._position = val; }
+  set position(val: vec3) { this._position = val; this._modelDirty = true; }
   get position() { return this._position; }
+  set rotation(val: quat) { this._rotation = val; this._modelDirty = true; }
+  get rotation() { return this._rotation; }
+  set scale(val: vec3) { this._scale = val; this._modelDirty = true; }
+  get scale() { return this._scale; }
+
+  get model() {
+    if (this._modelDirty) {
+      mat4.fromRotationTranslationScale(this._model, this.rotation, this.position, this.scale);
+      this._modelDirty = false;
+    }
+    return this._model;
+  }
 
   add(node) {
     this.children.push(node);
@@ -100,7 +117,11 @@ export class Command {
 
     this.objects.forEach(obj => {
       const { mesh: { material } } = obj;
-      obj.uniforms = { ...material.uniforms, screen: [vw, vh] };
+      obj.uniforms = {
+        ...material.uniforms,
+        screen: [vw, vh],
+        matModel: obj.model
+      };
       // uniforms.u_worldViewProjection = m4.multiply(viewProjection, mesh.model);
     });
 

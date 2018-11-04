@@ -24,11 +24,12 @@ export class App extends Application {
   cmd: Command;
   camera: Camera;
 
-  matModel: mat4 = mat4.identity(mat4.create());
   matViewModel: mat4 = mat4.create();
   matNormal: mat3 = mat3.create();
 
   params: Params;
+
+  mesh: Mesh;
 
   constructor(params: Params) {
     super();
@@ -48,14 +49,13 @@ export class App extends Application {
     this.camera.up = [0, 1, 0];
 
     const attribs = createTorusMesh();
-    const cube = new Geometry({
+    const geom = new Geometry({
       position: [...flatten(attribs.positions)],
       indices: [...flatten(attribs.cells)],
       uv: { numComponents: 2, data: [...flatten(attribs.uvs)] },
       normal: [...flatten(attribs.normals)]
     });
     this.mat = new Material(vert, frag, {
-      matModel: this.matModel,
       matView: this.camera.view,
       matProj: this.camera.projection,
 
@@ -68,7 +68,8 @@ export class App extends Application {
       lightColor: this.params.lightColor,
     });
     const scene = new Scene();
-    scene.add(new Mesh(cube, this.mat));
+    this.mesh = new Mesh(geom, this.mat);
+    scene.add(this.mesh);
 
     this.cmd = new Command(gl, scene);
   }
@@ -80,7 +81,7 @@ export class App extends Application {
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    mat3.normalFromMat4(this.matNormal, mat4.multiply(this.matViewModel, this.camera.view, this.matModel));
+    mat3.normalFromMat4(this.matNormal, mat4.multiply(this.matViewModel, this.camera.view, this.mesh.model));
     this.mat.uniforms.matView = this.camera.view;
     this.mat.uniforms.matProj = this.camera.projection;
     this.mat.uniforms.matViewModel = this.matViewModel;
