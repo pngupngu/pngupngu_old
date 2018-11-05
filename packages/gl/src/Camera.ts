@@ -3,10 +3,8 @@ import { mat4, vec3 } from 'gl-matrix';
 import { Node } from '.';
 
 export class Camera extends Node {
-  isPerspective: boolean = true;
-
   private _fov: number = Math.PI / 6;
-  private _aspect: number = 1.0;
+  // private _aspect: number = 1.0;
   private _near: number = 0.01;
   private _far: number = 1000;
   private _projectionCached: boolean = false;
@@ -18,17 +16,39 @@ export class Camera extends Node {
   private _view: any = mat4.create();
   private _projection: any = mat4.create();
 
+  isPerspective: boolean = true;
+  private _width: number;
+  private _height: number;
+
+  constructor(width: number, height: number) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
+
+  set width(val: number) {
+    this._width = val;
+    this._projectionCached = false;
+  }
+  get width() { return this._width; }
+
+  set height(val: number) {
+    this._height = val;
+    this._projectionCached = false;
+  }
+  get height() { return this._height; }
+
   set fov(val: number) {
     this._fov = val;
     this._projectionCached = false;
   }
   get fov() { return this._fov; }
 
-  set aspect(val: number) {
-    this._aspect = val;
-    this._projectionCached = false;
-  }
-  get aspect() { return this._aspect; }
+  // set aspect(val: number) {
+  //   this._aspect = val;
+  //   this._projectionCached = false;
+  // }
+  get aspect() { return this.width / this.height; }
 
   set near(val: number) {
     this._near = val;

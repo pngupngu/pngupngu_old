@@ -39,9 +39,9 @@ export class App extends Application {
   init(gl) {
     super.init(gl);
 
-    this.camera = new Camera();
+    this.camera = new Camera(gl.canvas.clientWidth, gl.canvas.clientHeight);
     this.camera.fov = 30 * Math.PI / 180;
-    this.camera.aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+    // this.camera.aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     this.camera.near = 0.5;
     this.camera.far = 100;
     this.camera.position = [1, 4, 10];
@@ -94,6 +94,6 @@ export class App extends Application {
     this.mat.uniforms.ambColor = this.params.ambColor;
     this.mat.uniforms.lightColor = this.params.lightColor;
 
-    this.cmd.draw(time);
+    this.cmd.draw(time, this.camera);
   }
 }

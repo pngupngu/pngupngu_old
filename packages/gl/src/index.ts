@@ -3,6 +3,8 @@ import { mat4, vec3, quat } from 'gl-matrix';
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
+import { Camera } from './camera';
+
 interface GeomAttrib {
   numComponents: number;
   data: number[]
@@ -105,12 +107,9 @@ export class Command {
     });
   }
 
-  draw(_,
-    vw = this.gl.canvas.width,
-    vh = this.gl.canvas.height,
-    fbo = null) {
+  draw(_, camera: Camera, fbo = null) {
     const gl = this.gl;
-    gl.viewport(0, 0, vw, vh);
+    gl.viewport(0, 0, camera.width, camera.height);
 
     twgl.bindFramebufferInfo(gl, fbo);
 
@@ -120,7 +119,7 @@ export class Command {
       const { mesh: { material } } = obj;
       obj.uniforms = {
         ...material.uniforms,
-        screen: [vw, vh],
+        // screen: [vw, vh],
         matModel: obj.model
       };
       // uniforms.u_worldViewProjection = m4.multiply(viewProjection, mesh.model);
