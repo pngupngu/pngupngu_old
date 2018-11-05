@@ -1,5 +1,5 @@
 import * as uuid from 'uuid/v4';
-import { mat4, vec3, quat } from 'gl-matrix';
+import { mat3, mat4, vec3, quat } from 'gl-matrix';
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
@@ -50,6 +50,9 @@ export class Node {
   protected _model: mat4 = mat4.identity(mat4.create());
   protected _modelDirty: boolean = true;
 
+  modelView: mat4 = mat4.create();
+  normal: mat3 = mat3.create();
+
   parent: Node;
   children: Array<Node> = [];
 
@@ -66,6 +69,11 @@ export class Node {
       this._modelDirty = false;
     }
     return this._model;
+  }
+
+  updateMatrices(view: mat4) {
+    mat4.multiply(this.modelView, view, this.model);
+    mat3.normalFromMat4(this.normal, this.modelView);
   }
 
   add(node) {
@@ -116,11 +124,17 @@ export class Command {
     // const viewProjection = m4.multiply(camera.projection, camera.view);
 
     this.objects.forEach(obj => {
-      const { mesh: { material } } = obj;
+      const { mesh } = obj;
+      mesh.updateMatrices(camera.view);
       obj.uniforms = {
-        ...material.uniforms,
+        ...mesh.material.uniforms,
         // screen: [vw, vh],
-        matModel: obj.model
+        matModel: mesh.model,
+        matView: camera.view,
+        matProj: camera.projection,
+        // FIXME: rename to modelview
+        matViewModel: mesh.modelView,
+        matNormal: mesh.normal,
       };
       // uniforms.u_worldViewProjection = m4.multiply(viewProjection, mesh.model);
     });

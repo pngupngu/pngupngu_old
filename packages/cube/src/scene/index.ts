@@ -1,4 +1,3 @@
-import { mat3, mat4 } from 'gl-matrix';
 import createTorusMesh from 'primitive-torus';
 import { flatten } from '@thi.ng/iterators/flatten';
 import { Vec3 } from '@thi.ng/vectors/vec3';
@@ -24,9 +23,6 @@ export class App extends Application {
   cmd: Command;
   camera: Camera;
 
-  matViewModel: mat4 = mat4.create();
-  matNormal: mat3 = mat3.create();
-
   params: Params;
 
   mesh: Mesh;
@@ -41,7 +37,6 @@ export class App extends Application {
 
     this.camera = new Camera(gl.canvas.clientWidth, gl.canvas.clientHeight);
     this.camera.fov = 30 * Math.PI / 180;
-    // this.camera.aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
     this.camera.near = 0.5;
     this.camera.far = 100;
     this.camera.position = [1, 4, 10];
@@ -56,8 +51,6 @@ export class App extends Application {
       normal: [...flatten(attribs.normals)]
     });
     this.mat = new Material(vert, frag, {
-      matView: this.camera.view,
-      matProj: this.camera.projection,
       lightPos: this.params.lightPos,
       f0: this.params.f0,
       metallic: this.params.metalic,
@@ -79,12 +72,6 @@ export class App extends Application {
     gl.enable(gl.CULL_FACE);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    mat3.normalFromMat4(this.matNormal, mat4.multiply(this.matViewModel, this.camera.view, this.mesh.model));
-    this.mat.uniforms.matView = this.camera.view;
-    this.mat.uniforms.matProj = this.camera.projection;
-    this.mat.uniforms.matViewModel = this.matViewModel;
-    this.mat.uniforms.matNormal = this.matNormal;
 
     this.mat.uniforms.albedo = this.params.albedo;
     this.mat.uniforms.f0 = this.params.f0;
