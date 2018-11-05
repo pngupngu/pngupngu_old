@@ -3,7 +3,7 @@ import { flatten } from '@thi.ng/iterators/flatten';
 import { Vec3 } from '@thi.ng/vectors/vec3';
 
 import { Application, Scene, Mesh, Material, Command, Geometry } from '@pngu/gl';
-import { Camera } from '@pngu/gl/camera';
+import { Camera } from '@pngu/gl/Camera';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
