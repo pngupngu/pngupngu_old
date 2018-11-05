@@ -12,9 +12,10 @@ export class Command {
   objects: Array<any> = [];
 
   constructor(readonly gl: WebGLRenderingContext, scene: Scene) {
-    scene.children.forEach(mesh => {
-      const programInfo = this.getProgram((<Partial<Mesh>>mesh).material);
-      const bufferInfo = twgl.createBufferInfoFromArrays(gl, (<Partial<Mesh>>mesh).geometry.attributes);
+    scene.children.forEach(node => {
+      const mesh = <Mesh>node;
+      const programInfo = this.getProgram(mesh.material);
+      const bufferInfo = twgl.createBufferInfoFromArrays(gl, mesh.geometry.attributes);
       const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, bufferInfo);
 
       this.objects.push({ programInfo, vertexArrayInfo, mesh });
