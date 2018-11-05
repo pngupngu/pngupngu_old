@@ -25,8 +25,6 @@ export class App extends Application {
 
   params: Params;
 
-  mesh: Mesh;
-
   constructor(params: Params) {
     super();
     this.params = params;
@@ -60,8 +58,7 @@ export class App extends Application {
       lightColor: this.params.lightColor,
     });
     const scene = new Scene();
-    this.mesh = new Mesh(geom, this.mat);
-    scene.add(this.mesh);
+    scene.add(new Mesh(geom, this.mat));
 
     this.cmd = new Command(gl, scene);
   }

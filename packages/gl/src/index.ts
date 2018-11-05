@@ -132,8 +132,7 @@ export class Command {
         matModel: mesh.model,
         matView: camera.view,
         matProj: camera.projection,
-        // FIXME: rename to modelview
-        matViewModel: mesh.modelView,
+        matModelView: mesh.modelView,
         matNormal: mesh.normal,
       };
       // uniforms.u_worldViewProjection = m4.multiply(viewProjection, mesh.model);
