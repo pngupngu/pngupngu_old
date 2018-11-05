@@ -1,6 +1,6 @@
 import { mat4, vec3 } from 'gl-matrix';
 
-import { Node } from '.';
+import { Node } from './node';
 
 export class Camera extends Node {
   private _fov: number = Math.PI / 6;

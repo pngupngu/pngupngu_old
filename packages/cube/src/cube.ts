@@ -1,7 +1,7 @@
 import { Vec3 } from '@thi.ng/vectors/vec3';
 
 import { panel } from '@pngu/ui/panel';
-import { getContext } from '@pngu/gl';
+import { getContext } from '@pngu/gl/application';
 import { CameraUI } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/ui/canvas-webgl';
 import { create as createSlider } from '@pngu/ui/slider';

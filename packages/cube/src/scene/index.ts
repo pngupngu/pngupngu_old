@@ -2,7 +2,12 @@ import createTorusMesh from 'primitive-torus';
 import { flatten } from '@thi.ng/iterators/flatten';
 import { Vec3 } from '@thi.ng/vectors/vec3';
 
-import { Application, Scene, Mesh, Material, Command, Geometry } from '@pngu/gl';
+import { Application } from '@pngu/gl/application';
+import { Scene } from '@pngu/gl/scene';
+import { Mesh } from '@pngu/gl/mesh';
+import { Material } from '@pngu/gl/material';
+import { Command } from '@pngu/gl/command';
+import { Geometry } from '@pngu/gl/geometry';
 import { Camera } from '@pngu/gl/Camera';
 
 import vert from './vert.glsl';

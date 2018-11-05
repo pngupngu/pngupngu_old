@@ -4,7 +4,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "removeComments": true,
     "experimentalDecorators": true,
     "noUnusedParameters": true,
