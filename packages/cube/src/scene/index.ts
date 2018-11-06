@@ -8,7 +8,7 @@ import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
 import { Geometry } from '@pngu/gl/geometry';
-import { Camera } from '@pngu/gl/Camera';
+import { PerspectiveCamera } from '@pngu/gl/Camera';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
@@ -26,7 +26,7 @@ export interface Params {
 export class App extends Application {
   mat: Material;
   cmd: Command;
-  camera: Camera;
+  camera: PerspectiveCamera;
 
   params: Params;
 
@@ -38,7 +38,7 @@ export class App extends Application {
   init(gl) {
     super.init(gl);
 
-    this.camera = new Camera(gl.canvas.clientWidth, gl.canvas.clientHeight);
+    this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
     this.camera.fov = 30 * Math.PI / 180;
     this.camera.near = 0.5;
     this.camera.far = 100;

@@ -3,6 +3,29 @@ import { mat4, vec3 } from 'gl-matrix';
 import { Node } from './node';
 
 export class Camera extends Node {
+  protected _width: number;
+  protected _height: number;
+
+  protected _view: any = mat4.identity(mat4.create());
+  protected _projection: any = mat4.identity(mat4.create());
+
+  constructor(width: number, height: number) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
+
+  set width(val: number) { this._width = val; }
+  get width() { return this._width; }
+
+  set height(val: number) { this._height = val; }
+  get height() { return this._height; }
+
+  get projection() { return this._projection; }
+  get view() { return this._view; }
+}
+
+export class PerspectiveCamera extends Camera {
   private _fov: number = Math.PI / 6;
   // private _aspect: number = 1.0;
   private _near: number = 0.01;
@@ -12,19 +35,6 @@ export class Camera extends Node {
   private _target: any = vec3.fromValues(0, 0, 0);
   private _up: any = vec3.fromValues(0, 1, 0);
   private _viewCached: boolean = false;
-
-  private _view: any = mat4.create();
-  private _projection: any = mat4.create();
-
-  isPerspective: boolean = true;
-  private _width: number;
-  private _height: number;
-
-  constructor(width: number, height: number) {
-    super();
-    this.width = width;
-    this.height = height;
-  }
 
   set width(val: number) {
     this._width = val;
@@ -97,7 +107,7 @@ export class Camera extends Node {
   }
 }
 
-export class OrthoCamera extends Node {
+export class OrthoCamera extends Camera {
   left: number = -1 ;
   right: number = 1;
   top: number = 1;
@@ -105,40 +115,7 @@ export class OrthoCamera extends Node {
   near: number = 0.1;
   far: number = 1000;
 
-  private _width: number;
-  private _height: number;
-  private _target: any = vec3.fromValues(0, 0, 0);
-  private _up: any = vec3.fromValues(0, 1, 0);
-
-  private _viewCached: boolean = false;
   private _projectionCached: boolean = false;
-
-  private _view: any = mat4.create();
-  private _projection: any = mat4.create();
-
-  constructor(width: number, height: number) {
-    super();
-    this.width = width;
-    this.height = height;
-  }
-
-  set width(val: number) { this._width = val; }
-  get width() { return this._width; }
-
-  set height(val: number) { this._height = val; }
-  get height() { return this._height; }
-
-  set target(val: any) {
-    this._target = val;
-    this._viewCached = false;
-  }
-  get target() { return this._target; }
-
-  set up(val: any) {
-    this._up = val;
-    this._viewCached = false;
-  }
-  get up() { return this._up; }
 
   get projection() {
     if (!this._projectionCached) {
@@ -146,13 +123,5 @@ export class OrthoCamera extends Node {
       this._projectionCached = true;
     }
     return this._projection;
-  }
-
-  get view() {
-    if (!this._viewCached) {
-      mat4.lookAt(this._view, this.position, this.target, this.up);
-      this._viewCached = true;
-    }
-    return this._view;
   }
 }

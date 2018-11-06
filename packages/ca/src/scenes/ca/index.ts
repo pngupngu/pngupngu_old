@@ -75,9 +75,6 @@ export class CA extends Application {
     const height = gl.canvas.clientHeight / scale;
 
     this.camera = new OrthoCamera(width, height);
-    this.camera.position = [0, 0, -10];
-    this.camera.target = [0, 0, 0];
-    this.camera.up = [0, 1, 0];
 
     const texOpts = { width, height, min: gl.LINEAR, mag: gl.NEAREST };
     this.frontTex = new Texture(gl, texOpts);

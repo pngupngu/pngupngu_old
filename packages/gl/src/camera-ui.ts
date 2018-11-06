@@ -2,12 +2,12 @@ import { gestureStream, GestureType, GestureInfo } from "@thi.ng/rstream-gesture
 import { ISubscribable } from "@thi.ng/rstream/api";
 import { quat, vec2, vec3 } from 'gl-matrix';
 
-import { Camera } from './Camera';
+import { PerspectiveCamera } from './Camera';
 
 export class CameraUI {
   sub: ISubscribable<any>;
   speed: number = 5;
-  camera: Camera;
+  camera: PerspectiveCamera;
 
   private radius: number;
   private center: vec2;
@@ -24,7 +24,7 @@ export class CameraUI {
   private u: vec3 = vec3.create();
   private pos: vec3 = vec3.create();
 
-  constructor(el: HTMLCanvasElement, camera: Camera) {
+  constructor(el: HTMLCanvasElement, camera: PerspectiveCamera) {
     this.center = vec2.fromValues(el.width, el.height);
     vec2.scale(this.center, this.center, 0.5)
     this.radius = Math.max(el.width, el.height);
