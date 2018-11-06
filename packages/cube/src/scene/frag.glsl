@@ -16,7 +16,13 @@ precision mediump float;
 #pragma glslify: distributionBlinnPhong = require('@pngu/gl/shaders/brdf/distribution/blinnPhong');
 #pragma glslify: distributionGGX = require('@pngu/gl/shaders/brdf/distribution/ggx');
 #pragma glslify: distributionBeckmann = require('@pngu/gl/shaders/brdf/distribution/beckmann');
+#pragma glslify: geometryImplicit = require('@pngu/gl/shaders/brdf/geometry/implicit');
+#pragma glslify: geometrySchlick = require('@pngu/gl/shaders/brdf/geometry/schlick');
+#pragma glslify: geometryGGX = require('@pngu/gl/shaders/brdf/geometry/ggx');
+#pragma glslify: geometryCookTorrance = require('@pngu/gl/shaders/brdf/geometry/cookTorrance');
 #pragma glslify: diffuseDisney = require('@pngu/gl/shaders/brdf/diffuse/disney');
+#pragma glslify: diffuseNormalizedDisney = require('@pngu/gl/shaders/brdf/diffuse/normalizedDisney');
+#pragma glslify: diffuseOrenNayar = require('@pngu/gl/shaders/brdf/diffuse/orenNayar');
 
 uniform vec3 ambColor;
 uniform vec3 lightColor;
@@ -30,6 +36,8 @@ uniform sampler2D texNormal;
 // uniform sampler2D texSpecular;
 uniform bool useTexNormal;
 uniform int distributionType;
+uniform int geometryType;
+uniform int diffuseType;
 
 varying vec3 vNormal;
 varying vec3 vLightPos;
@@ -55,7 +63,6 @@ void main() {
 
   vec3 fresnel0 = mix(f0, albedo, metallic);
   vec3 F = fresnelSchlick(fresnel0, LdotH);
-  // float D = distributionBlinnPhong(normal, halfVec, roughness);
   float D = 0.0;
   if (distributionType == 0) {
     D = distributionBlinnPhong(normal, halfVec, roughness);
@@ -64,10 +71,30 @@ void main() {
   } else if (distributionType == 2) {
     D = distributionBeckmann(normal, halfVec, roughness);
   }
+  float G = 0.0;
+  if (geometryType == 0) {
+    G = geometryImplicit(normal, halfVec, viewDir, lightDir, roughness);
+  } else if (geometryType == 1) {
+    G = geometrySchlick(normal, viewDir, roughness) * geometrySchlick(normal, lightDir, roughness);
+  } else if (geometryType == 2) {
+    G = geometryGGX(normal, viewDir, roughness) * geometryGGX(normal, lightDir, roughness);
+  } else if (geometryType == 3) {
+    G = geometryCookTorrance(normal, halfVec, viewDir, lightDir);
+  }
 
-  vec3 spec = (F * D) / 4.0;
+  vec3 spec = (F * G * D) / max(4.0 * NdotL * NdotV, EPSILON);
+  // vec3 spec = (F * D) / 4.0;
 
-  float diffuse = diffuseDisney(NdotL, NdotV, LdotH, roughness);
+  float diffuse = 1.0;
+  if (diffuseType == 0) {
+    diffuse = 1.0;
+  } else if (diffuseType == 1) {
+    diffuse = diffuseDisney(NdotL, NdotV, LdotH, roughness);
+  } else if (diffuseType == 2) {
+    diffuse = diffuseNormalizedDisney(NdotL, NdotV, LdotH, roughness);
+  } else if (diffuseType == 3) {
+    diffuse = diffuseOrenNayar(LdotV, NdotL, NdotV, roughness);
+  }
 
   vec3 kD = vec3(1.0) - F;
   kD *= 1.0 - metallic;

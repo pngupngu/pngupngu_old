@@ -27,6 +27,8 @@ export interface Params {
   lightColor: Vec3;
   useTexNormal: boolean;
   distributionType: 0 | 1 | 2;
+  geometryType: 0 | 1 | 2 | 3;
+  diffuseType: 0 | 1 | 2 | 3;
 }
 
 export class App extends Application {
@@ -66,6 +68,8 @@ export class App extends Application {
       lightColor: this.params.lightColor,
       useTexNormal: this.params.useTexNormal,
       distributionType: this.params.distributionType,
+      geometryType: this.params.geometryType,
+      diffuseType: this.params.diffuseType,
     });
 
     new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex; });
@@ -94,6 +98,8 @@ export class App extends Application {
     this.mat.uniforms.lightColor = this.params.lightColor;
     this.mat.uniforms.useTexNormal = this.params.useTexNormal;
     this.mat.uniforms.distributionType = this.params.distributionType;
+    this.mat.uniforms.geometryType = this.params.geometryType;
+    this.mat.uniforms.diffuseType = this.params.diffuseType;
 
     this.cmd.draw(time, this.camera);
   }

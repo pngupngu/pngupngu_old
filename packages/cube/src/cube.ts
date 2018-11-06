@@ -59,8 +59,15 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const roughnessCtrl = createSlider(ui.cslider);
   const chkbTexNormal = createCheckbox('texNormal', ui.checkbox);
 
-  const cselect = createSelect(ui.cselect);
-  const distTypes = [[1, 'blinn phong'], [2, 'ggx'], [3, 'beckmann']]
+  const distSelect = createSelect(ui.cselect);
+  const distTypes = [[0, 'blinn phong'], [1, 'ggx'], [2, 'beckmann']]
+
+  const geomSelect = createSelect(ui.cselect);
+  const geomTypes = [[0, 'implicit'], [1, 'schlick'], [2, 'ggx'], [3, 'cook torrance']];
+
+  const diffuseSelect = createSelect(ui.cselect);
+  const diffuseTypes = [[0, 'default'], [1, 'disney'], [2, 'normalized disney'], [3, 'oren nayar']];
+
 
   return () =>
     ['div', ui.root,
@@ -78,6 +85,8 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['ambColor', [msAmbColor, views.params.deref().ambColor]],
         ['lightColor', [msLightColor, views.params.deref().lightColor]],
         ['texNormal', [chkbTexNormal, v => bus.dispatch([ev.SET_PARAM, ['useTexNormal', v]]), views.params.deref().useTexNormal]],
-        ['distType', [cselect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['distributionType', v]]) }, distTypes, views.params.deref().distributionType]],
+        ['distType', [distSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['distributionType', v]]) }, distTypes, views.params.deref().distributionType]],
+        ['geomType', [geomSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['geomTypes', v]]) }, geomTypes, views.params.deref().geometryType]],
+        ['diffuseType', [diffuseSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['diffuseType', v]]) }, diffuseTypes, views.params.deref().diffuseType]],
       ]];
 };

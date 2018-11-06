@@ -30,6 +30,8 @@ export const CONFIG: AppConfig = {
       lightColor: new Vec3([1, 1, 1]),
       useTexNormal: false,
       distributionType: 0,
+      geometryType: 0,
+      diffuseType: 0,
     }
   },
 

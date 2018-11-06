@@ -1,4 +1,4 @@
-import { CheckBoxArgs, CheckBoxAttribs } from './api';
+import { CheckBoxArgs } from './api';
 
 export const checkbox = (_: any, { id, onchange, attribs }: CheckBoxArgs, value: boolean) => {
   return ['div', attribs.container,
@@ -13,6 +13,6 @@ export const checkbox = (_: any, { id, onchange, attribs }: CheckBoxArgs, value:
   ];
 }
 
-export const create = (id: string, attribs: CheckBoxAttribs) =>
+export const create = (id: string, attribs: any) =>
   (_: any, onchange: (e: boolean) => void, value: boolean) =>
     [checkbox, { id, attribs, onchange }, value];
