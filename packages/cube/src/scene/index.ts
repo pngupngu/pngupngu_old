@@ -26,6 +26,8 @@ export interface Params {
   ambColor: Vec3;
   lightColor: Vec3;
   useTexNormal: boolean;
+  useTexDiff: boolean;
+  useGamma: boolean;
   distributionType: 0 | 1 | 2;
   geometryType: 0 | 1 | 2 | 3;
   diffuseType: 0 | 1 | 2 | 3;
@@ -67,6 +69,8 @@ export class App extends Application {
       ambColor: this.params.ambColor,
       lightColor: this.params.lightColor,
       useTexNormal: this.params.useTexNormal,
+      useTexDiff: this.params.useTexDiff,
+      useGamma: this.params.useGamma,
       distributionType: this.params.distributionType,
       geometryType: this.params.geometryType,
       diffuseType: this.params.diffuseType,
@@ -97,6 +101,8 @@ export class App extends Application {
     this.mat.uniforms.ambColor = this.params.ambColor;
     this.mat.uniforms.lightColor = this.params.lightColor;
     this.mat.uniforms.useTexNormal = this.params.useTexNormal;
+    this.mat.uniforms.useTexDiff = this.params.useTexDiff;
+    this.mat.uniforms.useGamma = this.params.useGamma;
     this.mat.uniforms.distributionType = this.params.distributionType;
     this.mat.uniforms.geometryType = this.params.geometryType;
     this.mat.uniforms.diffuseType = this.params.diffuseType;

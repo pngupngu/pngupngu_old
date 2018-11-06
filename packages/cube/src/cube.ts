@@ -58,6 +58,8 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const metalicCtrl = createSlider(ui.cslider);
   const roughnessCtrl = createSlider(ui.cslider);
   const chkbTexNormal = createCheckbox('texNormal', ui.checkbox);
+  const chkbTexDiffuse = createCheckbox('texDiffuse', ui.checkbox);
+  const chkbGamma = createCheckbox('gamma', ui.checkbox);
 
   const distSelect = createSelect(ui.cselect);
   const distTypes = [[0, 'blinn phong'], [1, 'ggx'], [2, 'beckmann']]
@@ -85,6 +87,8 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['ambColor', [msAmbColor, views.params.deref().ambColor]],
         ['lightColor', [msLightColor, views.params.deref().lightColor]],
         ['texNormal', [chkbTexNormal, v => bus.dispatch([ev.SET_PARAM, ['useTexNormal', v]]), views.params.deref().useTexNormal]],
+        ['texDiffuse', [chkbTexDiffuse, v => bus.dispatch([ev.SET_PARAM, ['useTexDiff', v]]), views.params.deref().useTexDiff]],
+        ['gamma', [chkbGamma, v => bus.dispatch([ev.SET_PARAM, ['useGamma', v]]), views.params.deref().useGamma]],
         ['distType', [distSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['distributionType', v]]) }, distTypes, views.params.deref().distributionType]],
         ['geomType', [geomSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['geomTypes', v]]) }, geomTypes, views.params.deref().geometryType]],
         ['diffuseType', [diffuseSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['diffuseType', v]]) }, diffuseTypes, views.params.deref().diffuseType]],

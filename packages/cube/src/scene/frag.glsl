@@ -12,6 +12,8 @@ precision mediump float;
 #define EPSILON 1e-4
 #endif
 
+#pragma glslify: toLinear = require('@pngu/gl/shaders/gamma/toLinear');
+#pragma glslify: toGamma = require('@pngu/gl/shaders/gamma/toGamma');
 #pragma glslify: fresnelSchlick = require('@pngu/gl/shaders/brdf/fresnelSchlick');
 #pragma glslify: distributionBlinnPhong = require('@pngu/gl/shaders/brdf/distribution/blinnPhong');
 #pragma glslify: distributionGGX = require('@pngu/gl/shaders/brdf/distribution/ggx');
@@ -32,9 +34,11 @@ uniform vec3 albedo;
 uniform float metallic;
 
 uniform sampler2D texNormal;
-// uniform sampler2D texDiffuse;
+uniform sampler2D texDiffuse;
 // uniform sampler2D texSpecular;
 uniform bool useTexNormal;
+uniform bool useTexDiff;
+uniform bool useGamma;
 uniform int distributionType;
 uniform int geometryType;
 uniform int diffuseType;
@@ -96,9 +100,21 @@ void main() {
     diffuse = diffuseOrenNayar(LdotV, NdotL, NdotV, roughness);
   }
 
+  vec3 dcolor = albedo;
+  if (useTexDiff) {
+    dcolor = texture2D(texDiffuse, vUv).rgb;
+    if (useGamma) {
+      dcolor = toLinear(dcolor);
+    }
+  }
+
   vec3 kD = vec3(1.0) - F;
   kD *= 1.0 - metallic;
-  vec3 c1 = NdotL * lightColor * (spec + kD * albedo * diffuse) + ambColor * albedo;
+  vec3 color = NdotL * lightColor * (spec + kD * dcolor * diffuse);
+  if (useTexDiff && useGamma) {
+    color = toGamma(color);
+  }
+  color += ambColor * albedo;
 
-  gl_FragColor = vec4(c1, 1.0);
+  gl_FragColor = vec4(color, 1.0);
 }

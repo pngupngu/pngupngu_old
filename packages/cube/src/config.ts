@@ -29,6 +29,8 @@ export const CONFIG: AppConfig = {
       ambColor: new Vec3([0.03, 0.03, 0.03]),
       lightColor: new Vec3([1, 1, 1]),
       useTexNormal: false,
+      useTexDiff: false,
+      useGamma: false,
       distributionType: 0,
       geometryType: 0,
       diffuseType: 0,
