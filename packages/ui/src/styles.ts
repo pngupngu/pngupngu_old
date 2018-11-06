@@ -1,7 +1,10 @@
 import cx from 'classnames';
 import { updateIn, toPath } from '@thi.ng/paths';
 
-import { UIAttrib, ComponentAttrib, SelectAttribs, SliderAttribs, PanelAttribs } from './api';
+import {
+  UIAttrib, ComponentAttrib, SelectAttribs,
+  SliderAttribs, PanelAttribs, CheckBoxAttribs
+} from './api';
 
 export const addClass = (attribs, klass, path?: string) =>
   updateIn(attribs, path ? toPath(path).concat(['class']) : 'class', cls => cx(cls, klass));
@@ -34,6 +37,13 @@ export const slider: SliderAttribs = {
   value: { class: 'f7 code absolute--fill no-select ph1 white' },
 };
 
+export const checkbox: CheckBoxAttribs = {
+  container: { class: 'dib relative w1 h1' },
+  input: { class: 'hidden input-reset pointer checkbox' },
+  label: { class: 'absolute left-0 dib v-top pointer border-box w1 h1 bg-black' }
+}
+
 export const inlineButton: UIAttrib = inline(button);
 export const inlineSelect: UIAttrib = inline(select, 'container');
+export const inlineCheckbox: UIAttrib = inline(checkbox, 'container');
 export const inlineSlider: UIAttrib = addClass(inline(slider, 'container'), 'w4', 'container');

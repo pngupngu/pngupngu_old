@@ -23,3 +23,11 @@ export interface SliderArgs {
   precision: number;
   attribs: SliderAttribs;
 }
+
+export type CheckBoxAttribs = Record<'container' | 'input' | 'label', Partial<UIAttrib>>;
+
+export interface CheckBoxArgs {
+  id: string;
+  onchange(e: boolean): void;
+  attribs: CheckBoxAttribs;
+}

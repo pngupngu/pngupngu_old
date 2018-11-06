@@ -153,3 +153,12 @@ code,
 .gtc3 {
   grid-template-columns: repeat(3, 1fr);
 }
+
+.hidden {
+  visibility: hidden;
+}
+
+.checkbox:checked + label {
+  background-color: #777;
+  border: solid 0.21rem rgba(0,0,0,.9);
+}

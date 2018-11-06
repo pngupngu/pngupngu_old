@@ -1,7 +1,7 @@
 import {
   root,
-  panel, select, button, slider,
-  inlineButton, inlineSelect, inlineSlider,
+  panel, select, button, slider, checkbox,
+  inlineButton, inlineSelect, inlineSlider, inlineCheckbox,
   addClass
 } from '@pngu/ui/styles';
 
@@ -47,11 +47,13 @@ export const CONFIG: AppConfig = {
   initialState: {
     raf: false,
     value: 50,
+    checked: false,
   },
 
   views: {
     raf: 'raf',
-    value: 'value'
+    value: 'value',
+    checked: 'checked',
   },
 
   ui: {
@@ -60,8 +62,8 @@ export const CONFIG: AppConfig = {
     nav: { class: 'list ma0 pa0' },
     link: { class: 'pointer link red' },
 
-    button,
-    inlineButton, inlineSelect, inlineSlider,
+    button, checkbox,
+    inlineButton, inlineSelect, inlineSlider, inlineCheckbox,
 
     panel: addClass(panel, 'w5', 'container'),
 
