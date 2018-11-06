@@ -1,3 +1,5 @@
+// #extension GL_OES_standard_derivatives : enable
+
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -21,9 +23,15 @@ uniform vec3 f0;
 uniform vec3 albedo;
 uniform float metallic;
 
+uniform sampler2D texNormal;
+// uniform sampler2D texDiffuse;
+// uniform sampler2D texSpecular;
+uniform bool useTexNormal;
+
 varying vec3 vNormal;
 varying vec3 vLightPos;
 varying vec3 vVertPos;
+varying vec2 vUv;
 
 void main() {
   vec3 lightDir = normalize(vLightPos - vVertPos);
@@ -31,6 +39,11 @@ void main() {
   vec3 halfVec = normalize(lightDir + viewDir);
 
   vec3 normal = normalize(vNormal);
+  if (useTexNormal) {
+    normal = texture2D(texNormal, vUv).xyz * 2.0 - 1.0;
+    // normalMap.y *= -1.0;
+    // normal = perturb(normalMap, normal, viewDir, vUv);
+  }
 
   float NdotL = clamp(dot(normal, lightDir), 0.0, 1.0);
   float NdotV = clamp(dot(normal, viewDir), 0.0, 1.0);

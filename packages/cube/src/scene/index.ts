@@ -9,9 +9,13 @@ import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
 import { Geometry } from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/Camera';
+import { Texture } from '@pngu/gl/texture';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
+import brickDiffuse from '../assets/images/brick-diffuse.jpg';
+import brickNormal from '../assets/images/brick-normal.jpg';
+import brickSpecular from '../assets/images/brick-specular.jpg';
 
 export interface Params {
   f0: Vec3;
@@ -21,6 +25,7 @@ export interface Params {
   roughness: number;
   ambColor: Vec3;
   lightColor: Vec3;
+  useTexNormal: boolean;
 }
 
 export class App extends Application {
@@ -58,7 +63,13 @@ export class App extends Application {
       roughness: this.params.roughness,
       ambColor: this.params.ambColor,
       lightColor: this.params.lightColor,
+      useTexNormal: false
     });
+
+    new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex; });
+    new Texture(gl, { src: brickNormal }, tex => { this.mat.uniforms.texNormal = tex; });
+    new Texture(gl, { src: brickSpecular }, tex => { this.mat.uniforms.texSpecular = tex; });
+
     const scene = new Scene();
     scene.add(new Mesh(geom, this.mat));
 

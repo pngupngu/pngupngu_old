@@ -5,49 +5,45 @@ type TextureFunc = (gl: WebGLRenderingContext, options: TextureOptions) => FullT
 type FullTextureSrc = number[] | ArrayBuffer | HTMLCanvasElement | HTMLImageElement | HTMLVideoElement | string | string[] | TextureFunc;
 
 interface TextureOptions {
-  target?: number;
-  width?: number;
-  height?: number;
-  depth?: number;
-  min?: number;
-  mag?: number;
-  minMag?: number;
-  internalFormat?: number;
-  format?: number;
-  type?: number;
-  wrap?: number;
-  wrapS?: number;
-  wrapT?: number;
-  wrapR?: number;
-  minLod?: number;
-  maxLod?: number;
-  baseLevel?: number;
-  maxLevel?: number;
-  unpackAlignment?: number;
-  premultiplyAlpha?: number;
-  flipY?: number;
-  colorspaceConversion?: number;
-  color?: number[] | ArrayBuffer;
-  auto?: boolean;
-  cubeFaceOrder?: number[];
-  src?: FullTextureSrc;
-  crossOrigin?: string;
-}
-
-export class Texture {
+  target: number;
   width: number;
   height: number;
+  depth: number;
+  min: number;
+  mag: number;
+  minMag: number;
+  internalFormat: number;
+  format: number;
+  type: number;
+  wrap: number;
+  wrapS: number;
+  wrapT: number;
+  wrapR: number;
+  minLod: number;
+  maxLod: number;
+  baseLevel: number;
+  maxLevel: number;
+  unpackAlignment: number;
+  premultiplyAlpha: number;
+  flipY: number;
+  colorspaceConversion: number;
+  color: number[] | ArrayBuffer;
+  auto: boolean;
+  cubeFaceOrder: number[];
+  src: FullTextureSrc;
+  crossOrigin: string;
+}
+
+const NOOP = _ => {};
+
+export class Texture {
+  width: number = 1;
+  height: number = 1;
   texture: WebGLTexture;
   buffer: Uint8Array;
   ready: boolean;
 
-  constructor(
-    readonly gl: WebGLRenderingContext,
-    options: TextureOptions = { width: 1, height: 1 },
-    callback = _ => { }
-  ) {
-    this.width = options.width;
-    this.height = options.height;
+  constructor( readonly gl: WebGLRenderingContext, options?: Partial<TextureOptions>, callback = NOOP) {
     this.texture = twgl.createTexture(gl, { flipY: true, ...options },
       (_, __, img) => {
         this.width = img.width;
