@@ -1,4 +1,4 @@
-// #extension GL_OES_standard_derivatives : enable
+#version 300 es
 
 #ifdef GL_ES
 precision mediump float;
@@ -12,6 +12,7 @@ precision mediump float;
 #define EPSILON 1e-4
 #endif
 
+#pragma glslify: perturb = require('@pngu/gl/shaders/perturbNormal');
 #pragma glslify: toLinear = require('@pngu/gl/shaders/gamma/toLinear');
 #pragma glslify: toGamma = require('@pngu/gl/shaders/gamma/toGamma');
 #pragma glslify: fresnelSchlick = require('@pngu/gl/shaders/brdf/fresnelSchlick');
@@ -35,18 +36,20 @@ uniform float metallic;
 
 uniform sampler2D texNormal;
 uniform sampler2D texDiffuse;
-// uniform sampler2D texSpecular;
 uniform bool useTexNormal;
 uniform bool useTexDiff;
 uniform bool useGamma;
 uniform int distributionType;
 uniform int geometryType;
 uniform int diffuseType;
+uniform bool showNormal;
 
-varying vec3 vNormal;
-varying vec3 vLightPos;
-varying vec3 vVertPos;
-varying vec2 vUv;
+in vec3 vNormal;
+in vec3 vLightPos;
+in vec3 vVertPos;
+in vec2 vUv;
+
+out vec4 fragColor;
 
 void main() {
   vec3 lightDir = normalize(vLightPos - vVertPos);
@@ -55,9 +58,9 @@ void main() {
 
   vec3 normal = normalize(vNormal);
   if (useTexNormal) {
-    normal = texture2D(texNormal, vUv).xyz * 2.0 - 1.0;
-    // normalMap.y *= -1.0;
-    // normal = perturb(normalMap, normal, viewDir, vUv);
+    vec3 normalMap = texture(texNormal, vUv).xyz * 2.0 - 1.0;
+    normalMap.y *= -1.0;
+    normal = perturb(normalMap, normal, viewDir, vUv);
   }
 
   float NdotL = clamp(dot(normal, lightDir), 0.0, 1.0);
@@ -102,7 +105,7 @@ void main() {
 
   vec3 dcolor = albedo;
   if (useTexDiff) {
-    dcolor = texture2D(texDiffuse, vUv).rgb;
+    dcolor = texture(texDiffuse, vUv).rgb;
     if (useGamma) {
       dcolor = toLinear(dcolor);
     }
@@ -116,5 +119,10 @@ void main() {
   }
   color += ambColor * albedo;
 
-  gl_FragColor = vec4(color, 1.0);
+  if (showNormal) {
+    color = normal;
+  }
+
+  // gl_FragColor = vec4(color, 1.0);
+  fragColor = vec4(color, 1.0);
 }

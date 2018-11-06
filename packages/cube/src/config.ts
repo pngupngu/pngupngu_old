@@ -34,6 +34,7 @@ export const CONFIG: AppConfig = {
       distributionType: 0,
       geometryType: 0,
       diffuseType: 0,
+      showNormal: false
     }
   },
 

@@ -60,6 +60,7 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const chkbTexNormal = createCheckbox('texNormal', ui.checkbox);
   const chkbTexDiffuse = createCheckbox('texDiffuse', ui.checkbox);
   const chkbGamma = createCheckbox('gamma', ui.checkbox);
+  const chkbNormal = createCheckbox('normal', ui.checkbox);
 
   const distSelect = createSelect(ui.cselect);
   const distTypes = [[0, 'blinn phong'], [1, 'ggx'], [2, 'beckmann']]
@@ -69,7 +70,6 @@ export const cube = ({ ui, views, bus }: AppContext) => {
 
   const diffuseSelect = createSelect(ui.cselect);
   const diffuseTypes = [[0, 'default'], [1, 'disney'], [2, 'normalized disney'], [3, 'oren nayar']];
-
 
   return () =>
     ['div', ui.root,
@@ -92,5 +92,6 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['distType', [distSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['distributionType', v]]) }, distTypes, views.params.deref().distributionType]],
         ['geomType', [geomSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['geomTypes', v]]) }, geomTypes, views.params.deref().geometryType]],
         ['diffuseType', [diffuseSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['diffuseType', v]]) }, diffuseTypes, views.params.deref().diffuseType]],
+        ['normal', [chkbNormal, v => bus.dispatch([ev.SET_PARAM, ['showNormal', v]]), views.params.deref().showNormal]],
       ]];
 };

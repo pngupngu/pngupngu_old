@@ -31,6 +31,7 @@ export interface Params {
   distributionType: 0 | 1 | 2;
   geometryType: 0 | 1 | 2 | 3;
   diffuseType: 0 | 1 | 2 | 3;
+  showNormal: boolean;
 }
 
 export class App extends Application {
@@ -74,6 +75,7 @@ export class App extends Application {
       distributionType: this.params.distributionType,
       geometryType: this.params.geometryType,
       diffuseType: this.params.diffuseType,
+      showNormal: this.params.showNormal,
     });
 
     new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex; });
@@ -106,6 +108,7 @@ export class App extends Application {
     this.mat.uniforms.distributionType = this.params.distributionType;
     this.mat.uniforms.geometryType = this.params.geometryType;
     this.mat.uniforms.diffuseType = this.params.diffuseType;
+    this.mat.uniforms.showNormal = this.params.showNormal;
 
     this.cmd.draw(time, this.camera);
   }
