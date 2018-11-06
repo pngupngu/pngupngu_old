@@ -28,7 +28,8 @@ export const CONFIG: AppConfig = {
       roughness: 0.1,
       ambColor: new Vec3([0.03, 0.03, 0.03]),
       lightColor: new Vec3([1, 1, 1]),
-      useTexNormal: false
+      useTexNormal: false,
+      distributionType: 0,
     }
   },
 
@@ -44,6 +45,7 @@ export const CONFIG: AppConfig = {
 
     container: { class: 'dg gtc3' },
     cslider: addClass(slider, 'mr-2 ctrl', 'container'),
+    cselect: addClass(select, 'mr-2 ctrl', 'container'),
 
     ca: { class: 'w-100 h-100 absolute' },
   }

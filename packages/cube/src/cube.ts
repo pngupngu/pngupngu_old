@@ -4,6 +4,7 @@ import { panel } from '@pngu/ui/panel';
 import { getContext } from '@pngu/gl/application';
 import { CameraUI } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/ui/canvas-webgl';
+import { create as createSelect } from '@pngu/ui/select';
 import { create as createSlider } from '@pngu/ui/slider';
 import { create as createCheckbox } from '@pngu/ui/checkbox';
 
@@ -58,6 +59,9 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const roughnessCtrl = createSlider(ui.cslider);
   const chkbTexNormal = createCheckbox('texNormal', ui.checkbox);
 
+  const cselect = createSelect(ui.cselect);
+  const distTypes = [[1, 'blinn phong'], [2, 'ggx'], [3, 'beckmann']]
+
   return () =>
     ['div', ui.root,
       [canvas_, ui.ca],
@@ -73,6 +77,7 @@ export const cube = ({ ui, views, bus }: AppContext) => {
           views.params.deref().roughness]],
         ['ambColor', [msAmbColor, views.params.deref().ambColor]],
         ['lightColor', [msLightColor, views.params.deref().lightColor]],
-        ['texNormal', [chkbTexNormal, v => bus.dispatch([ev.SET_PARAM, ['useTexNormal', v]]), views.params.deref().useTexNormal]]
+        ['texNormal', [chkbTexNormal, v => bus.dispatch([ev.SET_PARAM, ['useTexNormal', v]]), views.params.deref().useTexNormal]],
+        ['distType', [cselect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['distributionType', v]]) }, distTypes, views.params.deref().distributionType]],
       ]];
 };

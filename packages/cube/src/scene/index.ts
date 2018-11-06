@@ -26,6 +26,7 @@ export interface Params {
   ambColor: Vec3;
   lightColor: Vec3;
   useTexNormal: boolean;
+  distributionType: 0 | 1 | 2;
 }
 
 export class App extends Application {
@@ -64,6 +65,7 @@ export class App extends Application {
       ambColor: this.params.ambColor,
       lightColor: this.params.lightColor,
       useTexNormal: this.params.useTexNormal,
+      distributionType: this.params.distributionType,
     });
 
     new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex; });
@@ -91,6 +93,7 @@ export class App extends Application {
     this.mat.uniforms.ambColor = this.params.ambColor;
     this.mat.uniforms.lightColor = this.params.lightColor;
     this.mat.uniforms.useTexNormal = this.params.useTexNormal;
+    this.mat.uniforms.distributionType = this.params.distributionType;
 
     this.cmd.draw(time, this.camera);
   }
