@@ -96,3 +96,63 @@ export class Camera extends Node {
     return this._view;
   }
 }
+
+export class OrthoCamera extends Node {
+  left: number = -1 ;
+  right: number = 1;
+  top: number = 1;
+  bottom: number = -1;
+  near: number = 0.1;
+  far: number = 1000;
+
+  private _width: number;
+  private _height: number;
+  private _target: any = vec3.fromValues(0, 0, 0);
+  private _up: any = vec3.fromValues(0, 1, 0);
+
+  private _viewCached: boolean = false;
+  private _projectionCached: boolean = false;
+
+  private _view: any = mat4.create();
+  private _projection: any = mat4.create();
+
+  constructor(width: number, height: number) {
+    super();
+    this.width = width;
+    this.height = height;
+  }
+
+  set width(val: number) { this._width = val; }
+  get width() { return this._width; }
+
+  set height(val: number) { this._height = val; }
+  get height() { return this._height; }
+
+  set target(val: any) {
+    this._target = val;
+    this._viewCached = false;
+  }
+  get target() { return this._target; }
+
+  set up(val: any) {
+    this._up = val;
+    this._viewCached = false;
+  }
+  get up() { return this._up; }
+
+  get projection() {
+    if (!this._projectionCached) {
+      mat4.ortho(this._projection, this.left, this.right, this.bottom, this.top, this.near, this.far);
+      this._projectionCached = true;
+    }
+    return this._projection;
+  }
+
+  get view() {
+    if (!this._viewCached) {
+      mat4.lookAt(this._view, this.position, this.target, this.up);
+      this._viewCached = true;
+    }
+    return this._view;
+  }
+}

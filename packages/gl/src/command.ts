@@ -1,7 +1,7 @@
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
-import { Camera } from './camera';
+import { Camera, OrthoCamera } from './camera';
 import { Scene } from './scene';
 import { Mesh } from './mesh';
 import { Material } from './material';
@@ -22,7 +22,7 @@ export class Command {
     });
   }
 
-  draw(_, camera: Camera, fbo = null) {
+  draw(_, camera: Camera | OrthoCamera, fbo = null) {
     const gl = this.gl;
     gl.viewport(0, 0, camera.width, camera.height);
 
@@ -33,7 +33,7 @@ export class Command {
       mesh.updateMatrices(camera.view);
       obj.uniforms = {
         ...mesh.material.uniforms,
-        // screen: [vw, vh],
+        screen: [camera.width, camera.height],
         matModel: mesh.model,
         matView: camera.view,
         matProj: camera.projection,

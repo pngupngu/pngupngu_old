@@ -3,8 +3,14 @@ import { rad } from "@thi.ng/math/angle";
 import { createFramebufferInfo, m4 } from 'twgl.js';
 import { vec2 } from 'gl-matrix';
 
-import { Application, Scene, Mesh, Material, Command, Plane } from '@pngu/gl';
+import { Application } from '@pngu/gl/application';
+import { Scene } from '@pngu/gl/scene';
+import { Mesh } from '@pngu/gl/mesh';
+import { Material } from '@pngu/gl/material';
+import { Command } from '@pngu/gl/command';
+import { Plane } from '@pngu/gl/geometry';
 import { Texture } from '@pngu/gl/texture';
+import { OrthoCamera } from '@pngu/gl/Camera';
 
 import { Presets, Params } from './api';
 import vert from './vert.glsl';
@@ -32,9 +38,6 @@ export class CA extends Application {
   backFbo: any;
   isFront: boolean = true;
 
-  width: number;
-  height: number;
-
   params: Params;
 
   fade: number = 1.0;
@@ -44,6 +47,8 @@ export class CA extends Application {
 
   mat1: Material;
   mat2: Material;
+
+  camera: OrthoCamera;
 
   constructor(params: Params = presets.growth) {
     super();
@@ -66,22 +71,24 @@ export class CA extends Application {
     const plane = new Plane(2, 2, 1, 1, m4.rotationX(rad(90)));
 
     const scale = 1;
-    this.width = gl.canvas.clientWidth / scale;
-    this.height = gl.canvas.clientHeight / scale;
+    const width = gl.canvas.clientWidth / scale;
+    const height = gl.canvas.clientHeight / scale;
 
-    const texOpts = {
-      width: this.width, height: this.height,
-      min: gl.LINEAR, mag: gl.NEAREST
-    };
+    this.camera = new OrthoCamera(width, height);
+    this.camera.position = [0, 0, -10];
+    this.camera.target = [0, 0, 0];
+    this.camera.up = [0, 1, 0];
+
+    const texOpts = { width, height, min: gl.LINEAR, mag: gl.NEAREST };
     this.frontTex = new Texture(gl, texOpts);
     this.backTex = new Texture(gl, texOpts);
 
     this.frontFbo = createFramebufferInfo(gl,
       [{ attachment: this.frontTex.texture }, { format: gl.DEPTH_STENCIL, }],
-      this.width, this.height);
+      width, height);
     this.backFbo = createFramebufferInfo(gl,
       [{ attachment: this.backTex.texture }, { format: gl.DEPTH_STENCIL, }],
-      this.width, this.height);
+      width, height);
 
     const scene1 = new Scene();
     this.mat1 = new Material(vert, ca, {
@@ -103,6 +110,7 @@ export class CA extends Application {
   render(time) {
     const gl = this.gl;
     gl.disable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -119,16 +127,17 @@ export class CA extends Application {
     let uni2 = this.mat2.uniforms;
     uni2.state = rtt.attachments[0];
 
-    this.cmd1.draw(time, this.width, this.height, rtt);
+    this.cmd1.draw(time, this.camera, rtt);
     uni1.useStamp = 0;
-    this.cmd2.draw(time);
+    this.cmd2.draw(time, this.camera);
 
     this.isFront = !this.isFront;
   }
 
   move(ox, oy) {
+    const canvas = this.gl.canvas;
     const v = vec2.fromValues(ox, oy);
-    vec2.divide(v, v, vec2.fromValues(this.width, this.height));
+    vec2.divide(v, v, vec2.fromValues(canvas.clientWidth, canvas.clientHeight));
     this.mat1.uniforms.mouse = v;
   }
 

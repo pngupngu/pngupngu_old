@@ -3,7 +3,7 @@ import { button } from '@thi.ng/hdom-components/button';
 import { gestureStream, GestureType } from "@thi.ng/rstream-gestures";
 import { filter } from "@thi.ng/transducers/xform/filter";
 
-import { getContext } from '@pngu/gl';
+import { getContext } from '@pngu/gl/application';
 import { canvas } from '@pngu/ui/canvas-webgl';
 import { panel } from '@pngu/ui/panel';
 import { create as createSelect } from '@pngu/ui/select';
