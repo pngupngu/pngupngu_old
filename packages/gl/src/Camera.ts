@@ -112,7 +112,7 @@ export class OrthoCamera extends Camera {
   right: number = 1;
   top: number = 1;
   bottom: number = -1;
-  near: number = 0.1;
+  near: number = 0.01;
   far: number = 1000;
 
   private _projectionCached: boolean = false;
