@@ -5,6 +5,7 @@ import { getContext } from '@pngu/gl/application';
 import { CameraUI } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/ui/canvas-webgl';
 import { create as createSlider } from '@pngu/ui/slider';
+import { create as createCheckbox } from '@pngu/ui/checkbox';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
@@ -55,6 +56,7 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const msLightColor = multiSlider('lightColor', ui.cslider, { min: 0, max: 1, step: 0.01 });
   const metalicCtrl = createSlider(ui.cslider);
   const roughnessCtrl = createSlider(ui.cslider);
+  const chkbTexNormal = createCheckbox('texNormal', ui.checkbox);
 
   return () =>
     ['div', ui.root,
@@ -70,6 +72,7 @@ export const cube = ({ ui, views, bus }: AppContext) => {
           { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, ['roughness', v]]) },
           views.params.deref().roughness]],
         ['ambColor', [msAmbColor, views.params.deref().ambColor]],
-        ['lightColor', [msLightColor, views.params.deref().lightColor]]
+        ['lightColor', [msLightColor, views.params.deref().lightColor]],
+        ['texNormal', [chkbTexNormal, v => bus.dispatch([ev.SET_PARAM, ['useTexNormal', v]]), views.params.deref().useTexNormal]]
       ]];
 };

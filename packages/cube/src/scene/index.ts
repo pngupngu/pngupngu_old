@@ -63,7 +63,7 @@ export class App extends Application {
       roughness: this.params.roughness,
       ambColor: this.params.ambColor,
       lightColor: this.params.lightColor,
-      useTexNormal: false
+      useTexNormal: this.params.useTexNormal,
     });
 
     new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex; });
@@ -90,6 +90,7 @@ export class App extends Application {
     this.mat.uniforms.roughness = this.params.roughness;
     this.mat.uniforms.ambColor = this.params.ambColor;
     this.mat.uniforms.lightColor = this.params.lightColor;
+    this.mat.uniforms.useTexNormal = this.params.useTexNormal;
 
     this.cmd.draw(time, this.camera);
   }
