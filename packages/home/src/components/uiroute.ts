@@ -4,6 +4,8 @@ import { panel } from '@pngu/ui/panel';
 import { create as createSelect } from '@pngu/ui/select';
 import { create as createSlider } from '@pngu/ui/slider';
 import { create as createCheckbox } from '@pngu/ui/checkbox';
+// import { streamOrientation } from '@pngu/ui/utils';
+// import { streamMotion } from '@pngu/ui/utils';
 
 import { AppContext } from '../api';
 import { ev } from '../events';
@@ -24,6 +26,13 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
 
   const chk1 = createCheckbox('chk1', ui.inlineCheckbox);
   const chk2 = createCheckbox('chk2', ui.checkbox);
+
+  // streamOrientation(0.1).subscribe({
+  //   next: console.log
+  // });
+  // streamMotion(1, 15).subscribe({
+  //   next: console.log
+  // })
 
   return () =>
     ['div', ui.root,

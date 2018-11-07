@@ -38,9 +38,9 @@ export const slider: SliderAttribs = {
 };
 
 export const checkbox: CheckBoxAttribs = {
-  container: { class: 'dib relative w1 h1' },
+  container: { class: 'dib relative w1 h1 v-btm' },
   input: { class: 'hidden input-reset pointer checkbox' },
-  label: { class: 'absolute left-0 dib v-top pointer border-box w1 h1 bg-black' }
+  label: { class: 'absolute left-0 dib pointer border-box w1 h1 bg-black' }
 }
 
 export const inlineButton: UIAttrib = inline(button);
