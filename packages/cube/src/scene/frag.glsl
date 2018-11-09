@@ -59,7 +59,6 @@ void main() {
   vec3 normal = normalize(vNormal);
   if (useTexNormal) {
     vec3 normalMap = texture(texNormal, vUv).xyz * 2.0 - 1.0;
-    normalMap.y *= -1.0;
     normal = perturb(normalMap, normal, viewDir, vUv);
   }
 

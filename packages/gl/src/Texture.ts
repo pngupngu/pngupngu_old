@@ -43,7 +43,7 @@ export class Texture {
   buffer: Uint8Array;
   ready: boolean;
 
-  constructor( readonly gl: WebGLRenderingContext, options?: Partial<TextureOptions>, callback = NOOP) {
+  constructor(readonly gl: WebGLRenderingContext, options?: Partial<TextureOptions>, callback = NOOP) {
     this.texture = twgl.createTexture(gl, { flipY: true, ...options },
       (_, __, img) => {
         this.width = img.width;
