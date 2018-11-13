@@ -6,7 +6,7 @@ import { EventBus } from "@thi.ng/interceptors/event-bus";
 import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
 import { SelectAttribs, SliderAttribs, PanelAttribs, CheckBoxAttribs } from '@pngu/ui/api';
 
-import { Params } from './scene';
+import { Params } from './scenes/pbr';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 

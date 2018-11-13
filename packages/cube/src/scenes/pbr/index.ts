@@ -13,9 +13,9 @@ import { Texture } from '@pngu/gl/texture';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
-import brickDiffuse from '../assets/images/brick-diffuse.jpg';
-import brickNormal from '../assets/images/brick-normal.jpg';
-import brickSpecular from '../assets/images/brick-specular.jpg';
+import brickDiffuse from '../../assets/images/brick-diffuse.jpg';
+import brickNormal from '../../assets/images/brick-normal.jpg';
+import brickSpecular from '../../assets/images/brick-specular.jpg';
 
 export interface Params {
   f0: Vec3;
