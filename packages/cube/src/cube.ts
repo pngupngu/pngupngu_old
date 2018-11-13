@@ -58,27 +58,25 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const diffuseSelect = createSelect(ui.cselect);
   const diffuseTypes = [[0, 'default'], [1, 'disney'], [2, 'normalized disney'], [3, 'oren nayar']];
 
-  return () =>
-    ['div', ui.root,
+  return () => {
+    const params = views.params.deref();
+    return ['div', ui.root,
       [canvas_, ui.ca],
       [panel, ui.panel,
-        ['f0', [msF0, views.params.deref().f0]],
-        ['albedo', [msAlbedo, views.params.deref().albedo]],
-        ['lightPos', [msLightPos, views.params.deref().lightPos]],
-        ['metalic', [metalicCtrl,
-          { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, ['metalic', v]]) },
-          views.params.deref().metalic]],
-        ['roughness', [roughnessCtrl,
-          { min: 0, max: 1, step: 0.01, onchange: v => bus.dispatch([ev.SET_PARAM, ['roughness', v]]) },
-          views.params.deref().roughness]],
-        ['ambColor', [msAmbColor, views.params.deref().ambColor]],
-        ['lightColor', [msLightColor, views.params.deref().lightColor]],
-        ['texNormal', [chkbTexNormal, v => bus.dispatch([ev.SET_PARAM, ['useTexNormal', v]]), views.params.deref().useTexNormal]],
-        ['texDiffuse', [chkbTexDiffuse, v => bus.dispatch([ev.SET_PARAM, ['useTexDiff', v]]), views.params.deref().useTexDiff]],
-        ['gamma', [chkbGamma, v => bus.dispatch([ev.SET_PARAM, ['useGamma', v]]), views.params.deref().useGamma]],
-        ['distType', [distSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['distributionType', v]]) }, distTypes, views.params.deref().distributionType]],
-        ['geomType', [geomSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['geomTypes', v]]) }, geomTypes, views.params.deref().geometryType]],
-        ['diffuseType', [diffuseSelect, { onchange: v => bus.dispatch([ev.SET_PARAM, ['diffuseType', v]]) }, diffuseTypes, views.params.deref().diffuseType]],
-        ['normal', [chkbNormal, v => bus.dispatch([ev.SET_PARAM, ['showNormal', v]]), views.params.deref().showNormal]],
+        ['f0', [msF0, params.f0]],
+        ['albedo', [msAlbedo, params.albedo]],
+        ['lightPos', [msLightPos, params.lightPos]],
+        ['metalic', [metalicCtrl, { min: 0, max: 1, step: 0.01, onchange: onchange('metalic') }, params.metalic]],
+        ['roughness', [roughnessCtrl, { min: 0, max: 1, step: 0.01, onchange: onchange('roughness') }, params.roughness]],
+        ['ambColor', [msAmbColor, params.ambColor]],
+        ['lightColor', [msLightColor, params.lightColor]],
+        ['texNormal', [chkbTexNormal, onchange('useTexNormal'), params.useTexNormal]],
+        ['texDiffuse', [chkbTexDiffuse, onchange('useTexDiff'), params.useTexDiff]],
+        ['gamma', [chkbGamma, onchange('useGamma'), params.useGamma]],
+        ['distType', [distSelect, { onchange: onchange('distributionType') }, distTypes, params.distributionType]],
+        ['geomType', [geomSelect, { onchange: onchange('geomTypes') }, geomTypes, params.geometryType]],
+        ['diffuseType', [diffuseSelect, { onchange: onchange('diffuseType') }, diffuseTypes, params.diffuseType]],
+        ['normal', [chkbNormal, onchange('showNormal'), params.showNormal]],
       ]];
+  }
 };
