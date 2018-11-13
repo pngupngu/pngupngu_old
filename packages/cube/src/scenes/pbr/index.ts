@@ -43,11 +43,27 @@ export class App extends Application {
   cmd: Command;
   camera: PerspectiveCamera;
 
-  params: Params;
-
-  constructor(params: Params) {
+  constructor() {
     super();
-    this.params = params;
+  }
+
+  set params(params: Params) {
+    const uniforms = this.mat.uniforms;
+
+    uniforms.albedo = params.albedo;
+    uniforms.f0 = params.f0;
+    uniforms.lightPos = params.lightPos;
+    uniforms.metalic = params.metalic;
+    uniforms.roughness = params.roughness;
+    uniforms.ambColor = params.ambColor;
+    uniforms.lightColor = params.lightColor;
+    uniforms.useTexNormal = params.useTexNormal;
+    uniforms.useTexDiff = params.useTexDiff;
+    uniforms.useGamma = params.useGamma;
+    uniforms.distributionType = params.distributionType;
+    uniforms.geometryType = params.geometryType;
+    uniforms.diffuseType = params.diffuseType;
+    uniforms.showNormal = params.showNormal;
   }
 
   init(gl) {
@@ -65,22 +81,8 @@ export class App extends Application {
       uv: { numComponents: 2, data: [...flatten(attribs.uvs)] },
       normal: [...flatten(attribs.normals)]
     });
-    this.mat = new Material(vert, frag, {
-      lightPos: this.params.lightPos,
-      f0: this.params.f0,
-      metallic: this.params.metalic,
-      albedo: this.params.albedo,
-      roughness: this.params.roughness,
-      ambColor: this.params.ambColor,
-      lightColor: this.params.lightColor,
-      useTexNormal: this.params.useTexNormal,
-      useTexDiff: this.params.useTexDiff,
-      useGamma: this.params.useGamma,
-      distributionType: this.params.distributionType,
-      geometryType: this.params.geometryType,
-      diffuseType: this.params.diffuseType,
-      showNormal: this.params.showNormal,
-    });
+
+    this.mat = new Material(vert, frag);
 
     new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex; });
     new Texture(gl, { src: brickNormal }, tex => { this.mat.uniforms.texNormal = tex; });
@@ -98,23 +100,6 @@ export class App extends Application {
     gl.enable(gl.CULL_FACE);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    const uniforms = this.mat.uniforms;
-
-    uniforms.albedo = this.params.albedo;
-    uniforms.f0 = this.params.f0;
-    uniforms.lightPos = this.params.lightPos;
-    uniforms.metalic = this.params.metalic;
-    uniforms.roughness = this.params.roughness;
-    uniforms.ambColor = this.params.ambColor;
-    uniforms.lightColor = this.params.lightColor;
-    uniforms.useTexNormal = this.params.useTexNormal;
-    uniforms.useTexDiff = this.params.useTexDiff;
-    uniforms.useGamma = this.params.useGamma;
-    uniforms.distributionType = this.params.distributionType;
-    uniforms.geometryType = this.params.geometryType;
-    uniforms.diffuseType = this.params.diffuseType;
-    uniforms.showNormal = this.params.showNormal;
 
     this.cmd.draw(time, this.camera);
   }

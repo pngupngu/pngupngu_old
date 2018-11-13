@@ -3,12 +3,12 @@ import { EventDef, EffectDef, FX_STATE } from "@thi.ng/interceptors/api";
 import { valueSetter } from "@thi.ng/interceptors/interceptors";
 import { setIn } from '@thi.ng/paths';
 
-export const ev: IObjectOf<string> = {
-  SET_RAF: 'set-raf',
-  SET_PARAM: 'set-param',
+export enum ev {
+  SET_RAF,
+  SET_PARAM,
 };
 
-export const fx: IObjectOf<string> = {
+export enum fx {
 };
 
 type Handlers = {

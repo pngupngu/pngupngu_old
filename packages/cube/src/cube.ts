@@ -35,7 +35,7 @@ const makeCanvas = app => {
 
 export const cube = ({ ui, views, bus }: AppContext) => {
   const params = views.params.deref();
-  const canvas_ = makeCanvas(new App(params));
+  const canvas_ = makeCanvas(new App());
 
   const onchange = name => v => bus.dispatch([ev.SET_PARAM, [name, v]])
 
@@ -78,7 +78,7 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['texDiffuse', [cbTexDiffuse, onchange('useTexDiff'), params.useTexDiff]],
         ['gamma', [cbGamma, onchange('useGamma'), params.useGamma]],
         ['distType', [selDist, { onchange: onchange('distributionType') }, distTypes, params.distributionType]],
-        ['geomType', [selGeom, { onchange: onchange('geomTypes') }, geomTypes, params.geometryType]],
+        ['geomType', [selGeom, { onchange: onchange('geomType') }, geomTypes, params.geometryType]],
         ['diffuseType', [selDiffuse, { onchange: onchange('diffuseType') }, diffuseTypes, params.diffuseType]],
         ['normal', [cbNormal, onchange('showNormal'), params.showNormal]],
       ]];
