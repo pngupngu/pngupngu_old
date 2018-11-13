@@ -35,8 +35,7 @@ const makeCanvas = app => {
 
 export const cube = ({ ui, views, bus }: AppContext) => {
   const params = views.params.deref();
-  const app = new App(params);
-  const canvas_ = makeCanvas(app);
+  const canvas_ = makeCanvas(new App(params));
 
   const onchange = name => v => bus.dispatch([ev.SET_PARAM, [name, v]])
 
@@ -52,15 +51,15 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const cbGamma = createCheckbox('gamma', ui.checkbox);
   const cbNormal = createCheckbox('normal', ui.checkbox);
 
-  const distSelect = createSelect(ui.cselect);
+  const selDist = createSelect(ui.cselect);
   const distTypes = [...map(v => [v, DistTypes[v]],
     [DistTypes.BlinnPhong, DistTypes.GGX, DistTypes.Beckmann])];
 
-  const geomSelect = createSelect(ui.cselect);
+  const selGeom = createSelect(ui.cselect);
   const geomTypes = [...map(v => [v, GeometryTypes[v]],
     [GeometryTypes.Implicit, GeometryTypes.Schlick, GeometryTypes.GGX, GeometryTypes.CookTorrance])];
 
-  const diffuseSelect = createSelect(ui.cselect);
+  const selDiffuse = createSelect(ui.cselect);
   const diffuseTypes = [...map(v => [v, DiffuseTypes[v]],
     [DiffuseTypes.Default, DiffuseTypes.Disney, DiffuseTypes.NormalizedDisney, DiffuseTypes.OrenNayar])];
 
@@ -78,9 +77,9 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['texNormal', [cbTexNormal, onchange('useTexNormal'), params.useTexNormal]],
         ['texDiffuse', [cbTexDiffuse, onchange('useTexDiff'), params.useTexDiff]],
         ['gamma', [cbGamma, onchange('useGamma'), params.useGamma]],
-        ['distType', [distSelect, { onchange: onchange('distributionType') }, distTypes, params.distributionType]],
-        ['geomType', [geomSelect, { onchange: onchange('geomTypes') }, geomTypes, params.geometryType]],
-        ['diffuseType', [diffuseSelect, { onchange: onchange('diffuseType') }, diffuseTypes, params.diffuseType]],
+        ['distType', [selDist, { onchange: onchange('distributionType') }, distTypes, params.distributionType]],
+        ['geomType', [selGeom, { onchange: onchange('geomTypes') }, geomTypes, params.geometryType]],
+        ['diffuseType', [selDiffuse, { onchange: onchange('diffuseType') }, diffuseTypes, params.diffuseType]],
         ['normal', [cbNormal, onchange('showNormal'), params.showNormal]],
       ]];
 };

@@ -99,20 +99,22 @@ export class App extends Application {
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    this.mat.uniforms.albedo = this.params.albedo;
-    this.mat.uniforms.f0 = this.params.f0;
-    this.mat.uniforms.lightPos = this.params.lightPos;
-    this.mat.uniforms.metalic = this.params.metalic;
-    this.mat.uniforms.roughness = this.params.roughness;
-    this.mat.uniforms.ambColor = this.params.ambColor;
-    this.mat.uniforms.lightColor = this.params.lightColor;
-    this.mat.uniforms.useTexNormal = this.params.useTexNormal;
-    this.mat.uniforms.useTexDiff = this.params.useTexDiff;
-    this.mat.uniforms.useGamma = this.params.useGamma;
-    this.mat.uniforms.distributionType = this.params.distributionType;
-    this.mat.uniforms.geometryType = this.params.geometryType;
-    this.mat.uniforms.diffuseType = this.params.diffuseType;
-    this.mat.uniforms.showNormal = this.params.showNormal;
+    const uniforms = this.mat.uniforms;
+
+    uniforms.albedo = this.params.albedo;
+    uniforms.f0 = this.params.f0;
+    uniforms.lightPos = this.params.lightPos;
+    uniforms.metalic = this.params.metalic;
+    uniforms.roughness = this.params.roughness;
+    uniforms.ambColor = this.params.ambColor;
+    uniforms.lightColor = this.params.lightColor;
+    uniforms.useTexNormal = this.params.useTexNormal;
+    uniforms.useTexDiff = this.params.useTexDiff;
+    uniforms.useGamma = this.params.useGamma;
+    uniforms.distributionType = this.params.distributionType;
+    uniforms.geometryType = this.params.geometryType;
+    uniforms.diffuseType = this.params.diffuseType;
+    uniforms.showNormal = this.params.showNormal;
 
     this.cmd.draw(time, this.camera);
   }
