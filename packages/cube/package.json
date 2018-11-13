@@ -14,6 +14,7 @@
     "@pngu/gl": "^1.0.0",
     "@pngu/ui": "^1.0.0",
     "@thi.ng/api": "^4.2.3",
+    "@thi.ng/checks": "^1.5.13",
     "@thi.ng/hdom": "^5.0.7",
     "@thi.ng/interceptors": "^1.8.17",
     "@thi.ng/iterators": "^4.1.34",

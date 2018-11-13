@@ -43,10 +43,6 @@ export class App extends Application {
   cmd: Command;
   camera: PerspectiveCamera;
 
-  constructor() {
-    super();
-  }
-
   set params(params: Params) {
     const uniforms = this.mat.uniforms;
 
