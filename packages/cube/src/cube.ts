@@ -1,4 +1,4 @@
-import { indexed } from '@thi.ng/transducers/xform/indexed';
+import { map } from '@thi.ng/transducers/xform/map';
 
 import { panel } from '@pngu/ui/panel';
 import { getContext } from '@pngu/gl/application';
@@ -10,7 +10,7 @@ import { create as createCheckbox } from '@pngu/ui/checkbox';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
-import { App } from './scenes/pbr';
+import { App, DistTypes, GeometryTypes, DiffuseTypes } from './scenes/pbr';
 
 const makeCanvas = app => {
   let camUI: CameraUI;
@@ -46,20 +46,23 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const msAmbColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
   const msLightColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
   const sMetalic = createSlider(ui.cslider);
-  const cbRoughness = createSlider(ui.cslider);
+  const sRoughness = createSlider(ui.cslider);
   const cbTexNormal = createCheckbox('texNormal', ui.checkbox);
   const cbTexDiffuse = createCheckbox('texDiffuse', ui.checkbox);
   const cbGamma = createCheckbox('gamma', ui.checkbox);
   const cbNormal = createCheckbox('normal', ui.checkbox);
 
   const distSelect = createSelect(ui.cselect);
-  const distTypes = [...indexed(['blinn phong', 'ggx', 'beckmann'])];
+  const distTypes = [...map(v => [v, DistTypes[v]],
+    [DistTypes.BlinnPhong, DistTypes.GGX, DistTypes.Beckmann])];
 
   const geomSelect = createSelect(ui.cselect);
-  const geomTypes = [...indexed(['implicit', 'schlick', 'ggx', 'cook torrance'])];
+  const geomTypes = [...map(v => [v, GeometryTypes[v]],
+    [GeometryTypes.Implicit, GeometryTypes.Schlick, GeometryTypes.GGX, GeometryTypes.CookTorrance])];
 
   const diffuseSelect = createSelect(ui.cselect);
-  const diffuseTypes = [...indexed(['default', 'disney', 'normalized disney', 'oren nayar'])];
+  const diffuseTypes = [...map(v => [v, DiffuseTypes[v]],
+    [DiffuseTypes.Default, DiffuseTypes.Disney, DiffuseTypes.NormalizedDisney, DiffuseTypes.OrenNayar])];
 
   return () =>
     ['div', ui.root,
@@ -69,7 +72,7 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['albedo', [msAlbedo, params.albedo]],
         ['lightPos', [msLightPos, params.lightPos]],
         ['metalic', [sMetalic, { min: 0, max: 1, step: 0.01, onchange: onchange('metalic') }, params.metalic]],
-        ['roughness', [cbRoughness, { min: 0, max: 1, step: 0.01, onchange: onchange('roughness') }, params.roughness]],
+        ['roughness', [sRoughness, { min: 0, max: 1, step: 0.01, onchange: onchange('roughness') }, params.roughness]],
         ['ambColor', [msAmbColor, params.ambColor]],
         ['lightColor', [msLightColor, params.lightColor]],
         ['texNormal', [cbTexNormal, onchange('useTexNormal'), params.useTexNormal]],

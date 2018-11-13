@@ -17,25 +17,9 @@ import brickDiffuse from '../../assets/images/brick-diffuse.jpg';
 import brickNormal from '../../assets/images/brick-normal.jpg';
 import brickSpecular from '../../assets/images/brick-specular.jpg';
 
-export enum DistTypes {
-  BlinnPhong,
-  GGX,
-  Beckmann,
-}
-
-export enum GeometryTypes {
-  Implicit,
-  Schlick,
-  GGX,
-  CookTorrance,
-}
-
-export enum DiffuseTypes {
-  Default,
-  Disney,
-  NormalizedDisney,
-  OrenNayar,
-}
+export enum DistTypes { BlinnPhong, GGX, Beckmann, }
+export enum GeometryTypes { Implicit, Schlick, GGX, CookTorrance, }
+export enum DiffuseTypes { Default, Disney, NormalizedDisney, OrenNayar, }
 
 export interface Params {
   f0: Vec3;
