@@ -32,7 +32,8 @@ const makeCanvas = app => {
 };
 
 export const cube = ({ ui, views, bus }: AppContext) => {
-  const app = new App(views.params.deref());
+  const params = views.params.deref();
+  const app = new App(params);
   const canvas_ = makeCanvas(app);
 
   const onchange = name => v => bus.dispatch([ev.SET_PARAM, [name, v]])
@@ -58,9 +59,8 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const diffuseSelect = createSelect(ui.cselect);
   const diffuseTypes = [[0, 'default'], [1, 'disney'], [2, 'normalized disney'], [3, 'oren nayar']];
 
-  return () => {
-    const params = views.params.deref();
-    return ['div', ui.root,
+  return () =>
+    ['div', ui.root,
       [canvas_, ui.ca],
       [panel, ui.panel,
         ['f0', [msF0, params.f0]],
@@ -78,5 +78,4 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['diffuseType', [diffuseSelect, { onchange: onchange('diffuseType') }, diffuseTypes, params.diffuseType]],
         ['normal', [chkbNormal, onchange('showNormal'), params.showNormal]],
       ]];
-  }
 };
