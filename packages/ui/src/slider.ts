@@ -1,9 +1,11 @@
 import { clamp } from '@thi.ng/math/interval';
+import { IVec } from '@thi.ng/vectors/api';
 import { fit } from '@thi.ng/math/fit';
 import { map } from "@thi.ng/transducers/xform/map";
 import { dedupe } from "@thi.ng/transducers/xform/dedupe";
+import { range } from '@thi.ng/transducers/iter/range'
 
-import { SliderArgs } from './api';
+import { SliderArgs, MultiSliderArgs, MultiSliderAttribs } from './api';
 import { streamDrag } from './utils';
 
 const NOOP = _ => { };
@@ -42,3 +44,12 @@ export const create = attribs => {
   return (_: any, args: SliderArgs, value: number) =>
     [slider_, { attribs, ...args }, value];
 };
+
+export const multiSlider = (n: number, attribs: MultiSliderAttribs, args: MultiSliderArgs) => {
+  const sliders = [...map(_ => create(attribs.slider), range(n))];
+  return (_: any, value: IVec) =>
+    ['div', attribs.container, ...map((i: number) =>
+      [sliders[i], { ...args, onchange: v => args.onchange((value[i] = v, value)) }, value[i]],
+      range(n))
+    ];
+}

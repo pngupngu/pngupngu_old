@@ -1,31 +1,14 @@
-import { Vec3 } from '@thi.ng/vectors/vec3';
-
 import { panel } from '@pngu/ui/panel';
 import { getContext } from '@pngu/gl/application';
 import { CameraUI } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/ui/canvas-webgl';
-import { UIAttrib } from '@pngu/ui/api';
 import { create as createSelect } from '@pngu/ui/select';
-import { create as createSlider } from '@pngu/ui/slider';
+import { create as createSlider, multiSlider } from '@pngu/ui/slider';
 import { create as createCheckbox } from '@pngu/ui/checkbox';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
 import { App } from './scenes/pbr';
-
-type MultiSliderAttribs = Record<'container' | 'slider', Partial<UIAttrib>>;
-
-const multiSlider = (attribs: MultiSliderAttribs, opts) => {
-  const s1 = createSlider(attribs.slider);
-  const s2 = createSlider(attribs.slider);
-  const s3 = createSlider(attribs.slider);
-  return (_: any, value: Vec3) =>
-    ['div', attribs.container,
-      [s1, { ...opts, onchange: v => opts.onchange((value[0] = v, value)) }, value[0]],
-      [s2, { ...opts, onchange: v => opts.onchange((value[1] = v, value)) }, value[1]],
-      [s3, { ...opts, onchange: v => opts.onchange((value[2] = v, value)) }, value[2]],
-    ];
-}
 
 const makeCanvas = app => {
   let camUI: CameraUI;
@@ -52,14 +35,13 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const app = new App(views.params.deref());
   const canvas_ = makeCanvas(app);
 
-  const msa = { container: ui.container, slider: ui.cslider };
   const onchange = name => v => bus.dispatch([ev.SET_PARAM, [name, v]])
 
-  const msF0 = multiSlider(msa, { min: 0, max: 1, step: 0.01, onchange: onchange('f0') });
-  const msAlbedo = multiSlider(msa, { min: 0, max: 1, step: 0.01, onchange: onchange('albedo') });
-  const msLightPos = multiSlider(msa, { min: -2, max: 2, step: 0.01, onchange: onchange('lightPos') });
-  const msAmbColor = multiSlider(msa, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
-  const msLightColor = multiSlider(msa, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
+  const msF0 = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('f0') });
+  const msAlbedo = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('albedo') });
+  const msLightPos = multiSlider(3, ui.multiSlider, { min: -2, max: 2, step: 0.01, onchange: onchange('lightPos') });
+  const msAmbColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
+  const msLightColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
   const metalicCtrl = createSlider(ui.cslider);
   const roughnessCtrl = createSlider(ui.cslider);
   const chkbTexNormal = createCheckbox('texNormal', ui.checkbox);

@@ -2,6 +2,7 @@ import { Vec3 } from '@thi.ng/vectors/vec3';
 
 import {
   root, panel, select, button, slider, checkbox,
+  multiSlider,
   addClass
 } from '@pngu/ui/styles';
 
@@ -44,11 +45,10 @@ export const CONFIG: AppConfig = {
   },
 
   ui: {
-    root, button, select, slider, checkbox,
+    root, button, select, slider, checkbox, multiSlider,
 
     panel: addClass(panel, 'absolute w5', 'container'),
 
-    container: { class: 'dg gtc3' },
     cslider: addClass(slider, 'mr-2 ctrl', 'container'),
     cselect: addClass(select, 'mr-2 ctrl', 'container'),
 

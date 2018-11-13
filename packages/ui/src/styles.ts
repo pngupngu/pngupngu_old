@@ -3,7 +3,8 @@ import { updateIn, toPath } from '@thi.ng/paths';
 
 import {
   UIAttrib, ComponentAttrib, SelectAttribs,
-  SliderAttribs, PanelAttribs, CheckBoxAttribs
+  SliderAttribs, PanelAttribs, CheckBoxAttribs,
+  MultiSliderAttribs
 } from './api';
 
 export const addClass = (attribs, klass, path?: string) =>
@@ -41,6 +42,11 @@ export const checkbox: CheckBoxAttribs = {
   container: { class: 'dib relative w1 h1 v-btm' },
   input: { class: 'hidden input-reset pointer checkbox' },
   label: { class: 'absolute left-0 dib pointer border-box w1 h1 bg-black' }
+}
+
+export const multiSlider: MultiSliderAttribs = {
+  container: { class: 'dg gtc3' },
+  slider: addClass(slider, 'mr-2 ctrl', 'container')
 }
 
 export const inlineButton: UIAttrib = inline(button);

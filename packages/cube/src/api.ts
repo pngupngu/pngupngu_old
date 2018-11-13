@@ -3,8 +3,11 @@ import { ViewTransform, IView } from "@thi.ng/atom/api";
 import { EventDef, EffectDef, InterceptorContext } from "@thi.ng/interceptors/api";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
 
-import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
-import { SelectAttribs, SliderAttribs, PanelAttribs, CheckBoxAttribs } from '@pngu/ui/api';
+import {
+  UIAttrib, ComponentAttrib,
+  SelectAttribs, SliderAttribs, PanelAttribs, CheckBoxAttribs,
+  MultiSliderAttribs
+} from '@pngu/ui/api';
 
 import { Params } from './scenes/pbr';
 
@@ -42,6 +45,7 @@ export interface UIAttribs {
   slider?: SliderAttribs;
   panel?: PanelAttribs;
   checkbox?: CheckBoxAttribs;
+  multiSlider?: MultiSliderAttribs;
 }
 
 export interface AppContext {

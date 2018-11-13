@@ -1,3 +1,5 @@
+import { IVec } from '@thi.ng/vectors/api';
+
 export interface UIAttrib {
   class: string;
 }
@@ -20,8 +22,17 @@ export interface SliderArgs {
   max: number;
   step: number;
   onchange?: (e: number) => void;
-  precision: number;
+  precision?: number;
   attribs: SliderAttribs;
+}
+
+export type MultiSliderAttribs = Record<'container' | 'slider', Partial<UIAttrib>>;
+export interface MultiSliderArgs {
+  min: number;
+  max: number;
+  step: number;
+  precision?: number;
+  onchange?(v: IVec): void;
 }
 
 export type CheckBoxAttribs = Record<'container' | 'input' | 'label', Partial<UIAttrib>>;
