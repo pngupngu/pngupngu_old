@@ -43,12 +43,12 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const msLightPos = multiSlider(3, ui.multiSlider, { min: -2, max: 2, step: 0.01, onchange: onchange('lightPos') });
   const msAmbColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
   const msLightColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
-  const metalicCtrl = createSlider(ui.cslider);
-  const roughnessCtrl = createSlider(ui.cslider);
-  const chkbTexNormal = createCheckbox('texNormal', ui.checkbox);
-  const chkbTexDiffuse = createCheckbox('texDiffuse', ui.checkbox);
-  const chkbGamma = createCheckbox('gamma', ui.checkbox);
-  const chkbNormal = createCheckbox('normal', ui.checkbox);
+  const sMetalic = createSlider(ui.cslider);
+  const cbRoughness = createSlider(ui.cslider);
+  const cbTexNormal = createCheckbox('texNormal', ui.checkbox);
+  const cbTexDiffuse = createCheckbox('texDiffuse', ui.checkbox);
+  const cbGamma = createCheckbox('gamma', ui.checkbox);
+  const cbNormal = createCheckbox('normal', ui.checkbox);
 
   const distSelect = createSelect(ui.cselect);
   const distTypes = [[0, 'blinn phong'], [1, 'ggx'], [2, 'beckmann']]
@@ -66,16 +66,16 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ['f0', [msF0, params.f0]],
         ['albedo', [msAlbedo, params.albedo]],
         ['lightPos', [msLightPos, params.lightPos]],
-        ['metalic', [metalicCtrl, { min: 0, max: 1, step: 0.01, onchange: onchange('metalic') }, params.metalic]],
-        ['roughness', [roughnessCtrl, { min: 0, max: 1, step: 0.01, onchange: onchange('roughness') }, params.roughness]],
+        ['metalic', [sMetalic, { min: 0, max: 1, step: 0.01, onchange: onchange('metalic') }, params.metalic]],
+        ['roughness', [cbRoughness, { min: 0, max: 1, step: 0.01, onchange: onchange('roughness') }, params.roughness]],
         ['ambColor', [msAmbColor, params.ambColor]],
         ['lightColor', [msLightColor, params.lightColor]],
-        ['texNormal', [chkbTexNormal, onchange('useTexNormal'), params.useTexNormal]],
-        ['texDiffuse', [chkbTexDiffuse, onchange('useTexDiff'), params.useTexDiff]],
-        ['gamma', [chkbGamma, onchange('useGamma'), params.useGamma]],
+        ['texNormal', [cbTexNormal, onchange('useTexNormal'), params.useTexNormal]],
+        ['texDiffuse', [cbTexDiffuse, onchange('useTexDiff'), params.useTexDiff]],
+        ['gamma', [cbGamma, onchange('useGamma'), params.useGamma]],
         ['distType', [distSelect, { onchange: onchange('distributionType') }, distTypes, params.distributionType]],
         ['geomType', [geomSelect, { onchange: onchange('geomTypes') }, geomTypes, params.geometryType]],
         ['diffuseType', [diffuseSelect, { onchange: onchange('diffuseType') }, diffuseTypes, params.diffuseType]],
-        ['normal', [chkbNormal, onchange('showNormal'), params.showNormal]],
+        ['normal', [cbNormal, onchange('showNormal'), params.showNormal]],
       ]];
 };
