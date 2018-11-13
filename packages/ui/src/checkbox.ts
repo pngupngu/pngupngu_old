@@ -1,7 +1,7 @@
 import { CheckBoxArgs } from './api';
 
-export const checkbox = (_: any, { id, onchange, attribs }: CheckBoxArgs, value: boolean) => {
-  return ['div', attribs.container,
+export const checkbox = (_: any, { id, onchange, attribs }: CheckBoxArgs, value: boolean) =>
+  ['div', attribs.container,
     ['input', {
       id: id,
       type: 'checkbox',
@@ -9,9 +9,7 @@ export const checkbox = (_: any, { id, onchange, attribs }: CheckBoxArgs, value:
       checked: value,
       ...attribs.input
     }],
-    ['label', { for: id, ...attribs.label }]
-  ];
-}
+    ['label', { for: id, ...attribs.label }]];
 
 export const create = (id: string, attribs: any) =>
   (_: any, onchange: (e: boolean) => void, value: boolean) =>

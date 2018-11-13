@@ -6,8 +6,8 @@ export class Camera extends Node {
   protected _width: number;
   protected _height: number;
 
-  protected _view: any = mat4.identity(mat4.create());
-  protected _projection: any = mat4.identity(mat4.create());
+  protected _view: mat4 = mat4.create();
+  protected _projection: mat4 = mat4.create();
 
   constructor(width: number, height: number) {
     super();
@@ -15,7 +15,8 @@ export class Camera extends Node {
     this.height = height;
   }
 
-  set width(val: number) { this._width = val; }
+  set width(val: number) {
+     this._width = val; }
   get width() { return this._width; }
 
   set height(val: number) { this._height = val; }
@@ -112,7 +113,7 @@ export class OrthoCamera extends Camera {
   right: number = 1;
   top: number = 1;
   bottom: number = -1;
-  near: number = 0.01;
+  near: number = 0.0;
   far: number = 1000;
 
   private _projectionCached: boolean = false;

@@ -1,5 +1,3 @@
-// import { map } from '@thi.ng/transducers/xform/map';
-
 import { enumNames } from '@pngu/core/utils/enum-names';
 import { panel } from '@pngu/ui/panel';
 import { getContext } from '@pngu/gl/application';

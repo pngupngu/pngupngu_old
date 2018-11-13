@@ -17,9 +17,9 @@ import brickDiffuse from '../../assets/images/brick-diffuse.jpg';
 import brickNormal from '../../assets/images/brick-normal.jpg';
 import brickSpecular from '../../assets/images/brick-specular.jpg';
 
-export enum DistTypes { BlinnPhong, GGX, Beckmann, }
-export enum GeometryTypes { Implicit, Schlick, GGX, CookTorrance, }
-export enum DiffuseTypes { Default, Disney, NormalizedDisney, OrenNayar, }
+export enum DistTypes { BlinnPhong, GGX, Beckmann }
+export enum GeometryTypes { Implicit, Schlick, GGX, CookTorrance }
+export enum DiffuseTypes { Default , Disney, NormalizedDisney, OrenNayar }
 
 export interface Params {
   f0: Vec3;
@@ -36,6 +36,23 @@ export interface Params {
   geometryType: GeometryTypes;
   diffuseType: DiffuseTypes;
   showNormal: boolean;
+}
+
+export const defaultParams: Params = {
+  lightPos: new Vec3([1, 1, 2]),
+  f0: new Vec3([0.04, 0.04, 0.04]),
+  albedo: new Vec3([0.9, 0.9, 0.9]),
+  metalic: 0.0,
+  roughness: 0.3,
+  ambColor: new Vec3([0.03, 0.03, 0.03]),
+  lightColor: new Vec3([1, 1, 1]),
+  useTexNormal: true,
+  useTexDiff: true,
+  useGamma: false,
+  distributionType: DistTypes.BlinnPhong,
+  geometryType: GeometryTypes.Implicit,
+  diffuseType: DiffuseTypes.Default,
+  showNormal: false
 }
 
 export class App extends Application {

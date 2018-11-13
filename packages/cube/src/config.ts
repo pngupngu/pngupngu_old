@@ -1,5 +1,3 @@
-import { Vec3 } from '@thi.ng/vectors/vec3';
-
 import {
   root, panel, select, button, slider, checkbox,
   multiSlider,
@@ -8,8 +6,9 @@ import {
 
 import { AppConfig } from './api';
 import { handlers } from './events';
-import { cube } from './cube';
-import { DistTypes, GeometryTypes, DiffuseTypes } from './scenes/pbr'
+// import { cube } from './cube';
+import { wire } from './wire';
+import { defaultParams } from './scenes/pbr'
 
 export const CONFIG: AppConfig = {
 
@@ -18,26 +17,12 @@ export const CONFIG: AppConfig = {
 
   domRoot: 'app',
 
-  rootComponent: cube,
+  // rootComponent: cube,
+  rootComponent: wire,
 
   initialState: {
     raf: false,
-    params: {
-      lightPos: new Vec3([1, 1, 2]),
-      f0: new Vec3([0.04, 0.04, 0.04]),
-      albedo: new Vec3([0.9, 0.9, 0.9]),
-      metalic: 0.0,
-      roughness: 0.3,
-      ambColor: new Vec3([0.03, 0.03, 0.03]),
-      lightColor: new Vec3([1, 1, 1]),
-      useTexNormal: true,
-      useTexDiff: true,
-      useGamma: false,
-      distributionType: DistTypes.BlinnPhong,
-      geometryType: GeometryTypes.Implicit,
-      diffuseType: DiffuseTypes.Default,
-      showNormal: false
-    }
+    params: defaultParams
   },
 
   views: {
