@@ -1,3 +1,5 @@
+import { indexed } from '@thi.ng/transducers/xform/indexed';
+
 import { panel } from '@pngu/ui/panel';
 import { getContext } from '@pngu/gl/application';
 import { CameraUI } from '@pngu/gl/camera-ui';
@@ -51,13 +53,13 @@ export const cube = ({ ui, views, bus }: AppContext) => {
   const cbNormal = createCheckbox('normal', ui.checkbox);
 
   const distSelect = createSelect(ui.cselect);
-  const distTypes = [[0, 'blinn phong'], [1, 'ggx'], [2, 'beckmann']]
+  const distTypes = [...indexed(['blinn phong', 'ggx', 'beckmann'])];
 
   const geomSelect = createSelect(ui.cselect);
-  const geomTypes = [[0, 'implicit'], [1, 'schlick'], [2, 'ggx'], [3, 'cook torrance']];
+  const geomTypes = [...indexed(['implicit', 'schlick', 'ggx', 'cook torrance'])];
 
   const diffuseSelect = createSelect(ui.cselect);
-  const diffuseTypes = [[0, 'default'], [1, 'disney'], [2, 'normalized disney'], [3, 'oren nayar']];
+  const diffuseTypes = [...indexed(['default', 'disney', 'normalized disney', 'oren nayar'])];
 
   return () =>
     ['div', ui.root,
