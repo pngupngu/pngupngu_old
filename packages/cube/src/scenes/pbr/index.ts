@@ -17,6 +17,26 @@ import brickDiffuse from '../../assets/images/brick-diffuse.jpg';
 import brickNormal from '../../assets/images/brick-normal.jpg';
 import brickSpecular from '../../assets/images/brick-specular.jpg';
 
+export enum DistTypes {
+  BlinnPhong,
+  GGX,
+  Beckmann,
+}
+
+export enum GeometryTypes {
+  Implicit,
+  Schlick,
+  GGX,
+  CookTorrance,
+}
+
+export enum DiffuseTypes {
+  Default,
+  Disney,
+  NormalizedDisney,
+  OrenNayar,
+}
+
 export interface Params {
   f0: Vec3;
   albedo: Vec3;
@@ -28,9 +48,9 @@ export interface Params {
   useTexNormal: boolean;
   useTexDiff: boolean;
   useGamma: boolean;
-  distributionType: 0 | 1 | 2;
-  geometryType: 0 | 1 | 2 | 3;
-  diffuseType: 0 | 1 | 2 | 3;
+  distributionType: DistTypes;
+  geometryType: GeometryTypes;
+  diffuseType: DiffuseTypes;
   showNormal: boolean;
 }
 

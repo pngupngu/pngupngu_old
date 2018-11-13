@@ -9,6 +9,7 @@ import {
 import { AppConfig } from './api';
 import { handlers } from './events';
 import { cube } from './cube';
+import { DistTypes, GeometryTypes, DiffuseTypes } from './scenes/pbr'
 
 export const CONFIG: AppConfig = {
 
@@ -32,9 +33,9 @@ export const CONFIG: AppConfig = {
       useTexNormal: true,
       useTexDiff: true,
       useGamma: false,
-      distributionType: 0,
-      geometryType: 0,
-      diffuseType: 0,
+      distributionType: DistTypes.BlinnPhong,
+      geometryType: GeometryTypes.Implicit,
+      diffuseType: DiffuseTypes.Default,
       showNormal: false
     }
   },
