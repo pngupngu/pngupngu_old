@@ -13,7 +13,7 @@ uniform vec3 lightPos;
 
 in vec3 position;
 in vec3 normal;
-in vec2 uv;
+in vec2 texcoord;
 
 out vec3 vVertPos;
 out vec3 vLightPos;
@@ -22,7 +22,7 @@ out vec2 vUv;
 
 void main () {
   vNormal = matNormal * normal;
-  vUv = uv;
+  vUv = texcoord;
 
   vec4 eyePos = matModelView * vec4(position, 1.0);
   vVertPos = eyePos.xyz;

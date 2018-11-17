@@ -15,7 +15,5 @@ out vec2 vUv;
 void main() {
   vUv = texcoord;
 
-  vec4 eyePos = matModelView * position;
-
-  gl_Position = matProj * eyePos;
+  gl_Position = matModelView * position;
 }

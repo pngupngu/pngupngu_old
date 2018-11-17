@@ -8,11 +8,12 @@
   "scripts": {
     "build": "yarn run clean && tsc",
     "clean": "rimraf *.js *.d.ts *.d.ts.map",
-    "test": "yarn run clean && tsc -b test && nyc mocha build/**/*.js"
+    "test": "tsc -b test && nyc mocha build/**/*.js"
   },
   "dependencies": {
     "@thi.ng/rstream": "^1.13.7",
     "@thi.ng/rstream-gestures": "^0.5.17",
+    "@thi.ng/transducers": "^2.2.2",
     "gl-matrix": "^2.8.1",
     "twgl.js": "^4.5.2"
   }

@@ -7,7 +7,10 @@ import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import { Geometry } from '@pngu/gl/geometry';
+import {
+  Geometry,
+  // Cube
+} from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/Camera';
 import { Texture } from '@pngu/gl/texture';
 
@@ -91,9 +94,11 @@ export class App extends Application {
     const geom = new Geometry({
       position: [...flatten(attribs.positions)],
       indices: [...flatten(attribs.cells)],
-      uv: { numComponents: 2, data: [...flatten(attribs.uvs)] },
+      texcoord: [...flatten(attribs.uvs)],
       normal: [...flatten(attribs.normals)]
     });
+    // const geom = new Cube(2);
+    // console.log(geom.attributes);
 
     this.mat = new Material(vert, frag);
 

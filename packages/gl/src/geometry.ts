@@ -1,11 +1,7 @@
 import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 
-interface GeomAttrib {
-  numComponents: number;
-  data: number[]
-}
-type GeomAttribs = IObjectOf<number[] | GeomAttrib>;
+type GeomAttribs = IObjectOf<number[]>;
 
 export class Geometry {
   attributes: GeomAttribs;
