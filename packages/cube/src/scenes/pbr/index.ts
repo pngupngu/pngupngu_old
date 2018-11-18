@@ -86,9 +86,9 @@ export class App extends Application {
     super.init(gl);
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
-    this.camera.position = [1, 4, 10];
-    this.camera.target = [0, 0, 0];
-    this.camera.up = [0, 1, 0];
+    this.camera.position = new Vec3([1, 4, 10]);
+    this.camera.target = new Vec3([0, 0, 0]);
+    this.camera.up = new Vec3([0, 1, 0]);
 
     const attribs = createTorusMesh();
     const geom = new Geometry({

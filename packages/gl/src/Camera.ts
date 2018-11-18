@@ -1,4 +1,6 @@
-import { mat4, vec3 } from 'gl-matrix';
+import { mat4 } from 'gl-matrix';
+import { Vec3 } from '@thi.ng/vectors/vec3';
+import { Mat44, lookAt, perspective } from '@thi.ng/vectors/mat44';
 
 import { Node } from './node';
 
@@ -6,8 +8,8 @@ export class Camera extends Node {
   protected _width: number;
   protected _height: number;
 
-  protected _view: mat4 = mat4.create();
-  protected _projection: mat4 = mat4.create();
+  protected _view: Mat44 = Mat44.identity();
+  protected _projection: Mat44 = Mat44.identity();
 
   constructor(width: number, height: number) {
     super();
@@ -17,24 +19,24 @@ export class Camera extends Node {
 
   set width(val: number) {
      this._width = val; }
-  get width() { return this._width; }
+  get width(): number { return this._width; }
 
   set height(val: number) { this._height = val; }
-  get height() { return this._height; }
+  get height(): number { return this._height; }
 
-  get projection() { return this._projection; }
-  get view() { return this._view; }
+  get projection(): Mat44 { return this._projection; }
+  get view(): Mat44 { return this._view; }
 }
 
 export class PerspectiveCamera extends Camera {
-  private _fov: number = Math.PI / 6;
+  private _fov: number = 30;
   // private _aspect: number = 1.0;
   private _near: number = 0.01;
   private _far: number = 1000;
   private _projectionCached: boolean = false;
 
-  private _target: any = vec3.fromValues(0, 0, 0);
-  private _up: any = vec3.fromValues(0, 1, 0);
+  private _target: Vec3 = new Vec3();
+  private _up: Vec3 = new Vec3([0, 1, 0]);
   private _viewCached: boolean = false;
 
   set width(val: number) {
@@ -73,27 +75,28 @@ export class PerspectiveCamera extends Camera {
   }
   get far() { return this._far; }
 
-  set position(val: any) {
-    this._position = val;
+  set position(val: Vec3) {
+    this._position.set(val);
     this._viewCached = false;
   }
   get position() { return this._position; }
 
-  set target(val: any) {
-    this._target = val;
+  set target(val: Vec3) {
+    this._target.set(val);
     this._viewCached = false;
   }
   get target() { return this._target; }
 
-  set up(val: any) {
-    this._up = val;
+  set up(val: Vec3) {
+    this._up.set(val);
     this._viewCached = false;
   }
   get up() { return this._up; }
 
   get projection() {
     if (!this._projectionCached) {
-      mat4.perspective(this._projection, this.fov, this.aspect, this.near, this.far);
+      perspective(this._projection.buf, this.fov, this.aspect, this.near, this.far);
+      // mat4.perspective(this._projection, this.fov, this.aspect, this.near, this.far);
       this._projectionCached = true;
     }
     return this._projection;
@@ -101,7 +104,8 @@ export class PerspectiveCamera extends Camera {
 
   get view() {
     if (!this._viewCached) {
-      mat4.lookAt(this._view, this.position, this.target, this.up);
+      lookAt(this._view.buf, this.position.buf, this.target.buf, this.up.buf);
+      // mat4.lookAt(this._view, this.position, this.target, this.up);
       this._viewCached = true;
     }
     return this._view;
