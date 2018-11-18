@@ -31,34 +31,25 @@ export class PerspectiveCamera extends Camera {
   private _near: number = 0.01;
   private _far: number = 1000;
   private _projectionCached: boolean = false;
-
   private _target: Vec3 = new Vec3();
   private _up: Vec3 = new Vec3([0, 1, 0]);
   private _viewCached: boolean = false;
 
   set width(val: number) { this._width = val; this._projectionCached = false; }
   get width(): number { return this._width; }
-
   set height(val: number) { this._height = val; this._projectionCached = false; }
   get height(): number { return this._height; }
-
   set fov(val: number) { this._fov = val; this._projectionCached = false; }
   get fov(): number { return this._fov; }
-
   get aspect(): number { return this.width / this.height; }
-
   set near(val: number) { this._near = val; this._projectionCached = false; }
   get near(): number { return this._near; }
-
   set far(val: number) { this._far = val; this._projectionCached = false; }
   get far(): number { return this._far; }
-
   set position(val: Vec3) { this._position.set(val); this._viewCached = false; }
   get position(): Vec3 { return this._position; }
-
   set target(val: Vec3) { this._target.set(val); this._viewCached = false; }
   get target(): Vec3 { return this._target; }
-
   set up(val: Vec3) { this._up.set(val); this._viewCached = false; }
   get up(): Vec3 { return this._up; }
 
