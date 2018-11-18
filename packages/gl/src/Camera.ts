@@ -16,8 +16,7 @@ export class Camera extends Node {
     this.height = height;
   }
 
-  set width(val: number) {
-     this._width = val; }
+  set width(val: number) { this._width = val; }
   get width(): number { return this._width; }
 
   set height(val: number) { this._height = val; }
@@ -29,7 +28,6 @@ export class Camera extends Node {
 
 export class PerspectiveCamera extends Camera {
   private _fov: number = 30;
-  // private _aspect: number = 1.0;
   private _near: number = 0.01;
   private _far: number = 1000;
   private _projectionCached: boolean = false;
@@ -38,61 +36,33 @@ export class PerspectiveCamera extends Camera {
   private _up: Vec3 = new Vec3([0, 1, 0]);
   private _viewCached: boolean = false;
 
-  set width(val: number) {
-    this._width = val;
-    this._projectionCached = false;
-  }
-  get width() { return this._width; }
+  set width(val: number) { this._width = val; this._projectionCached = false; }
+  get width(): number { return this._width; }
 
-  set height(val: number) {
-    this._height = val;
-    this._projectionCached = false;
-  }
-  get height() { return this._height; }
+  set height(val: number) { this._height = val; this._projectionCached = false; }
+  get height(): number { return this._height; }
 
-  set fov(val: number) {
-    this._fov = val;
-    this._projectionCached = false;
-  }
-  get fov() { return this._fov; }
+  set fov(val: number) { this._fov = val; this._projectionCached = false; }
+  get fov(): number { return this._fov; }
 
-  // set aspect(val: number) {
-  //   this._aspect = val;
-  //   this._projectionCached = false;
-  // }
-  get aspect() { return this.width / this.height; }
+  get aspect(): number { return this.width / this.height; }
 
-  set near(val: number) {
-    this._near = val;
-    this._projectionCached = false;
-  }
-  get near() { return this._near; }
+  set near(val: number) { this._near = val; this._projectionCached = false; }
+  get near(): number { return this._near; }
 
-  set far(val: number) {
-    this._far = val;
-    this._projectionCached = false;
-  }
-  get far() { return this._far; }
+  set far(val: number) { this._far = val; this._projectionCached = false; }
+  get far(): number { return this._far; }
 
-  set position(val: Vec3) {
-    this._position.set(val);
-    this._viewCached = false;
-  }
-  get position() { return this._position; }
+  set position(val: Vec3) { this._position.set(val); this._viewCached = false; }
+  get position(): Vec3 { return this._position; }
 
-  set target(val: Vec3) {
-    this._target.set(val);
-    this._viewCached = false;
-  }
-  get target() { return this._target; }
+  set target(val: Vec3) { this._target.set(val); this._viewCached = false; }
+  get target(): Vec3 { return this._target; }
 
-  set up(val: Vec3) {
-    this._up.set(val);
-    this._viewCached = false;
-  }
-  get up() { return this._up; }
+  set up(val: Vec3) { this._up.set(val); this._viewCached = false; }
+  get up(): Vec3 { return this._up; }
 
-  get projection() {
+  get projection(): Mat44 {
     if (!this._projectionCached) {
       perspective(this._projection.buf, this.fov, this.aspect, this.near, this.far);
       this._projectionCached = true;
@@ -100,7 +70,7 @@ export class PerspectiveCamera extends Camera {
     return this._projection;
   }
 
-  get view() {
+  get view(): Mat44 {
     if (!this._viewCached) {
       lookAt(this._view.buf, this.position.buf, this.target.buf, this.up.buf);
       this._viewCached = true;
