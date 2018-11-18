@@ -1,7 +1,7 @@
 import { enumNames } from '@pngu/core/utils/enum-names';
 import { panel } from '@pngu/ui/panel';
 import { getContext } from '@pngu/gl/application';
-// import { CameraUI } from '@pngu/gl/camera-ui';
+import { CameraUI } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/ui/canvas-webgl';
 import { create as createSelect } from '@pngu/ui/select';
 import { create as createSlider, multiSlider } from '@pngu/ui/slider';
@@ -12,14 +12,14 @@ import { ev } from "./events";
 import { App, DistTypes, GeometryTypes, DiffuseTypes } from './scenes/pbr';
 
 const makeCanvas = app => {
-  // let camUI: CameraUI;
+  let camUI: CameraUI;
   return canvas({
-    init(_el: HTMLCanvasElement, gl: WebGLRenderingContext, { bus }: AppContext) {
+    init(el: HTMLCanvasElement, gl: WebGLRenderingContext, { bus }: AppContext) {
       bus.dispatch([ev.SET_RAF, true]);
       app.init(gl);
 
-      // camUI = new CameraUI(el, app.camera);
-      // camUI.speed = 3;
+      camUI = new CameraUI(el, app.camera);
+      camUI.speed = 3;
     },
     update(_: HTMLCanvasElement, __: WebGLRenderbuffer, { views }: AppContext, time: number, ____: number) {
       app.params = views.params.deref();
@@ -27,7 +27,7 @@ const makeCanvas = app => {
     },
     release(_: HTMLCanvasElement, __: WebGLRenderingContext, { bus }: AppContext) {
       bus.dispatch([ev.SET_RAF, false]);
-      // camUI.release();
+      camUI.release();
     }
   }, getContext());
 };

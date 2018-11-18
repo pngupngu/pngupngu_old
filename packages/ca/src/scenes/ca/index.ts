@@ -1,7 +1,7 @@
 import { IObjectOf } from "@thi.ng/api/api";
 import { rad } from "@thi.ng/math/angle";
-import { createFramebufferInfo, m4 } from 'twgl.js';
-import { vec2 } from 'gl-matrix';
+import { Mat44 } from '@thi.ng/vectors/mat44';
+import { createFramebufferInfo } from 'twgl.js';
 
 import { Application } from '@pngu/gl/application';
 import { Scene } from '@pngu/gl/scene';
@@ -62,13 +62,13 @@ export class CA extends Application {
       a[s] = new Texture(gl, { src: this.stamps[s], wrap: gl.CLAMP_TO_EDGE }, tex => {
         const uniforms = this.mat1.uniforms;
         uniforms.stamp = tex.texture;
-        uniforms.stampSize = vec2.fromValues(tex.width, tex.height);
+        uniforms.stampSize = [tex.width, tex.height];
         uniforms.useStamp = 1;
       });
       return a;
     }, {});
 
-    const plane = new Plane(2, 2, 1, 1, m4.rotationX(rad(90)));
+    const plane = new Plane(2, 2, 1, 1, Mat44.rotationX(rad(90)));
 
     const scale = 1;
     const width = gl.canvas.clientWidth / scale;
@@ -133,9 +133,7 @@ export class CA extends Application {
 
   move(ox, oy) {
     const canvas = this.gl.canvas;
-    const v = vec2.fromValues(ox, oy);
-    vec2.divide(v, v, vec2.fromValues(canvas.clientWidth, canvas.clientHeight));
-    this.mat1.uniforms.mouse = v;
+    this.mat1.uniforms.mouse = [ox / canvas.clientWidth, oy / canvas.clientHeight];
   }
 
   randomize(gen) {
@@ -147,7 +145,7 @@ export class CA extends Application {
     const uniforms = this.mat1.uniforms;
     const tex = this.stampTexs[id];
     uniforms.stamp = tex.texture;
-    uniforms.stampSize = vec2.fromValues(tex.width, tex.height);
+    uniforms.stampSize = [tex.width, tex.height];
     uniforms.useStamp = 1;
   }
 }

@@ -1,6 +1,5 @@
-import { mat4 } from 'gl-matrix';
 import { Vec3 } from '@thi.ng/vectors/vec3';
-import { Mat44, lookAt, perspective } from '@thi.ng/vectors/mat44';
+import { Mat44, lookAt, perspective, ortho } from '@thi.ng/vectors/mat44';
 
 import { Node } from './node';
 
@@ -96,7 +95,6 @@ export class PerspectiveCamera extends Camera {
   get projection() {
     if (!this._projectionCached) {
       perspective(this._projection.buf, this.fov, this.aspect, this.near, this.far);
-      // mat4.perspective(this._projection, this.fov, this.aspect, this.near, this.far);
       this._projectionCached = true;
     }
     return this._projection;
@@ -105,7 +103,6 @@ export class PerspectiveCamera extends Camera {
   get view() {
     if (!this._viewCached) {
       lookAt(this._view.buf, this.position.buf, this.target.buf, this.up.buf);
-      // mat4.lookAt(this._view, this.position, this.target, this.up);
       this._viewCached = true;
     }
     return this._view;
@@ -124,7 +121,7 @@ export class OrthoCamera extends Camera {
 
   get projection() {
     if (!this._projectionCached) {
-      mat4.ortho(this._projection, this.left, this.right, this.bottom, this.top, this.near, this.far);
+      ortho(this._projection.buf, this.left, this.right, this.bottom, this.top, this.near, this.far);
       this._projectionCached = true;
     }
     return this._projection;

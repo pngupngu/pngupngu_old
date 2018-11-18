@@ -1,5 +1,5 @@
-import { mat4 } from 'gl-matrix';
 import { rad } from "@thi.ng/math/angle";
+import { Mat44 } from '@thi.ng/vectors/mat44';
 
 import { Application } from '@pngu/gl/application';
 import { Scene } from '@pngu/gl/scene';
@@ -20,7 +20,7 @@ export class App extends Application {
   init(gl) {
     super.init(gl);
 
-    const plane = new Plane(2, 2, 1, 1, mat4.fromXRotation(mat4.create(), rad(90)));
+    const plane = new Plane(2, 2, 1, 1, Mat44.rotationX(rad(90)));
 
     const width = gl.canvas.clientWidth;
     const height = gl.canvas.clientHeightp;
