@@ -1,4 +1,4 @@
-import { gestureStream, GestureType, GestureInfo } from "@thi.ng/rstream-gestures";
+import { gestureStream, GestureType, GestureInfo, GestureEvent } from "@thi.ng/rstream-gestures";
 import { ISubscribable } from "@thi.ng/rstream/api";
 import { Vec2 } from '@thi.ng/vectors/vec2';
 import { Vec3, setS3 } from '@thi.ng/vectors/vec3';
@@ -27,7 +27,7 @@ function transformQuat(out: Vec3, a: Vec3, q: quat) {
 }
 
 export class CameraUI {
-  sub: ISubscribable<any>;
+  sub: ISubscribable<GestureEvent>;
   speed: number = 5;
   camera: PerspectiveCamera;
 
