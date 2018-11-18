@@ -6,7 +6,6 @@ import { Node } from './node';
 export class Camera extends Node {
   protected _width: number;
   protected _height: number;
-
   protected _view: Mat44 = Mat44.identity();
   protected _projection: Mat44 = Mat44.identity();
 
@@ -18,10 +17,8 @@ export class Camera extends Node {
 
   set width(val: number) { this._width = val; }
   get width(): number { return this._width; }
-
   set height(val: number) { this._height = val; }
   get height(): number { return this._height; }
-
   get projection(): Mat44 { return this._projection; }
   get view(): Mat44 { return this._view; }
 }
