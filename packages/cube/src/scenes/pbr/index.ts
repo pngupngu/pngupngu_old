@@ -1,6 +1,12 @@
-import createTorusMesh from 'primitive-torus';
-import { flatten } from '@thi.ng/iterators/flatten';
+// import createTorusMesh from 'primitive-torus';
+import { repeat } from '@thi.ng/transducers/iter/repeat';
+import { mapcat } from "@thi.ng/transducers/xform/mapcat";
+import { flatten } from "@thi.ng/transducers/xform/flatten";
 import { Vec3 } from '@thi.ng/vectors/vec3';
+import { map } from "@thi.ng/transducers/xform/map";
+import { push } from '@thi.ng/transducers/rfn/push';
+import { comp } from "@thi.ng/transducers/func/comp";
+import { transduce } from '@thi.ng/transducers/transduce';
 
 import { Application } from '@pngu/gl/application';
 import { Scene } from '@pngu/gl/scene';
@@ -8,7 +14,10 @@ import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
 import {
-  Geometry,
+  // Geometry,
+  AABB,
+  tessellate3,
+  Geometry
   // Cube
 } from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/Camera';
@@ -87,18 +96,39 @@ export class App extends Application {
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
     this.camera.position = new Vec3([1, 4, 10]);
-    this.camera.target = new Vec3([0, 0, 0]);
-    this.camera.up = new Vec3([0, 1, 0]);
 
-    const attribs = createTorusMesh();
-    const geom = new Geometry({
-      position: [...flatten(attribs.positions)],
-      indices: [...flatten(attribs.cells)],
-      texcoord: [...flatten(attribs.uvs)],
-      normal: [...flatten(attribs.normals)]
-    });
+    // const attribs = createTorusMesh();
+    // const geom = new Geometry({
+    //   position: [...flatten(attribs.positions)],
+    //   indices: [...flatten(attribs.cells)],
+    //   texcoord: [...flatten(attribs.uvs)],
+    //   normal: [...flatten(attribs.normals)]
+    // });
     // const geom = new Cube(2);
     // console.log(geom.attributes);
+
+    const faces = new AABB().toPolygon().tessellate(tessellate3);
+
+    const faceNormals = [
+      [+1, 0, 0],
+      [-1, 0, 0],
+      [0, +1, 0],
+      [0, -1, 0],
+      [0, 0, +1],
+      [0, 0, -1],
+    ];
+
+    const points = transduce(
+      comp(mapcat((f: Vec3[]) => f), map(v => v.subNewN(0.5))),
+      push(),
+      faces);
+    const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), points);
+
+    const geom = new Geometry({
+      position,
+      texcoord: [...flatten(repeat([[1, 0], [0, 0], [0, 1], [1, 0], [0, 1], [1, 1]], 6))],
+      normal: [...flatten(mapcat(n => repeat(n, 6), faceNormals))]
+    });
 
     this.mat = new Material(vert, frag);
 

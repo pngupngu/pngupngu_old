@@ -120,6 +120,7 @@ export class CA extends Application {
     uni1.e2 = this.params.e2;
     uni1.f1 = this.params.f1;
     uni1.fade = this.fade;
+    uni1.screen = [this.camera.width, this.camera.height];
 
     let uni2 = this.mat2.uniforms;
     uni2.state = rtt.attachments[0];

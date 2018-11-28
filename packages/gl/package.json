@@ -11,9 +11,11 @@
     "test": "tsc -b test && nyc mocha build/**/*.js"
   },
   "dependencies": {
+    "@thi.ng/geom": "^0.2.2",
     "@thi.ng/rstream": "^1.13.7",
     "@thi.ng/rstream-gestures": "^0.5.17",
     "@thi.ng/transducers": "^2.2.2",
+    "@thi.ng/vectors": "^1.4.3",
     "gl-matrix": "^2.8.1",
     "twgl.js": "^4.5.2"
   }

@@ -1,11 +1,47 @@
 import * as assert from "assert";
-import { partition } from '@thi.ng/transducers/xform/partition';
+import { Vec3 } from '@thi.ng/vectors/vec3';
+import { repeat } from '@thi.ng/transducers/iter/repeat';
+import { mapcat } from "@thi.ng/transducers/xform/mapcat";
+import { flatten } from "@thi.ng/transducers/xform/flatten";
+import { map } from "@thi.ng/transducers/xform/map";
+import { push } from '@thi.ng/transducers/rfn/push';
+import { comp } from "@thi.ng/transducers/func/comp";
+import { transduce } from '@thi.ng/transducers/transduce';
 
-import { Cube } from '@pngu/gl/geometry';
+import {
+  AABB,
+  tessellate3
+} from '@pngu/gl/geometry';
 
 describe("foo", () => {
   assert.equal(1, 1);
 
-  const cube = new Cube(2);
-  console.log([...partition(3, cube.attributes.position)]);
+  const faces = new AABB().toPolygon().tessellate(tessellate3);
+  const points = transduce(
+    comp(mapcat((f: Vec3[]) => f), map(v => v.subNewN(0.5))),
+    push(),
+    faces
+  )
+  const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), points);
+
+  const faceNormals = [
+    [+1, 0, 0],
+    [-1, 0, 0],
+    [0, +1, 0],
+    [0, -1, 0],
+    [0, 0, +1],
+    [0, 0, -1],
+  ];
+
+  const attribs = {
+    position,
+    texcoord: [...flatten(repeat([[1, 0], [0, 0], [0, 1], [1, 0], [0, 1], [1, 1]], 6))],
+    normal: [...flatten(mapcat(n => repeat(n, 6), faceNormals))]
+  };
+  console.log(attribs.position);
 });
+
+// describe('bar', () => {
+//   const vs = [new Vec3([1, 0, 0]), new Vec3([1, 0, 1])];
+//   console.log([...map(v => v.subN(0.5), vs)]);
+// })

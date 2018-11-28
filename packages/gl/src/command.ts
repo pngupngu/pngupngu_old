@@ -33,7 +33,6 @@ export class Command {
       mesh.updateMatrices(camera.view);
       obj.uniforms = {
         ...mesh.material.uniforms,
-        screen: [camera.width, camera.height],
         matModel: mesh.model,
         matView: camera.view,
         matProj: camera.projection,

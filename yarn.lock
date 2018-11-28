@@ -1287,6 +1287,17 @@
   resolved "https://registry.yarnpkg.com/@thi.ng/errors/-/errors-0.1.11.tgz#f4f1177a1d44f549d76f5e4a1126d6cf7b89f426"
   integrity sha512-SFV69GvN1Tuvy8x1zHUPkyWn91KfCEVXIEnZSXgJTGdPabopheQjeOo/Yd4ta83lzhLbtopumu0O9gkZYtkgxw==
 
+"@thi.ng/geom@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@thi.ng/geom/-/geom-0.2.2.tgz#bfea55e089739b3b44d0ce43b4a6b614d84eef90"
+  integrity sha512-s2rtcn/8uh7cXW9NaX1EUz6lZ2QaEDzh6s0yal3EuAm9Vur2yO2xjf0GH7gmO/qYqxf+8+fWllZP96kU8f3Gsg==
+  dependencies:
+    "@thi.ng/api" "^4.2.3"
+    "@thi.ng/checks" "^1.5.13"
+    "@thi.ng/math" "^0.2.1"
+    "@thi.ng/transducers" "^2.2.2"
+    "@thi.ng/vectors" "^1.4.3"
+
 "@thi.ng/hdom-components@^2.2.12":
   version "2.2.12"
   resolved "https://registry.yarnpkg.com/@thi.ng/hdom-components/-/hdom-components-2.2.12.tgz#afbbf8d87d39353f41d1005ca96896037ff346c0"
@@ -1340,6 +1351,11 @@
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@thi.ng/math/-/math-0.2.0.tgz#47e099f97848d8a01348ecfec31d5c8a324dd240"
   integrity sha512-KJsWz+gesjXwp4AfTKsTinnAlegYETsj/EUX79+OX7Kd1hHdjmhSxjwVtVabnmrHThAqZgEi05LZ5xfHOFQWhQ==
+
+"@thi.ng/math@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@thi.ng/math/-/math-0.2.1.tgz#58acaef79c78831d198f7e346fba003aa8e6b213"
+  integrity sha512-utqRH8zQvUHZvul+kgW91ZWS2kiYL6unVs6Ej6h5SzizTAre7rATFJCZZ8nHxMDg1NJSx2/6FfwrNFFYM49CfQ==
 
 "@thi.ng/memoize@^0.2.5":
   version "0.2.5"
@@ -1450,6 +1466,17 @@
     "@thi.ng/checks" "^1.5.13"
     "@thi.ng/errors" "^0.1.11"
     "@thi.ng/math" "^0.2.0"
+    "@thi.ng/transducers" "^2.2.2"
+
+"@thi.ng/vectors@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@thi.ng/vectors/-/vectors-1.4.3.tgz#a72e85f4ad7aac6c4294fd7429ad3e349c61bec1"
+  integrity sha512-l0S6OucfGQmho8xCj+vmf60ogqji1lumgtTknajWAhPat9TUChmj/qrPgjYHfWD9dQK+x+fIhrEZ0/nawXD1dg==
+  dependencies:
+    "@thi.ng/api" "^4.2.3"
+    "@thi.ng/checks" "^1.5.13"
+    "@thi.ng/errors" "^0.1.11"
+    "@thi.ng/math" "^0.2.1"
     "@thi.ng/transducers" "^2.2.2"
 
 "@types/mocha@^5.2.5":
