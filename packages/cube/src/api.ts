@@ -9,7 +9,8 @@ import {
   MultiSliderAttribs
 } from '@pngu/ui/api';
 
-import { Params } from './scenes/pbr';
+import { Params as pbrParams } from './scenes/pbr';
+import { Params as wireParams } from './scenes/wire';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
@@ -21,7 +22,7 @@ export interface Module {
 
 interface Views {
   raf: boolean;
-  params: Params;
+  params: pbrParams & wireParams;
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };

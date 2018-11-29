@@ -14,11 +14,9 @@ import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
 import {
-  // Geometry,
   AABB,
   tessellate3,
   Geometry
-  // Cube
 } from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/Camera';
 import { Texture } from '@pngu/gl/texture';
@@ -104,8 +102,6 @@ export class App extends Application {
     //   texcoord: [...flatten(attribs.uvs)],
     //   normal: [...flatten(attribs.normals)]
     // });
-    // const geom = new Cube(2);
-    // console.log(geom.attributes);
 
     const faces = new AABB().toPolygon().tessellate(tessellate3);
 

@@ -1,4 +1,3 @@
-import * as twgl from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api/api";
 import { Vec3 } from '@thi.ng/vectors/vec3';
 import {
@@ -24,38 +23,11 @@ export class Geometry {
   }
 }
 
-export class Cube extends Geometry {
-  constructor(size) {
-    super(twgl.primitives.createCubeVertices(size));
-  }
-}
-
-export class Plane extends Geometry {
-  constructor(width, depth, subdivWidth = 1, subdivDepth = 1, matrix?) {
-    super(twgl.primitives.createPlaneVertices(width, depth, subdivWidth, subdivDepth, matrix));
-  }
-}
-
 export const tessellate3 = <T extends IVector<T>>(pts: ReadonlyArray<T>): T[][] => {
   if (pts.length == 3) {
     return [[pts[0], pts[1], pts[2]]];
   } else if (pts.length == 4) {
     return [[pts[0], pts[1], pts[2]], [pts[0], pts[2], pts[3]]];
-  }
-}
-
-export class Quad3 extends PointContainer3 {
-  faces: Vec3[][];
-
-  constructor(pts: Vec3[], attribs?: Attribs) {
-    super(pts, attribs);
-    this.faces = [pts];
-  }
-
-  tessellate(tessel: Tessellator<Vec3>, iter?: number): Vec3[][];
-  tessellate(tessel: Iterable<Tessellator<Vec3>>): Vec3[][];
-  tessellate(...args: any[]) {
-    return [...mapcat(pts => tessellate.apply(null, [pts, ...args]), this.faces)];
   }
 }
 
@@ -73,6 +45,12 @@ export class Polygon3 extends PointContainer3 implements
   tessellate(tessel: Iterable<Tessellator<Vec3>>): Vec3[][];
   tessellate(...args: any[]) {
     return [...mapcat(pts => tessellate.apply(null, [pts, ...args]), this.faces)];
+  }
+}
+
+export class Quad3 extends Polygon3 {
+  constructor(pts: Vec3[], attribs?: Attribs) {
+    super(pts, [pts], attribs);
   }
 }
 

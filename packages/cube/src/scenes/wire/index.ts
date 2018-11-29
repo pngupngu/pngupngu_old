@@ -1,6 +1,7 @@
 // import { rad } from "@thi.ng/math/angle";
 // import { Mat44 } from '@thi.ng/vectors/mat44';
 import { Vec3 } from '@thi.ng/vectors/vec3';
+import { repeat } from "@thi.ng/transducers/iter/repeat";
 import { mapcat } from "@thi.ng/transducers/xform/mapcat";
 import { flatten } from "@thi.ng/transducers/xform/flatten";
 
@@ -9,18 +10,39 @@ import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import {
-  Quad3, Geometry, tessellate3,
-} from '@pngu/gl/geometry';
+import { Quad3, Geometry, tessellate3, } from '@pngu/gl/geometry';
 import { OrthoCamera } from '@pngu/gl/Camera';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
 
+export interface Params {
+  width: number;
+  feather: number;
+  squeezeMin: number;
+  squeezeMax: number;
+}
+
+export const defaultParams: Params = {
+  width: 0.5,
+  feather: 0.0,
+  squeezeMin: 1.0,
+  squeezeMax: 1.0,
+};
+
 export class App extends Application {
   cmd: Command;
   camera: OrthoCamera;
   mat: Material;
+
+  set params(params: Params) {
+    const uniforms = this.mat.uniforms;
+
+    uniforms.width = params.width;
+    uniforms.feather = params.feather;
+    uniforms.squeezeMin = params.squeezeMin;
+    uniforms.squeezeMax = params.squeezeMax;
+  }
 
   init(gl) {
     super.init(gl);
@@ -36,6 +58,10 @@ export class App extends Application {
     const plane = new Geometry({
       position,
       texcoord: [...flatten([[0, 1], [0, 0], [1, 0], [0, 1], [1, 0], [1, 1]])],
+      barycentric: {
+        data: [...flatten(repeat([[0, 1], [0, 0], [1, 0]], 2))],
+        numComponents: 2
+      }
     });
 
     const width = gl.canvas.clientWidth;

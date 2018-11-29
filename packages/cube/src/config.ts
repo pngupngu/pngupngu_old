@@ -7,8 +7,9 @@ import {
 import { AppConfig } from './api';
 import { handlers } from './events';
 // import { cube } from './cube';
+// import { defaultParams } from './scenes/pbr'
 import { wire } from './wire';
-import { defaultParams } from './scenes/pbr'
+import { defaultParams } from './scenes/wire'
 
 export const CONFIG: AppConfig = {
 

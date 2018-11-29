@@ -9,12 +9,14 @@ uniform mat4 matProj;
 
 in vec3 position;
 in vec2 texcoord;
+in vec2 barycentric;
 
+out vec2 vBarycentric;
 out vec2 vUv;
 
 void main() {
   vUv = texcoord;
-  gl_Position = vec4(position, 1.0);
+  vBarycentric = barycentric;
 
-  // gl_Position = matProj * matModelView * vec4(position, 1.0);
+  gl_Position = matProj * matModelView * vec4(position, 1.0);
 }
