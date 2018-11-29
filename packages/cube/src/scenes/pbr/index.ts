@@ -1,8 +1,8 @@
 // import createTorusMesh from 'primitive-torus';
+import { Vec3 } from '@thi.ng/vectors/vec3';
 import { repeat } from '@thi.ng/transducers/iter/repeat';
 import { mapcat } from "@thi.ng/transducers/xform/mapcat";
 import { flatten } from "@thi.ng/transducers/xform/flatten";
-import { Vec3 } from '@thi.ng/vectors/vec3';
 import { map } from "@thi.ng/transducers/xform/map";
 import { push } from '@thi.ng/transducers/rfn/push';
 import { comp } from "@thi.ng/transducers/func/comp";

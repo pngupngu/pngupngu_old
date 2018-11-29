@@ -1,12 +1,17 @@
-import { rad } from "@thi.ng/math/angle";
-import { Mat44 } from '@thi.ng/vectors/mat44';
+// import { rad } from "@thi.ng/math/angle";
+// import { Mat44 } from '@thi.ng/vectors/mat44';
+import { Vec3 } from '@thi.ng/vectors/vec3';
+import { mapcat } from "@thi.ng/transducers/xform/mapcat";
+import { flatten } from "@thi.ng/transducers/xform/flatten";
 
 import { Application } from '@pngu/gl/application';
 import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import { Plane } from '@pngu/gl/geometry';
+import {
+  Quad3, Geometry, tessellate3,
+} from '@pngu/gl/geometry';
 import { OrthoCamera } from '@pngu/gl/Camera';
 
 import vert from './vert.glsl';
@@ -20,7 +25,18 @@ export class App extends Application {
   init(gl) {
     super.init(gl);
 
-    const plane = new Plane(2, 2, 1, 1, Mat44.rotationX(rad(90)));
+    const pts = [
+      new Vec3([-1, 1, 0]),
+      new Vec3([-1, -1, 0]),
+      new Vec3([1, -1, 0]),
+      new Vec3([1, 1, 0])
+    ];
+    const faces = new Quad3(pts).tessellate(tessellate3);
+    const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), mapcat((f: Vec3[]) => f, faces));
+    const plane = new Geometry({
+      position,
+      texcoord: [...flatten([[0, 1], [0, 0], [1, 0], [0, 1], [1, 0], [1, 1]])],
+    });
 
     const width = gl.canvas.clientWidth;
     const height = gl.canvas.clientHeightp;

@@ -44,6 +44,21 @@ export const tessellate3 = <T extends IVector<T>>(pts: ReadonlyArray<T>): T[][] 
   }
 }
 
+export class Quad3 extends PointContainer3 {
+  faces: Vec3[][];
+
+  constructor(pts: Vec3[], attribs?: Attribs) {
+    super(pts, attribs);
+    this.faces = [pts];
+  }
+
+  tessellate(tessel: Tessellator<Vec3>, iter?: number): Vec3[][];
+  tessellate(tessel: Iterable<Tessellator<Vec3>>): Vec3[][];
+  tessellate(...args: any[]) {
+    return [...mapcat(pts => tessellate.apply(null, [pts, ...args]), this.faces)];
+  }
+}
+
 export class Polygon3 extends PointContainer3 implements
   ITessellateable<Vec3> {
 

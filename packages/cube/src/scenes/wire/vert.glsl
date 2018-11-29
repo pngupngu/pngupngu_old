@@ -7,13 +7,14 @@ precision mediump float;
 uniform mat4 matModelView;
 uniform mat4 matProj;
 
-in vec4 position;
+in vec3 position;
 in vec2 texcoord;
 
 out vec2 vUv;
 
 void main() {
   vUv = texcoord;
+  gl_Position = vec4(position, 1.0);
 
-  gl_Position = matModelView * position;
+  // gl_Position = matProj * matModelView * vec4(position, 1.0);
 }
