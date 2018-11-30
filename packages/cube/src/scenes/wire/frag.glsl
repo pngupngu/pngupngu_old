@@ -13,6 +13,8 @@ uniform float squeezeMax;
 uniform float dashOffset;
 uniform float dashRepeat;
 uniform float dashLength;
+uniform vec3 colorEdge;
+uniform vec3 colorFill;
 
 out vec4 fragColor;
 
@@ -48,10 +50,7 @@ void main() {
   float pattern = fract((pa + dashOffset) * dashRepeat);
   thickness *= 1.0 - aastep(dashLength, pattern);
 
-  float g = gridFactor(bary, thickness, feather);
+  float g = 1.0 - gridFactor(bary, thickness, feather);
 
-  // fragColor = vec4(vec3(g), 1.0);
-  vec3 color = vec3(0.0) * mix(0.0, 0.8, g);
-
-  fragColor = vec4(color, mix(1.0, 0.0, g) + 0.2);
+  fragColor = vec4(mix(colorFill, colorEdge, g), mix(0.2, 1.0, g));
 }

@@ -31,6 +31,8 @@ export interface Params {
   dashOffset: number;
   dashRepeat: number;
   dashLength: number;
+  colorEdge: Vec3;
+  colorFill: Vec3;
 }
 
 export const defaultParams: Params = {
@@ -39,8 +41,10 @@ export const defaultParams: Params = {
   squeezeMin: 1.0,
   squeezeMax: 1.0,
   dashOffset: 0.0,
-  dashRepeat: 1,
+  dashRepeat: 0,
   dashLength: 0.5,
+  colorEdge: new Vec3([0.0, 0.8, 0.0]),
+  colorFill: new Vec3([0.5, 0.0, 0.0]),
 };
 
 export class App extends Application {
@@ -58,6 +62,8 @@ export class App extends Application {
     uniforms.dashOffset = params.dashOffset;
     uniforms.dashRepeat = params.dashRepeat;
     uniforms.dashLength = params.dashLength;
+    uniforms.colorEdge = params.colorEdge;
+    uniforms.colorFill = params.colorFill;
   }
 
   init(gl) {
@@ -93,6 +99,9 @@ export class App extends Application {
       }
     });
 
+    this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
+    this.camera.position = new Vec3([1, 4, 8]);
+
     // const pts = [
     //   new Vec3([-1, 1, 0]),
     //   new Vec3([-1, -1, 0]),
@@ -113,8 +122,6 @@ export class App extends Application {
     // });
 
     // this.camera = new OrthoCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
-    this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
-    this.camera.position = new Vec3([1, 4, 10]);
 
     this.mat = new Material(vert, frag);
 
@@ -128,7 +135,7 @@ export class App extends Application {
     gl.disable(gl.DEPTH_TEST);
     // gl.enable(gl.CULL_FACE);
     gl.enable(gl.BLEND);
-    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 

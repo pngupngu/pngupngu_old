@@ -2,7 +2,7 @@ import { canvas } from '@pngu/ui/canvas-webgl';
 import { getContext } from '@pngu/gl/application';
 import { CameraUI } from '@pngu/gl/camera-ui';
 import { panel } from '@pngu/ui/panel';
-import { create as createSlider } from '@pngu/ui/slider';
+import { create as createSlider, multiSlider } from '@pngu/ui/slider';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
@@ -40,6 +40,8 @@ export const wire = ({ ui, views, bus }: AppContext) => {
   const sDashOffset = createSlider(ui.cslider);
   const sDashRepeat = createSlider(ui.cslider);
   const sDashLength = createSlider(ui.cslider);
+  const msColorEdge = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
+  const msColorFill = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
 
   return () => {
     const params = views.params.deref();
@@ -53,6 +55,8 @@ export const wire = ({ ui, views, bus }: AppContext) => {
         ['dashOffset', [sDashOffset, { min: 0, max: 1, step: 0.01, onchange: onchange('dashOffset') }, params.dashOffset]],
         ['dashRepeat', [sDashRepeat, { min: 0, max: 10, step: 1, onchange: onchange('dashRepeat') }, params.dashRepeat]],
         ['dasLength', [sDashLength, { min: 0, max: 1, step: 0.01, onchange: onchange('dashLength') }, params.dashLength]],
+        ['colorEdge', [msColorEdge, params.colorEdge]],
+        ['colorFill', [msColorFill, params.colorFill]],
       ]
     ];
   };
