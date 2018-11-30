@@ -10,6 +10,9 @@ uniform float width;
 uniform float feather;
 uniform float squeezeMin;
 uniform float squeezeMax;
+uniform float dashOffset;
+uniform float dashRepeat;
+uniform float dashLength;
 
 out vec4 fragColor;
 
@@ -31,14 +34,24 @@ float gridFactor(vec3 bary, float width, float feather) {
   return min(min(a3.x, a3.y), a3.z);
 }
 
+float aastep(float threshold, float dist) {
+  float af = fwidth(dist) * 0.5;
+  return smoothstep(threshold - af, threshold + af, dist);
+}
+
 void main() {
   vec3 bary = baryCoord(vBarycentric);
   float pa = positionAlong(bary);
 
   float thickness = width;
   thickness *= mix(squeezeMin, squeezeMax, (1.0 - sin(pa * PI)));
+  float pattern = fract((pa + dashOffset) * dashRepeat);
+  thickness *= 1.0 - aastep(dashLength, pattern);
 
   float g = gridFactor(bary, thickness, feather);
 
-  fragColor = vec4(vec3(g), 1.0);
+  // fragColor = vec4(vec3(g), 1.0);
+  vec3 color = vec3(0.0) * mix(0.0, 0.8, g);
+
+  fragColor = vec4(color, mix(1.0, 0.0, g) + 0.2);
 }
