@@ -26,6 +26,7 @@ import frag from './frag.glsl';
 export interface Params {
   width: number;
   feather: number;
+  removeEdge: boolean;
   squeezeMin: number;
   squeezeMax: number;
   dashOffset: number;
@@ -36,8 +37,9 @@ export interface Params {
 }
 
 export const defaultParams: Params = {
-  width: 1.0,
+  width: 1.5,
   feather: 0.1,
+  removeEdge: false,
   squeezeMin: 1.0,
   squeezeMax: 1.0,
   dashOffset: 0.0,
@@ -49,6 +51,7 @@ export const defaultParams: Params = {
 
 export class App extends Application {
   cmd: Command;
+  // camera: OrthoCamera;
   camera: PerspectiveCamera;
   mat: Material;
 
@@ -57,6 +60,7 @@ export class App extends Application {
 
     uniforms.width = params.width;
     uniforms.feather = params.feather;
+    uniforms.removeEdge = params.removeEdge;
     uniforms.squeezeMin = params.squeezeMin;
     uniforms.squeezeMax = params.squeezeMax;
     uniforms.dashOffset = params.dashOffset;
@@ -70,16 +74,6 @@ export class App extends Application {
     super.init(gl);
 
     const faces = new AABB().toPolygon().tessellate(tessellate3);
-
-    // const faceNormals = [
-    //   [+1, 0, 0],
-    //   [-1, 0, 0],
-    //   [0, +1, 0],
-    //   [0, -1, 0],
-    //   [0, 0, +1],
-    //   [0, 0, -1],
-    // ];
-
     const points = transduce(
       comp(mapcat((f: Vec3[]) => f), map(v => v.subNewN(0.5))),
       push(),
@@ -89,11 +83,10 @@ export class App extends Application {
     const geom = new Geometry({
       position,
       texcoord: [...flatten(repeat([[1, 0], [0, 0], [0, 1], [1, 0], [0, 1], [1, 1]], 6))],
-      // normal: [...flatten(mapcat(n => repeat(n, 6), faceNormals))],
       barycentric: {
         data: [...flatten(repeat([
-          [0, 1], [0, 0], [1, 0],
-          [1, 0], [0, 0], [0, 1]
+          [1, 0], [0, 0], [0, 1],
+          [0, 1], [1, 0], [0, 0]
         ], 6))],
         numComponents: 2
       }
@@ -110,13 +103,14 @@ export class App extends Application {
     // ];
     // const faces = new Quad3(pts.map(p => p.mulN(0.5))).tessellate(tessellate3);
     // const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), mapcat((f: Vec3[]) => f, faces));
-    // const plane = new Geometry({
+    // const geom = new Geometry({
     //   position,
     //   texcoord: [...flatten([[0, 1], [0, 0], [1, 0], [0, 1], [1, 0], [1, 1]])],
     //   barycentric: {
     //     data: [...flatten([
-    //       [0, 1], [0, 0], [1, 0],
-    //       [1, 0], [0, 0], [0, 1]])],
+    //       [1, 0], [0, 0], [0, 1],
+    //       [0, 1], [1, 0], [0, 0]
+    //     ])],
     //     numComponents: 2
     //   }
     // });
@@ -136,6 +130,8 @@ export class App extends Application {
     // gl.enable(gl.CULL_FACE);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.enable(gl.SAMPLE_COVERAGE);
+    gl.enable(gl.SAMPLE_ALPHA_TO_COVERAGE);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 

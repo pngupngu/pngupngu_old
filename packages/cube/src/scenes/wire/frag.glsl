@@ -8,6 +8,7 @@ precision mediump float;
 
 uniform float width;
 uniform float feather;
+uniform bool removeEdge;
 uniform float squeezeMin;
 uniform float squeezeMax;
 uniform float dashOffset;
@@ -21,7 +22,7 @@ out vec4 fragColor;
 in vec2 vBarycentric;
 
 vec3 baryCoord(vec2 bary) {
-  return vec3(bary.x, bary.y, 1.0 - bary.x - bary.y);
+  return vec3(bary.x, bary.y, removeEdge ? 1.0 : 1.0 - bary.x - bary.y);
 }
 
 float positionAlong(vec3 bary) {
