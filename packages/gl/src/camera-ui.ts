@@ -71,9 +71,9 @@ export class CameraUI {
   }
 
   private handleZoom(delta) {
-    const vd = this.camera.target.subNew(this.camera.position);
-    const speed = Math.pow(Math.E, 0.01 * delta) * vd.mag();
-    this.camera.position = this.camera.target.subNew(vd.normalize().mulN(speed));
+    this.vd.set(this.camera.target).sub(this.camera.position);
+    const speed = Math.pow(Math.E, 0.01 * delta) * this.vd.mag();
+    this.camera.position = this.u.set(this.camera.target).sub(this.vd.normalize().mulN(speed));
   }
 
   private handleStart({ pos }: GestureInfo) {
