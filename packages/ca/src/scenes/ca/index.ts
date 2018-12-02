@@ -10,7 +10,6 @@ import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
 import { Quad3, Geometry, tessellate3 } from '@pngu/gl/geometry';
-
 import { Texture } from '@pngu/gl/texture';
 import { OrthoCamera } from '@pngu/gl/Camera';
 

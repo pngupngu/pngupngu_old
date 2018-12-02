@@ -12,12 +12,7 @@ import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import {
-  // Quad3,
-  AABB,
-  Geometry, tessellate3
-} from '@pngu/gl/geometry';
-// import { OrthoCamera } from '@pngu/gl/Camera';
+import { AABB, Geometry, tessellate3 } from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/Camera';
 
 import vert from './vert.glsl';
@@ -37,9 +32,9 @@ export interface Params {
 }
 
 export const defaultParams: Params = {
-  width: 1.5,
+  width: 1.4,
   feather: 0.1,
-  removeEdge: false,
+  removeEdge: true,
   squeezeMin: 1.0,
   squeezeMax: 1.0,
   dashOffset: 0.0,
@@ -51,7 +46,6 @@ export const defaultParams: Params = {
 
 export class App extends Application {
   cmd: Command;
-  // camera: OrthoCamera;
   camera: PerspectiveCamera;
   mat: Material;
 
@@ -94,28 +88,6 @@ export class App extends Application {
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
     this.camera.position = new Vec3([1, 4, 8]);
-
-    // const pts = [
-    //   new Vec3([-1, 1, 0]),
-    //   new Vec3([-1, -1, 0]),
-    //   new Vec3([1, -1, 0]),
-    //   new Vec3([1, 1, 0])
-    // ];
-    // const faces = new Quad3(pts.map(p => p.mulN(0.5))).tessellate(tessellate3);
-    // const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), mapcat((f: Vec3[]) => f, faces));
-    // const geom = new Geometry({
-    //   position,
-    //   texcoord: [...flatten([[0, 1], [0, 0], [1, 0], [0, 1], [1, 0], [1, 1]])],
-    //   barycentric: {
-    //     data: [...flatten([
-    //       [1, 0], [0, 0], [0, 1],
-    //       [0, 1], [1, 0], [0, 0]
-    //     ])],
-    //     numComponents: 2
-    //   }
-    // });
-
-    // this.camera = new OrthoCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
 
     this.mat = new Material(vert, frag);
 
