@@ -69,6 +69,7 @@ export class App extends Application {
 
   init(gl) {
     super.init(gl);
+    // gl.getExtension('OES_standard_derivatives');
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
     this.camera.position = new Vec3([1, 4, 8]);

@@ -1,4 +1,4 @@
-#version 300 es
+// #version 300 es
 
 #ifdef GL_ES
 precision mediump float;
@@ -7,12 +7,12 @@ precision mediump float;
 uniform mat4 matModelView;
 uniform mat4 matProj;
 
-in vec3 position;
-in vec2 texcoord;
-in vec2 barycentric;
+attribute vec3 position;
+attribute vec2 texcoord;
+attribute vec2 barycentric;
 
-out vec2 vBarycentric;
-out vec2 vUv;
+varying vec2 vBarycentric;
+varying vec2 vUv;
 
 void main() {
   vUv = texcoord;

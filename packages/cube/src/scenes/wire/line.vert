@@ -1,5 +1,3 @@
-#version 300 es
-
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -7,10 +5,10 @@ precision mediump float;
 uniform mat4 matModelView;
 uniform mat4 matProj;
 
-in vec3 position;
-in vec3 color;
+attribute vec3 position;
+attribute vec3 color;
 
-out vec3 vColor;
+varying vec3 vColor;
 
 void main() {
   vColor = color;

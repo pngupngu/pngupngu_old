@@ -7,4 +7,4 @@ export class Application {
   render(_) { }
 }
 
-export const getContext = (opts?: any) => (el: HTMLCanvasElement) => twgl.getContext(el, opts);
+export const getContext = (opts?: any) => (el: HTMLCanvasElement) => twgl.getWebGLContext(el, opts);

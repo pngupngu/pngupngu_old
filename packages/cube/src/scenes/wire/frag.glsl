@@ -1,4 +1,6 @@
-#version 300 es
+// #version 300 es
+
+#extension GL_OES_standard_derivatives : enable
 
 #ifdef GL_ES
 precision mediump float;
@@ -17,9 +19,9 @@ uniform float dashLength;
 uniform vec4 colorEdge;
 uniform vec4 colorFill;
 
-in vec2 vBarycentric;
+varying vec2 vBarycentric;
 
-out vec4 fragColor;
+// out vec4 fragColor;
 
 vec3 baryCoord(vec2 bary) {
   return vec3(bary.x, bary.y, removeEdge ? 1.0 : 1.0 - bary.x - bary.y);
@@ -53,5 +55,5 @@ void main() {
 
   float g = 1.0 - gridFactor(bary, thickness, feather);
 
-  fragColor = mix(colorFill, colorEdge, g);
+  gl_FragColor = mix(colorFill, colorEdge, g);
 }
