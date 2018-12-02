@@ -1,5 +1,6 @@
 import { gestureStream, GestureType, GestureInfo, GestureEvent } from "@thi.ng/rstream-gestures";
 import { ISubscribable } from "@thi.ng/rstream/api";
+import { fromEvent } from '@thi.ng/rstream/from/event';
 import { Vec2 } from '@thi.ng/vectors/vec2';
 import { Vec3, setS3 } from '@thi.ng/vectors/vec3';
 import { quat } from 'gl-matrix';
@@ -27,7 +28,8 @@ function transformQuat(out: Vec3, a: Vec3, q: quat) {
 }
 
 export class CameraUI {
-  sub: ISubscribable<GestureEvent>;
+  sub1: ISubscribable<GestureEvent>;
+  sub2: ISubscribable<any>;
   speed: number = 5;
   camera: PerspectiveCamera;
 
@@ -51,7 +53,7 @@ export class CameraUI {
 
     const $this = this;
 
-    this.sub = gestureStream(el).subscribe({
+    this.sub1 = gestureStream(el).subscribe({
       next({ 0: type, 1: info }) {
         if (type == GestureType.START) {
           $this.handleStart(info);
@@ -60,6 +62,18 @@ export class CameraUI {
         }
       }
     });
+
+    this.sub2 = fromEvent(el, 'wheel').subscribe({
+      next(e: MouseWheelEvent) {
+        $this.handleZoom(e.deltaY);
+      }
+    });
+  }
+
+  private handleZoom(delta) {
+    const vd = this.camera.target.subNew(this.camera.position);
+    const speed = Math.pow(Math.E, 0.01 * delta) * vd.mag();
+    this.camera.position = this.camera.target.subNew(vd.normalize().mulN(speed));
   }
 
   private handleStart({ pos }: GestureInfo) {
@@ -89,6 +103,7 @@ export class CameraUI {
   }
 
   release() {
-    this.sub.unsubscribe();
+    this.sub1.unsubscribe();
+    this.sub2.unsubscribe();
   }
 }
