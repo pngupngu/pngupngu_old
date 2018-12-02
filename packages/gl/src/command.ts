@@ -18,7 +18,10 @@ export class Command {
       const bufferInfo = twgl.createBufferInfoFromArrays(gl, mesh.geometry.attributes);
       const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, bufferInfo);
 
-      this.objects.push({ programInfo, vertexArrayInfo, mesh });
+      this.objects.push({
+        programInfo, vertexArrayInfo, mesh,
+        type: mesh.type
+       });
     });
   }
 

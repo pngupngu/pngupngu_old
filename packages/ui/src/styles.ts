@@ -44,10 +44,10 @@ export const checkbox: CheckBoxAttribs = {
   label: { class: 'absolute left-0 dib pointer border-box w1 h1 bg-black' }
 }
 
-export const multiSlider: MultiSliderAttribs = {
-  container: { class: 'dg gtc3' },
+export const multiSlider: (n: 2 | 3 | 4) => MultiSliderAttribs = n => ({
+  container: { class: `dg gtc${n}` },
   slider: addClass(slider, 'mr-2 ctrl', 'container')
-}
+});
 
 export const inlineButton: UIAttrib = inline(button);
 export const inlineSelect: UIAttrib = inline(select, 'container');

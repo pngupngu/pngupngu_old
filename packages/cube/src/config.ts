@@ -32,7 +32,10 @@ export const CONFIG: AppConfig = {
   },
 
   ui: {
-    root, button, select, slider, checkbox, multiSlider,
+    root, button, select, slider, checkbox,
+
+    multiSlider3: multiSlider(3),
+    multiSlider4: multiSlider(4),
 
     panel: addClass(panel, 'absolute w5', 'container'),
 

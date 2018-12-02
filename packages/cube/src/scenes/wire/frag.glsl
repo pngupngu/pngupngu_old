@@ -14,12 +14,12 @@ uniform float squeezeMax;
 uniform float dashOffset;
 uniform float dashRepeat;
 uniform float dashLength;
-uniform vec3 colorEdge;
-uniform vec3 colorFill;
-
-out vec4 fragColor;
+uniform vec4 colorEdge;
+uniform vec4 colorFill;
 
 in vec2 vBarycentric;
+
+out vec4 fragColor;
 
 vec3 baryCoord(vec2 bary) {
   return vec3(bary.x, bary.y, removeEdge ? 1.0 : 1.0 - bary.x - bary.y);
@@ -53,5 +53,5 @@ void main() {
 
   float g = 1.0 - gridFactor(bary, thickness, feather);
 
-  fragColor = vec4(mix(colorFill, colorEdge, g), mix(0.2, 1.0, g));
+  fragColor = mix(colorFill, colorEdge, g);
 }

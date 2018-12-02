@@ -42,8 +42,8 @@ export const wire = ({ ui, views, bus }: AppContext) => {
   const sDashOffset = createSlider(ui.cslider);
   const sDashRepeat = createSlider(ui.cslider);
   const sDashLength = createSlider(ui.cslider);
-  const msColorEdge = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
-  const msColorFill = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
+  const msColorEdge = multiSlider(4, ui.multiSlider4, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
+  const msColorFill = multiSlider(4, ui.multiSlider4, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
 
   return () => {
     const params = views.params.deref();

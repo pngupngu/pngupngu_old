@@ -3,7 +3,10 @@ import { Geometry } from './geometry';
 import { Material } from './material';
 
 export class Mesh extends Node {
-  constructor(readonly geometry: Geometry, readonly material: Material) {
+  type: number; // gl.TRIANGLES;
+
+  constructor(readonly geometry: Geometry, readonly material: Material, type: number = 4) {
     super();
+    this.type = type;
   }
 }

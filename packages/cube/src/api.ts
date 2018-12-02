@@ -46,7 +46,8 @@ export interface UIAttribs {
   slider?: SliderAttribs;
   panel?: PanelAttribs;
   checkbox?: CheckBoxAttribs;
-  multiSlider?: MultiSliderAttribs;
+  multiSlider3?: MultiSliderAttribs;
+  multiSlider4?: MultiSliderAttribs;
 }
 
 export interface AppContext {

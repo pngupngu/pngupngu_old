@@ -1,4 +1,5 @@
 import { Vec3 } from '@thi.ng/vectors/vec3';
+import { Vec4 } from '@thi.ng/vectors/vec4';
 import { mapcat } from "@thi.ng/transducers/xform/mapcat";
 import { flatten } from "@thi.ng/transducers/xform/flatten";
 import { map } from "@thi.ng/transducers/xform/map";
@@ -17,6 +18,8 @@ import { PerspectiveCamera } from '@pngu/gl/Camera';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
+import lineVert from './line.vert';
+import lineFrag from './line.frag';
 
 export interface Params {
   width: number;
@@ -27,8 +30,8 @@ export interface Params {
   dashOffset: number;
   dashRepeat: number;
   dashLength: number;
-  colorEdge: Vec3;
-  colorFill: Vec3;
+  colorEdge: Vec4;
+  colorFill: Vec4;
 }
 
 export const defaultParams: Params = {
@@ -40,8 +43,8 @@ export const defaultParams: Params = {
   dashOffset: 0.0,
   dashRepeat: 0,
   dashLength: 0.5,
-  colorEdge: new Vec3([0.0, 0.8, 0.0]),
-  colorFill: new Vec3([0.5, 0.0, 0.0]),
+  colorEdge: new Vec4([0.3, 0.3, 0.3, 1.0]),
+  colorFill: new Vec4([0.0, 0.0, 0.0, 0.2]),
 };
 
 export class App extends Application {
@@ -67,32 +70,53 @@ export class App extends Application {
   init(gl) {
     super.init(gl);
 
+    this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
+    this.camera.position = new Vec3([1, 4, 8]);
+
     const faces = new AABB().toPolygon().tessellate(tessellate3);
     const points = transduce(
       comp(mapcat((f: Vec3[]) => f), map(v => v.subNewN(0.5))),
       push(),
       faces);
     const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), points);
+    const barycentric = {
+      data: [...flatten(repeat([
+        [1, 0], [0, 0], [0, 1],
+        [0, 1], [1, 0], [0, 0]
+      ], 6))],
+      numComponents: 2
+    };
 
     const geom = new Geometry({
-      position,
+      position, barycentric,
       texcoord: [...flatten(repeat([[1, 0], [0, 0], [0, 1], [1, 0], [0, 1], [1, 1]], 6))],
-      barycentric: {
-        data: [...flatten(repeat([
-          [1, 0], [0, 0], [0, 1],
-          [0, 1], [1, 0], [0, 0]
-        ], 6))],
-        numComponents: 2
-      }
     });
 
-    this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
-    this.camera.position = new Vec3([1, 4, 8]);
+    const geom2 = new Geometry({
+      position: [...flatten([
+        [0, 0, 0],
+        [1, 0, 0],
+        [0, 0, 0],
+        [0, 1, 0],
+        [0, 0, 0],
+        [0, 0, 1]
+      ])],
+      color: [...flatten([
+        [1, 0, 0, 1],
+        [1, 0, 0, 1],
+        [0, 1, 0, 1],
+        [0, 1, 0, 1],
+        [0, 0, 1, 1],
+        [0, 0, 1, 1],
+      ])]
+    });
 
     this.mat = new Material(vert, frag);
 
     const scene = new Scene();
     scene.add(new Mesh(geom, this.mat));
+    scene.add(new Mesh(geom2, new Material(lineVert, lineFrag), gl.LINES));
+
     this.cmd = new Command(gl, scene);
   }
 
