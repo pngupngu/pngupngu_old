@@ -13,8 +13,7 @@ import { defaultParams } from './scenes/wire'
 
 export const CONFIG: AppConfig = {
 
-  events: handlers.events,
-  effects: handlers.effects,
+  handlers,
 
   domRoot: 'app',
 
@@ -31,7 +30,6 @@ export const CONFIG: AppConfig = {
     raf: 'raf',
     params: 'params',
     orientation: 'orientation',
-    // angle: 'angle',
   },
 
   ui: {
@@ -46,6 +44,6 @@ export const CONFIG: AppConfig = {
     cselect: addClass(select, 'mr-2 ctrl', 'container'),
 
     ca: { class: 'w-100 h-100 absolute' },
-    orient: { class: 'absolute bottom-0 left-0 right-0 tc code f7' },
+    orient: { class: 'absolute top-0 left-0 right-0 tc code f7' },
   }
 };

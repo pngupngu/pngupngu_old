@@ -1,14 +1,10 @@
-import { DEG2RAD } from '@thi.ng/math/api';
-import { Vec3 } from '@thi.ng/vectors/vec3';
-import { Mat44 } from '@thi.ng/vectors/mat44';
-
 import { canvas } from '@pngu/ui/canvas-webgl';
 import { getContext } from '@pngu/gl/application';
 import { CameraUI } from '@pngu/gl/camera-ui';
 // import { panel } from '@pngu/ui/panel';
 // import { create as createCheckbox } from '@pngu/ui/checkbox';
 // import { create as createSlider, multiSlider } from '@pngu/ui/slider';
-import { fromOrientation } from '@pngu/core/rstream/from-orientation';
+// import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
@@ -35,44 +31,9 @@ const makeCanvas = app => {
   }, getContext());
 };
 
-function mat44FromEulerYXZ(mat: Mat44, alpha: number, beta: number, gamma: number) {
-  let x = alpha * DEG2RAD, y = beta * DEG2RAD, z = gamma * DEG2RAD;
-  let a = Math.cos(x), b = Math.sin(x);
-  let c = Math.cos(y), d = Math.sin(y);
-  let e = Math.cos(z), f = Math.sin(z);
-  let ce = c * e, cf = c * f, de = d * e, df = d * f;
-
-  mat[0] = ce + df * b;
-  mat[4] = de * b - cf;
-  mat[8] = a * d;
-
-  mat[1] = a * f;
-  mat[5] = a * e;
-  mat[9] = - b;
-
-  mat[2] = cf * b - de;
-  mat[6] = df + ce * b;
-  mat[10] = a * c;
-
-  return mat;
-}
-
-export const wire = ({ ui, views, bus }: AppContext) => {
+export const wire = ({ ui, views }: AppContext) => {
   const canvas_ = makeCanvas(new App());
   // const onchange = name => v => bus.dispatch([ev.SET_PARAM, [name, v]]);
-
-  fromOrientation(1e-1).subscribe({
-    next(e) {
-      const mat = Mat44.identity();
-      mat44FromEulerYXZ(mat, e.beta, e.alpha, -e.gamma);
-      const v = mat
-        .mul(Mat44.rotationX(-90 * DEG2RAD))
-        .mulV3(new Vec3([0, 1, 0]));
-
-      // bus.dispatch([ev.SET_ORIENTATION, [e.alpha, e.beta, e.gamma]]);
-      bus.dispatch([ev.SET_ORIENTATION, [v.x, v.y, v.z]]);
-    }
-  });
 
   // const sWidth = createSlider(ui.cslider);
   // const sFeather = createSlider(ui.cslider);

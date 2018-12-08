@@ -44,7 +44,6 @@ export class App {
       fx.ROUTE_TO,
       ([id, params]) => this.router.routeTo(this.router.format(id, params))
     );
-    // this.ctx.bus.instrumentWith([trace]);
     this.addViews({
       route: "route",
       routeComponent: [

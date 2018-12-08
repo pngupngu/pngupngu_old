@@ -1,6 +1,6 @@
 import { IObjectOf } from "@thi.ng/api/api";
 import { ViewTransform, IView } from "@thi.ng/atom/api";
-import { EventDef, EffectDef, InterceptorContext } from "@thi.ng/interceptors/api";
+import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
 
 import {
@@ -14,12 +14,6 @@ import { Params as wireParams } from './scenes/wire';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
-export interface Module {
-  load(): Promise<any>;
-  init(): InterceptorContext;
-  release(): InterceptorContext;
-}
-
 interface Views {
   raf: boolean;
   params: pbrParams & wireParams;
@@ -30,11 +24,15 @@ export type AppViews = { [P in keyof Views]: IView<Views[P]> };
 
 export type ViewSpec = string | [string, ViewTransform<any>];
 
+export type Handlers = {
+  events: IObjectOf<EventDef>;
+  effects: IObjectOf<EffectDef>;
+}
+
 export interface AppConfig {
   domRoot: string | Element;
   rootComponent: any;
-  effects: IObjectOf<EffectDef>;
-  events: IObjectOf<EventDef>;
+  handlers: Handlers;
   initialState: any;
   ui: UIAttribs;
   views: Partial<Record<keyof AppViews, ViewSpec>>;
