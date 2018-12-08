@@ -11,7 +11,9 @@
     "test": "tsc -b test && nyc mocha build/**/*.js"
   },
   "dependencies": {
+    "@pngu/core": "^1.0.0",
     "@thi.ng/geom": "^0.2.2",
+    "@thi.ng/math": "^0.2.1",
     "@thi.ng/rstream": "^1.13.7",
     "@thi.ng/rstream-gestures": "^0.5.17",
     "@thi.ng/transducers": "^2.2.2",

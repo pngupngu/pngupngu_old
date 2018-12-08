@@ -6,6 +6,8 @@ import { setIn } from '@thi.ng/paths';
 export enum ev {
   SET_RAF,
   SET_PARAM,
+  SET_ORIENTATION,
+  SET_ANGLE,
 };
 
 export enum fx {
@@ -19,6 +21,8 @@ type Handlers = {
 export const handlers: Handlers = {
   events: {
     [ev.SET_RAF]: valueSetter('raf'),
+    [ev.SET_ORIENTATION]: valueSetter('orientation'),
+    [ev.SET_ANGLE]: valueSetter('angle'),
     [ev.SET_PARAM]: (state, [_, [name, v]]) => ({
       [FX_STATE]: setIn(state, ['params', name], v)
     })

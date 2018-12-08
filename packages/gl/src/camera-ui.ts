@@ -3,7 +3,11 @@ import { ISubscribable } from "@thi.ng/rstream/api";
 import { fromEvent } from '@thi.ng/rstream/from/event';
 import { Vec2 } from '@thi.ng/vectors/vec2';
 import { Vec3, setS3 } from '@thi.ng/vectors/vec3';
+import { Mat44 } from '@thi.ng/vectors/mat44';
+import { DEG2RAD } from '@thi.ng/math/api';
 import { quat } from 'gl-matrix';
+
+import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 
 import { PerspectiveCamera } from './Camera';
 
@@ -27,9 +31,32 @@ function transformQuat(out: Vec3, a: Vec3, q: quat) {
   setS3(out.buf, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
 }
 
+function mat44FromEulerYXZ(mat: Mat44, alpha: number, beta: number, gamma: number) {
+  let x = alpha * DEG2RAD, y = beta * DEG2RAD, z = gamma * DEG2RAD;
+  let a = Math.cos(x), b = Math.sin(x);
+  let c = Math.cos(y), d = Math.sin(y);
+  let e = Math.cos(z), f = Math.sin(z);
+  let ce = c * e, cf = c * f, de = d * e, df = d * f;
+
+  mat[0] = ce + df * b;
+  mat[4] = de * b - cf;
+  mat[8] = a * d;
+
+  mat[1] = a * f;
+  mat[5] = a * e;
+  mat[9] = - b;
+
+  mat[2] = cf * b - de;
+  mat[6] = df + ce * b;
+  mat[10] = a * c;
+
+  return mat;
+}
+
 export class CameraUI {
   sub1: ISubscribable<GestureEvent>;
   sub2: ISubscribable<any>;
+  sub3: ISubscribable<any>;
   speed: number = 5;
   camera: PerspectiveCamera;
 
@@ -68,6 +95,22 @@ export class CameraUI {
         $this.handleZoom(e.deltaY);
       }
     });
+
+    this.sub3 = fromOrientation(1e-2).subscribe({
+      next(e) { $this.handleOrientation(e); }
+    });
+  }
+
+  private handleOrientation(e: DeviceOrientationEvent) {
+    const pd = this.camera.target.dist(this.camera.position);
+    const mat = Mat44.identity();
+    mat44FromEulerYXZ(mat, e.beta, e.alpha, -e.gamma);
+    mat
+      .mul(Mat44.rotationX(-90 * DEG2RAD))
+      .mulV3(this.vd.setS(0, 0, 1));
+
+    this.camera.position = this.camera.target.addNew(this.vd.mulN(pd));
+    this.camera.up = mat.mulV3(this.vd.setS(0, 1, 0));
   }
 
   private handleZoom(delta) {

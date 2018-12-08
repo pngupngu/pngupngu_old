@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@thi.ng/checks": "^1.5.13",
+    "@thi.ng/math": "^0.2.1",
     "@thi.ng/rstream": "^1.13.7"
   }
 }

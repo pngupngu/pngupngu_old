@@ -23,6 +23,7 @@ export interface Module {
 interface Views {
   raf: boolean;
   params: pbrParams & wireParams;
+  orientation: number[];
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };

@@ -44,7 +44,7 @@ export const defaultParams: Params = {
   dashRepeat: 0,
   dashLength: 0.5,
   colorEdge: new Vec4([0.3, 0.3, 0.3, 1.0]),
-  colorFill: new Vec4([0.0, 0.0, 0.0, 0.2]),
+  colorFill: new Vec4([0.0, 0.0, 0.0, 0.25]),
 };
 
 export class App extends Application {
@@ -69,10 +69,10 @@ export class App extends Application {
 
   init(gl) {
     super.init(gl);
-    // gl.getExtension('OES_standard_derivatives');
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
-    this.camera.position = new Vec3([1, 4, 8]);
+    // this.camera.position = new Vec3([1, 4, 8]);
+    this.camera.position = new Vec3([0, 0, 8]);
 
     const faces = new AABB().toPolygon().tessellate(tessellate3);
     const points = transduce(

@@ -23,12 +23,15 @@ export const CONFIG: AppConfig = {
 
   initialState: {
     raf: false,
-    params: defaultParams
+    params: defaultParams,
+    orientation: [0, 0, 0],
   },
 
   views: {
     raf: 'raf',
-    params: 'params'
+    params: 'params',
+    orientation: 'orientation',
+    // angle: 'angle',
   },
 
   ui: {
@@ -43,5 +46,6 @@ export const CONFIG: AppConfig = {
     cselect: addClass(select, 'mr-2 ctrl', 'container'),
 
     ca: { class: 'w-100 h-100 absolute' },
+    orient: { class: 'absolute bottom-0 left-0 right-0 tc code f7' },
   }
 };
