@@ -14,14 +14,14 @@ export const wire = ({ ui, views, bus }: AppContext) => {
     slider: ui.cslider,
     checkbox: ui.checkbox,
     multislider: ui.multiSlider4
-  });
+  }, onchange);
 
   return () => {
     const params = views.params.deref();
     const orient = views.orientation.deref();
     return ['div', ui.root,
       [canvas_, ui.ca, params],
-      [panel_, onchange, params],
+      [panel_, params],
       ['div', ui.orient,
         `${orient[0].toFixed(2)}, ${orient[1].toFixed(2)}, ${orient[2].toFixed(2)}`],
     ];

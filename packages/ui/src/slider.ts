@@ -39,16 +39,30 @@ export const slider = () => {
   };
 };
 
-export const create = () => {
+export const create = (args0?: Partial<SliderArgs>) => {
   const slider_ = slider();
-  return (_: any, args: SliderArgs, value: number) => [slider_, args, value];
+  return (_: any, args1: Partial<SliderArgs>, value: number) =>
+    [slider_, { ...args0, ...args1 }, value];
 };
 
-export const multiSlider = (n: number) => {
-  const sliders = [...map(_ => create(), range(n))];
-  return (_: any, { min, max, step, precision = 2, onchange = NOOP, attribs }: MultiSliderArgs, value: IVec) =>
-    ['div', attribs.container, ...map((i: number) =>
-      [sliders[i], { min, max, step, precision, attribs: attribs.slider, onchange: v => onchange((value[i] = v, value)) }, value[i]],
-      range(n))
+export const multiSlider = (n: number, args0?: Partial<MultiSliderArgs>) => {
+  const opts = {
+    min: args0.min, max: args0.max, step: args0.step,
+    precision: args0.precision, attribs: args0.attribs.slider
+  };
+  const sliders = [...map(_ => create(opts), range(n))];
+
+  return (_: any, args1: Partial<MultiSliderArgs>, value: IVec) =>
+    ['div', args1.attribs ? args1.attribs.container : args0.attribs.container,
+      ...map((i: number) =>
+        [sliders[i], {
+          min: args1.min || args0.min,
+          max: args1.max || args0.max,
+          step: args1.step || args0.step,
+          precision: args1.precision || args0.precision,
+          attribs: args1.attribs ? args1.attribs.slider : args0.attribs.slider,
+          onchange: v => (args1.onchange || args0.onchange)((value[i] = v, value))
+        }, value[i]],
+        range(n))
     ];
 }

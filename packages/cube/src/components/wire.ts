@@ -45,29 +45,29 @@ export interface ControlAttribs {
   multislider: MultiSliderAttribs;
 }
 
-export const controls = (attribs: ControlAttribs) => {
-  const sWidth = createSlider();
-  const sFeather = createSlider();
-  const sSqueezeMin = createSlider();
-  const sSqueezeMax = createSlider();
-  const sDashOffset = createSlider();
-  const sDashRepeat = createSlider();
-  const sDashLength = createSlider();
-  const msColorEdge = multiSlider(4);
-  const msColorFill = multiSlider(4);
+export const controls = (attribs: ControlAttribs, onchange: (name: string) => (v: any) => void) => {
+  const sWidth = createSlider({ min: 0, max: 10, step: 0.01, onchange: onchange('width'), attribs: attribs.slider });
+  const sFeather = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('feather'), attribs: attribs.slider });
+  const sSqueezeMin = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('squeezeMin'), attribs: attribs.slider });
+  const sSqueezeMax = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('squeezeMax'), attribs: attribs.slider });
+  const sDashOffset = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('dashOffset'), attribs: attribs.slider });
+  const sDashRepeat = createSlider({ min: 0, max: 10, step: 1, onchange: onchange('dashRepeat'), attribs: attribs.slider });
+  const sDashLength = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('dashLength'), attribs: attribs.slider });
+  const msColorEdge = multiSlider(4, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor'), attribs: attribs.multislider });
+  const msColorFill = multiSlider(4, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor'), attribs: attribs.multislider });
 
-  return (_: any, onchange: (name: string) => (v: any) => void, params: Params) => {
+  return (_: any, params: Params) => {
     return [panel, attribs.panel,
-      ['width', [sWidth, { min: 0, max: 10, step: 0.01, onchange: onchange('width'), attribs: attribs.slider }, params.width]],
-      ['feather', [sFeather, { min: 0, max: 1, step: 0.01, onchange: onchange('feather'), attribs: attribs.slider }, params.feather]],
+      ['width', [sWidth, {}, params.width]],
+      ['feather', [sFeather, {}, params.feather]],
       ['removeEdge', [checkbox, {id: 'removeEdge', onchange: onchange('removeEdge'), attribs: attribs.checkbox}, params.removeEdge]],
-      ['squeezeMin', [sSqueezeMin, { min: 0, max: 1, step: 0.01, onchange: onchange('squeezeMin'), attribs: attribs.slider }, params.squeezeMin]],
-      ['squeezeMax', [sSqueezeMax, { min: 0, max: 1, step: 0.01, onchange: onchange('squeezeMax'), attribs: attribs.slider }, params.squeezeMax]],
-      ['dashOffset', [sDashOffset, { min: 0, max: 1, step: 0.01, onchange: onchange('dashOffset'), attribs: attribs.slider }, params.dashOffset]],
-      ['dashRepeat', [sDashRepeat, { min: 0, max: 10, step: 1, onchange: onchange('dashRepeat'), attribs: attribs.slider }, params.dashRepeat]],
-      ['dashLength', [sDashLength, { min: 0, max: 1, step: 0.01, onchange: onchange('dashLength'), attribs: attribs.slider }, params.dashLength]],
-      ['colorEdge', [msColorEdge, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor'), attribs: attribs.multislider }, params.colorEdge]],
-      ['colorFill', [msColorFill, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor'), attribs: attribs.multislider }, params.colorFill]],
+      ['squeezeMin', [sSqueezeMin, {}, params.squeezeMin]],
+      ['squeezeMax', [sSqueezeMax, {}, params.squeezeMax]],
+      ['dashOffset', [sDashOffset, {}, params.dashOffset]],
+      ['dashRepeat', [sDashRepeat, {}, params.dashRepeat]],
+      ['dashLength', [sDashLength, {}, params.dashLength]],
+      ['colorEdge', [msColorEdge, {}, params.colorEdge]],
+      ['colorFill', [msColorFill, {}, params.colorFill]],
     ];
   }
 }

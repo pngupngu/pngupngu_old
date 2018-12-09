@@ -24,7 +24,11 @@ export interface SliderArgs {
   attribs: SliderAttribs;
 }
 
-export type MultiSliderAttribs = ComponentAttrib<'container' | 'slider'>;
+export interface MultiSliderAttribs {
+  container: UIAttrib;
+  slider: SliderAttribs;
+}
+
 export interface MultiSliderArgs {
   min: number;
   max: number;
