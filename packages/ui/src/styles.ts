@@ -10,7 +10,7 @@ import {
 export const addClass = (attribs, klass, path?: string) =>
   updateIn(attribs, path ? toPath(path).concat(['class']) : 'class', cls => cx(cls, klass));
 
-export const inline = (attribs: UIAttrib | ComponentAttrib, path?: string) =>
+export const inline = (attribs: UIAttrib | ComponentAttrib<string>, path?: string) =>
   addClass(attribs, 'mh1 dib', path);
 
 export const root = { class: 'vw-100 vh-100 pa0 sans-serif f6 fw2 barlow bg-white98 relative' };
@@ -44,10 +44,13 @@ export const checkbox: CheckBoxAttribs = {
   label: { class: 'absolute left-0 dib pointer border-box w1 h1 bg-black' }
 }
 
-export const multiSlider: (n: 2 | 3 | 4) => MultiSliderAttribs = n => ({
+const multiSlider: (n: 2 | 3 | 4) => MultiSliderAttribs = n => ({
   container: { class: `dg gtc${n}` },
   slider: addClass(slider, 'mr-2 ctrl', 'container')
 });
+
+export const multiSlider3 = multiSlider(3);
+export const multiSlider4 = multiSlider(4);
 
 export const inlineButton: UIAttrib = inline(button);
 export const inlineSelect: UIAttrib = inline(select, 'container');

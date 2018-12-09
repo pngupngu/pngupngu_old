@@ -4,17 +4,17 @@ export interface UIAttrib {
   class: string;
 }
 
-export type ComponentAttrib = Record<string, Partial<UIAttrib>>;
+export type ComponentAttrib<T extends string> = Record<T, Partial<UIAttrib>>;
 
-export type PanelAttribs = Record<'container' | 'label' | 'content', Partial<UIAttrib>>;
+export type PanelAttribs = ComponentAttrib<'container' | 'label' | 'content'>;
 
-export type SelectAttribs = Record<'container' | 'triangle' | 'dropdown', Partial<UIAttrib>>;
+export type SelectAttribs = ComponentAttrib<'container' | 'triangle' | 'dropdown'>;
 export interface SelectArgs {
   attribs: SelectAttribs;
   onchange?: (e: string | number) => void;
 }
 
-export type SliderAttribs = Record<'container' | 'handle' | 'value', Partial<UIAttrib>>;
+export type SliderAttribs = ComponentAttrib<'container' | 'handle' | 'value'>;
 export interface SliderArgs {
   min: number;
   max: number;
@@ -24,7 +24,7 @@ export interface SliderArgs {
   attribs: SliderAttribs;
 }
 
-export type MultiSliderAttribs = Record<'container' | 'slider', Partial<UIAttrib>>;
+export type MultiSliderAttribs = ComponentAttrib<'container' | 'slider'>;
 export interface MultiSliderArgs {
   min: number;
   max: number;
@@ -33,7 +33,7 @@ export interface MultiSliderArgs {
   onchange?(v: IVec): void;
 }
 
-export type CheckBoxAttribs = Record<'container' | 'input' | 'label', Partial<UIAttrib>>;
+export type CheckBoxAttribs = ComponentAttrib<'container' | 'input' | 'label'>;
 export interface CheckBoxArgs {
   id: string;
   onchange(e: boolean): void;

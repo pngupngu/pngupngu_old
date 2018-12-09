@@ -39,7 +39,7 @@ export interface AppConfig {
 }
 
 export interface UIAttribs {
-  [key: string]: Partial<UIAttrib> | ComponentAttrib;
+  [key: string]: Partial<UIAttrib> | ComponentAttrib<string>;
 
   select?: SelectAttribs;
   slider?: SliderAttribs;

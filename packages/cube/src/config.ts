@@ -1,6 +1,6 @@
 import {
   root, panel, select, button, slider, checkbox,
-  multiSlider,
+  multiSlider3, multiSlider4,
   addClass
 } from '@pngu/ui/styles';
 
@@ -12,7 +12,6 @@ import { wire } from './wire';
 import { defaultParams } from './scenes/wire'
 
 export const CONFIG: AppConfig = {
-
   handlers,
 
   domRoot: 'app',
@@ -34,9 +33,7 @@ export const CONFIG: AppConfig = {
 
   ui: {
     root, button, select, slider, checkbox,
-
-    multiSlider3: multiSlider(3),
-    multiSlider4: multiSlider(4),
+    multiSlider3, multiSlider4,
 
     panel: addClass(panel, 'absolute w5', 'container'),
 
