@@ -28,7 +28,7 @@ export const CONFIG: AppConfig = {
   views: {
     raf: 'raf',
     params: 'params',
-    orientation: 'orientation',
+    orientation: 'orientation'
   },
 
   ui: {

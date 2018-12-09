@@ -1,3 +1,5 @@
+import { float } from '@thi.ng/strings/float';
+
 import { AppContext } from "./api";
 import { ev } from "./events";
 import { App } from './scenes/wire';
@@ -8,13 +10,14 @@ export const wire = ({ ui, views, bus }: AppContext) => {
     init: () => bus.dispatch([ev.SET_RAF, true]),
     release: () => bus.dispatch([ev.SET_RAF, false])
   });
-  const onchange = name => value => bus.dispatch([ev.SET_PARAM, [name, value]]);
   const panel_ = controls({
     panel: ui.panel,
     slider: ui.cslider,
     checkbox: ui.checkbox,
     multislider: ui.multiSlider4
-  }, onchange);
+  }, (name, value) => bus.dispatch([ev.SET_PARAM, [name, value]]));
+
+  const fmt = float(2);
 
   return () => {
     const params = views.params.deref();
@@ -22,8 +25,7 @@ export const wire = ({ ui, views, bus }: AppContext) => {
     return ['div', ui.root,
       [canvas_, ui.ca, params],
       [panel_, params],
-      ['div', ui.orient,
-        `${orient[0].toFixed(2)}, ${orient[1].toFixed(2)}, ${orient[2].toFixed(2)}`],
+      ['div', ui.orient, `${fmt(orient[0])}, ${fmt(orient[1])}, ${fmt(orient[2])}`],
     ];
   };
 }

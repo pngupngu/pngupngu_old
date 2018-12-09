@@ -1,4 +1,5 @@
 import { IObjectOf } from "@thi.ng/api/api";
+import { Mat44 } from '@thi.ng/vectors/mat44';
 import { ViewTransform, IView } from "@thi.ng/atom/api";
 import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
@@ -18,6 +19,7 @@ interface Views {
   raf: boolean;
   params: pbrParams & wireParams;
   orientation: number[];
+  orientRotate: Mat44;
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };
@@ -39,7 +41,7 @@ export interface AppConfig {
 }
 
 export interface UIAttribs {
-  [key: string]: Partial<UIAttrib> | ComponentAttrib<string>;
+  [key: string]: Partial<UIAttrib> | ComponentAttrib<string> | any;
 
   select?: SelectAttribs;
   slider?: SliderAttribs;

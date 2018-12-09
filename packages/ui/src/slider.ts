@@ -50,7 +50,7 @@ export const multiSlider = (n: number, args0?: Partial<MultiSliderArgs>) => {
     min: args0.min, max: args0.max, step: args0.step,
     precision: args0.precision, attribs: args0.attribs.slider
   };
-  const sliders = [...map(_ => create(opts), range(n))];
+  const sliders = [...map(() => create(opts), range(n))];
 
   return (_: any, args1: Partial<MultiSliderArgs>, value: IVec) =>
     ['div', args1.attribs ? args1.attribs.container : args0.attribs.container,

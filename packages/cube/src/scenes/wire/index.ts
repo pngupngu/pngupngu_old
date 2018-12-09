@@ -1,5 +1,6 @@
 import { Vec3 } from '@thi.ng/vectors/vec3';
 import { Vec4 } from '@thi.ng/vectors/vec4';
+import { Mat44 } from '@thi.ng/vectors/mat44';
 import { mapcat } from "@thi.ng/transducers/xform/mapcat";
 import { flatten } from "@thi.ng/transducers/xform/flatten";
 import { map } from "@thi.ng/transducers/xform/map";
@@ -32,6 +33,7 @@ export interface Params {
   dashLength: number;
   colorEdge: Vec4;
   colorFill: Vec4;
+  rotate: Mat44;
 }
 
 export const defaultParams: Params = {
@@ -45,12 +47,15 @@ export const defaultParams: Params = {
   dashLength: 0.5,
   colorEdge: new Vec4([0.3, 0.3, 0.3, 1.0]),
   colorFill: new Vec4([0.0, 0.0, 0.0, 0.25]),
+  rotate: Mat44.identity(),
 };
 
 export class App extends Application {
   cmd: Command;
   camera: PerspectiveCamera;
   mat: Material;
+
+  vd: Vec3 = new Vec3();
 
   set params(params: Params) {
     const uniforms = this.mat.uniforms;
@@ -65,6 +70,12 @@ export class App extends Application {
     uniforms.dashLength = params.dashLength;
     uniforms.colorEdge = params.colorEdge;
     uniforms.colorFill = params.colorFill;
+
+    const pd = this.camera.target.dist(this.camera.position);
+
+    this.camera.position = this.camera.target.addNew(
+      params.rotate.mulV3(this.vd.setS(0, 0, 1)).mulN(pd));
+    this.camera.up = params.rotate.mulV3(this.vd.setS(0, 1, 0));
   }
 
   init(gl) {
