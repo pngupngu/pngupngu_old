@@ -5,7 +5,7 @@ import fit from 'canvas-fit';
 import { CameraUI } from '@pngu/gl/camera-ui';
 import { PanelAttribs, SliderAttribs, CheckBoxAttribs, MultiSliderAttribs } from '@pngu/ui/api';
 import { panel } from '@pngu/ui/panel';
-import { checkbox } from '@pngu/ui/checkbox';
+import { create as createCheckbox } from '@pngu/ui/checkbox';
 import { create as createSlider, multiSlider } from '@pngu/ui/slider';
 
 import { App, Params } from '../scenes/wire';
@@ -46,21 +46,24 @@ export interface ControlAttribs {
 }
 
 export const controls = (attribs: ControlAttribs, onchange: (name: string) => (v: any) => void) => {
-  const sWidth = createSlider({ min: 0, max: 10, step: 0.01, onchange: onchange('width'), attribs: attribs.slider });
-  const sFeather = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('feather'), attribs: attribs.slider });
-  const sSqueezeMin = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('squeezeMin'), attribs: attribs.slider });
-  const sSqueezeMax = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('squeezeMax'), attribs: attribs.slider });
-  const sDashOffset = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('dashOffset'), attribs: attribs.slider });
-  const sDashRepeat = createSlider({ min: 0, max: 10, step: 1, onchange: onchange('dashRepeat'), attribs: attribs.slider });
-  const sDashLength = createSlider({ min: 0, max: 1, step: 0.01, onchange: onchange('dashLength'), attribs: attribs.slider });
-  const msColorEdge = multiSlider(4, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor'), attribs: attribs.multislider });
-  const msColorFill = multiSlider(4, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor'), attribs: attribs.multislider });
+  const sliderOpts = (min, max, step, name, attribs) => ({ min, max, step, onchange: onchange(name), attribs});
+
+  const sWidth = createSlider(sliderOpts(0, 10, 0.01, 'width', attribs.slider));
+  const sFeather = createSlider(sliderOpts(0, 1, 0.01, 'feather', attribs.slider));
+  const cbRemoveEdge = createCheckbox({ id: 'removeEdge', onchange: onchange('removeEdge'), attribs: attribs.checkbox });
+  const sSqueezeMin = createSlider(sliderOpts(0, 1, 0.01, 'squeezeMin', attribs.slider ));
+  const sSqueezeMax = createSlider(sliderOpts(0, 1, 0.01, 'squeezeMax', attribs.slider ));
+  const sDashOffset = createSlider(sliderOpts(0, 1, 0.01, 'dashOffset', attribs.slider ));
+  const sDashRepeat = createSlider(sliderOpts(0, 10, 1, 'dashRepeat', attribs.slider ));
+  const sDashLength = createSlider(sliderOpts(0, 1, 0.01, 'dashLength', attribs.slider ));
+  const msColorEdge = multiSlider(4, sliderOpts(0, 1, 0.01, 'ambColor', attribs.multislider ));
+  const msColorFill = multiSlider(4, sliderOpts(0, 1, 0.01, 'lightColor', attribs.multislider ));
 
   return (_: any, params: Params) => {
     return [panel, attribs.panel,
       ['width', [sWidth, {}, params.width]],
       ['feather', [sFeather, {}, params.feather]],
-      ['removeEdge', [checkbox, {id: 'removeEdge', onchange: onchange('removeEdge'), attribs: attribs.checkbox}, params.removeEdge]],
+      ['removeEdge', [cbRemoveEdge, {}, params.removeEdge]],
       ['squeezeMin', [sSqueezeMin, {}, params.squeezeMin]],
       ['squeezeMax', [sSqueezeMax, {}, params.squeezeMax]],
       ['dashOffset', [sDashOffset, {}, params.dashOffset]],

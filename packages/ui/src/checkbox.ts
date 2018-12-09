@@ -11,6 +11,10 @@ export const checkbox = (_: any, { id, onchange, attribs }: CheckBoxArgs, value:
     }],
     ['label', { for: id, ...attribs.label }]];
 
-export const create = (id: string, attribs: any) =>
-  (_: any, onchange: (e: boolean) => void, value: boolean) =>
-    [checkbox, { id, attribs, onchange }, value];
+export const create = (args0?: Partial<CheckBoxArgs>) =>
+  (_: any, args1: Partial<CheckBoxArgs>, value: boolean) =>
+    [checkbox, {
+      id: args1.id || args0.id,
+      attribs: args1.attribs || args0.attribs,
+      onchange: args1.onchange || args0.attribs
+    }, value];
