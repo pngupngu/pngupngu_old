@@ -9,14 +9,12 @@ export type ComponentAttrib = Record<string, Partial<UIAttrib>>;
 export type PanelAttribs = Record<'container' | 'label' | 'content', Partial<UIAttrib>>;
 
 export type SelectAttribs = Record<'container' | 'triangle' | 'dropdown', Partial<UIAttrib>>;
-
 export interface SelectArgs {
   attribs: SelectAttribs;
   onchange?: (e: string | number) => void;
 }
 
 export type SliderAttribs = Record<'container' | 'handle' | 'value', Partial<UIAttrib>>;
-
 export interface SliderArgs {
   min: number;
   max: number;
@@ -36,7 +34,6 @@ export interface MultiSliderArgs {
 }
 
 export type CheckBoxAttribs = Record<'container' | 'input' | 'label', Partial<UIAttrib>>;
-
 export interface CheckBoxArgs {
   id: string;
   onchange(e: boolean): void;

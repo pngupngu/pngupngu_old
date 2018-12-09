@@ -1,5 +1,5 @@
-import { clamp } from '@thi.ng/math/interval';
 import { IVec } from '@thi.ng/vectors/api';
+import { clamp } from '@thi.ng/math/interval';
 import { fit } from '@thi.ng/math/fit';
 import { map } from "@thi.ng/transducers/xform/map";
 import { dedupe } from "@thi.ng/transducers/xform/dedupe";
@@ -45,9 +45,9 @@ export const create = attribs => {
     [slider_, { attribs, ...args }, value];
 };
 
-export const multiSlider = (n: number, attribs: MultiSliderAttribs, args: MultiSliderArgs) => {
+export const multiSlider = (n: number, attribs: MultiSliderAttribs) => {
   const sliders = [...map(_ => create(attribs.slider), range(n))];
-  return (_: any, value: IVec) =>
+  return (_: any, args: MultiSliderArgs, value: IVec) =>
     ['div', attribs.container, ...map((i: number) =>
       [sliders[i], { ...args, onchange: v => args.onchange((value[i] = v, value)) }, value[i]],
       range(n))

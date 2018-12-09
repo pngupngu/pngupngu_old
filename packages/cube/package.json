@@ -16,6 +16,7 @@
     "@thi.ng/api": "^4.2.3",
     "@thi.ng/checks": "^1.5.13",
     "@thi.ng/hdom": "^5.2.0",
+    "@thi.ng/hdom-components": "^2.2.15",
     "@thi.ng/interceptors": "^1.9.0",
     "@thi.ng/iterators": "^4.1.36",
     "@thi.ng/math": "^0.2.1",
@@ -27,7 +28,8 @@
     "@thi.ng/vectors": "^1.4.4",
     "bunny": "^1.0.1",
     "gl-matrix": "^2.8.1",
-    "primitive-torus": "^1.0.4"
+    "primitive-torus": "^1.0.4",
+    "twgl.js": "^4.5.2"
   },
   "devDependencies": {
     "glslify-bundle": "^5.1.1",

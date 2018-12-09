@@ -44,6 +44,6 @@ export const CONFIG: AppConfig = {
     cselect: addClass(select, 'mr-2 ctrl', 'container'),
 
     ca: { class: 'w-100 h-100 absolute' },
-    orient: { class: 'absolute top-0 left-0 right-0 tc code f7' },
+    orient: { class: 'absolute bottom-0 left-0 right-0 tc code f7' },
   }
 };

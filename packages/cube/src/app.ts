@@ -67,9 +67,7 @@ export class App {
         ins: { src: { stream: (_) => orient } },
         outs: {
           '*': node => node.subscribe({
-            next: e => {
-              bus.dispatch([ev.SET_ORIENTATION, [e.alpha, e.beta, e.gamma]])
-            }
+            next: e => bus.dispatch([ev.SET_ORIENTATION, [e.alpha, e.beta, e.gamma]])
           })
         }
       }

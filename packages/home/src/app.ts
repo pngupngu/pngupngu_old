@@ -31,16 +31,18 @@ export class App {
   }
 
   private setupRouter() {
+    const { bus } = this.ctx;
+
     this.router = new HTMLRouter(this.config.router);
     this.router.addListener(
       EVENT_ROUTE_CHANGED,
-      e => this.ctx.bus.dispatch([EVENT_ROUTE_CHANGED, e.value])
+      e => bus.dispatch([EVENT_ROUTE_CHANGED, e.value])
     );
-    this.ctx.bus.addHandlers({
+    bus.addHandlers({
       [EVENT_ROUTE_CHANGED]: valueSetter("route"),
       [ev.ROUTE_TO]: (_, [__, route]) => ({ [fx.ROUTE_TO]: route })
     });
-    this.ctx.bus.addEffect(
+    bus.addEffect(
       fx.ROUTE_TO,
       ([id, params]) => this.router.routeTo(this.router.format(id, params))
     );

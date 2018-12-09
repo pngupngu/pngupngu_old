@@ -37,11 +37,11 @@ export const cube = ({ ui, views, bus }: AppContext) => {
 
   const onchange = name => v => bus.dispatch([ev.SET_PARAM, [name, v]])
 
-  const msF0 = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('f0') });
-  const msAlbedo = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('albedo') });
-  const msLightPos = multiSlider(3, ui.multiSlider, { min: -2, max: 2, step: 0.01, onchange: onchange('lightPos') });
-  const msAmbColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
-  const msLightColor = multiSlider(3, ui.multiSlider, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
+  const msF0 = multiSlider(3, ui.multiSlider3, { min: 0, max: 1, step: 0.01, onchange: onchange('f0') });
+  const msAlbedo = multiSlider(3, ui.multiSlider3, { min: 0, max: 1, step: 0.01, onchange: onchange('albedo') });
+  const msLightPos = multiSlider(3, ui.multiSlider3, { min: -2, max: 2, step: 0.01, onchange: onchange('lightPos') });
+  const msAmbColor = multiSlider(3, ui.multiSlider3, { min: 0, max: 1, step: 0.01, onchange: onchange('ambColor') });
+  const msLightColor = multiSlider(3, ui.multiSlider3, { min: 0, max: 1, step: 0.01, onchange: onchange('lightColor') });
   const sMetalic = createSlider(ui.cslider);
   const sRoughness = createSlider(ui.cslider);
   const cbTexNormal = createCheckbox('texNormal', ui.checkbox);
