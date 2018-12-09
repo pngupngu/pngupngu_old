@@ -31,6 +31,7 @@ export interface MultiSliderArgs {
   step: number;
   precision?: number;
   onchange?(v: IVec): void;
+  attribs: MultiSliderAttribs;
 }
 
 export type CheckBoxAttribs = ComponentAttrib<'container' | 'input' | 'label'>;

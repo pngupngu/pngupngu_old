@@ -5,7 +5,7 @@ import { map } from "@thi.ng/transducers/xform/map";
 import { dedupe } from "@thi.ng/transducers/xform/dedupe";
 import { range } from '@thi.ng/transducers/iter/range'
 
-import { SliderArgs, MultiSliderArgs, MultiSliderAttribs } from './api';
+import { SliderArgs, MultiSliderArgs } from './api';
 import { streamDrag } from './utils';
 
 const NOOP = _ => { };
@@ -39,17 +39,16 @@ export const slider = () => {
   };
 };
 
-export const create = attribs => {
+export const create = () => {
   const slider_ = slider();
-  return (_: any, args: SliderArgs, value: number) =>
-    [slider_, { attribs, ...args }, value];
+  return (_: any, args: SliderArgs, value: number) => [slider_, args, value];
 };
 
-export const multiSlider = (n: number, attribs: MultiSliderAttribs) => {
-  const sliders = [...map(_ => create(attribs.slider), range(n))];
-  return (_: any, args: MultiSliderArgs, value: IVec) =>
+export const multiSlider = (n: number) => {
+  const sliders = [...map(_ => create(), range(n))];
+  return (_: any, { min, max, step, precision = 2, onchange = NOOP, attribs }: MultiSliderArgs, value: IVec) =>
     ['div', attribs.container, ...map((i: number) =>
-      [sliders[i], { ...args, onchange: v => args.onchange((value[i] = v, value)) }, value[i]],
+      [sliders[i], { min, max, step, precision, attribs: attribs.slider, onchange: v => onchange((value[i] = v, value)) }, value[i]],
       range(n))
     ];
 }
