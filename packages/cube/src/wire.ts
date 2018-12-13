@@ -75,7 +75,7 @@ const toSpherePos = (width: number, height: number) => {
   }
 };
 
-const toRotation = (camera: PerspectiveCamera) => {
+const rotateCamera = (camera: PerspectiveCamera) => {
   const axis = new Vec3();
   const side = new Vec3();
   const up = new Vec3();
@@ -84,7 +84,7 @@ const toRotation = (camera: PerspectiveCamera) => {
   const u = new Vec3();
   const vd = new Vec3();
 
-  return ({ 0: type, 1: { delta } }) => {
+  return ({ 0: type, 1: { delta, zoom } }) => {
     if (type == GestureType.START) {
       up.set(camera.up);
       viewDir.set(camera.position).sub(camera.target);
@@ -97,11 +97,16 @@ const toRotation = (camera: PerspectiveCamera) => {
       transformQuat(vd, viewDir, q);
       transformQuat(u, up, q);
       return [u, camera.target.addNew(vd)];
+    } else if (type == GestureType.ZOOM) {
+      vd.set(camera.target).sub(camera.position);
+      const speed = Math.pow(Math.E, 0.01 * zoom) * vd.mag();
+      const pos = u.set(camera.target).sub(vd.normalize().mulN(speed));
+      return [camera.up, pos];
     }
   };
 }
 
-const toCameraRot = (camera: PerspectiveCamera) => {
+const orientCamera = (camera: PerspectiveCamera) => {
   const up0 = new Vec3();
   const vd = new Vec3();
   const pos = new Vec3();
@@ -147,13 +152,13 @@ export const wire = ({ ui, views, bus }: AppContext) => {
 
   const canvas_ = canvas(app, {
     init(el) {
-      const sub1 = gestureStream(el)
+      const sub1 = gestureStream(el, { absZoom: false })
         .transform(
-          filter(g => g[0] == GestureType.START || g[0] == GestureType.DRAG),
+          filter(g => g[0] == GestureType.START || g[0] == GestureType.DRAG || g[0] == GestureType.ZOOM),
           map(toSpherePos(el.width, el.height)),
-          map(toRotation(app.camera)));
+          map(rotateCamera(app.camera)));
 
-      const sub2 = fromOrientation(1e-2).transform(map(toCameraRot(app.camera)));
+      const sub2 = fromOrientation(1e-2).transform(map(orientCamera(app.camera)));
 
       sub = merge({ src: [sub1, sub2] }).subscribe({
         next({ 0: up, 1: pos }) {
