@@ -50,6 +50,10 @@ export class PerspectiveCamera extends Camera {
   set up(val: Vec3) { this._up.set(val); this._viewCached = false; }
   get up(): Vec3 { return this._up; }
 
+  get pivotDistance(): number {
+    return this.target.dist(this.position);
+  }
+
   get projection(): Mat44 {
     if (!this._projectionCached) {
       perspective(this._projection.buf, this.fov, this.aspect, this.near, this.far);

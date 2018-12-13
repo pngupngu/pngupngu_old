@@ -3,7 +3,6 @@ import fit from 'canvas-fit';
 import { canvasWebGL, CanvasHandlers } from "@thi.ng/hdom-components/canvas";
 import { partial } from '@thi.ng/compose/partial';
 
-import { CameraUI } from '@pngu/gl/camera-ui';
 import { PanelAttribs, SliderAttribs, CheckBoxAttribs, MultiSliderAttribs } from '@pngu/ui/api';
 import { panel } from '@pngu/ui/panel';
 import { create as createCheckbox } from '@pngu/ui/checkbox';
@@ -12,7 +11,7 @@ import { create as createSlider, multiSlider } from '@pngu/ui/slider';
 import { App, Params } from '../scenes/wire';
 
 export const canvas = (app: App, { init, update, release }: Partial<CanvasHandlers<WebGLRenderingContext>>) => {
-  let camUI: CameraUI, resize;
+  let resize;
   return canvasWebGL({
     init(el: HTMLCanvasElement, gl: WebGLRenderingContext, _: any) {
       addExtensionsToContext(gl);
@@ -20,8 +19,6 @@ export const canvas = (app: App, { init, update, release }: Partial<CanvasHandle
       resize();
 
       app.init(gl);
-      camUI = new CameraUI(el, app.camera);
-      camUI.speed = 3;
 
       init && init(el, gl);
     },
@@ -32,8 +29,6 @@ export const canvas = (app: App, { init, update, release }: Partial<CanvasHandle
       update && update(el, gl);
     },
     release(el: HTMLCanvasElement, gl: WebGLRenderingContext, _: any) {
-      camUI.release();
-
       release && release(el, gl);
     }
   });
@@ -43,7 +38,8 @@ export interface ControlAttribs {
   panel: PanelAttribs;
   slider: SliderAttribs;
   checkbox: CheckBoxAttribs;
-  multislider: MultiSliderAttribs;
+  multislider3: MultiSliderAttribs;
+  multislider4: MultiSliderAttribs;
 }
 
 export const controls = (attribs: ControlAttribs, onchange: (name: string, v: any) => void) => {
@@ -62,11 +58,13 @@ export const controls = (attribs: ControlAttribs, onchange: (name: string, v: an
   const sDashOffset = createSlider(sliderOpts(0, 1, 0.01, 'dashOffset', attribs.slider));
   const sDashRepeat = createSlider(sliderOpts(0, 10, 1, 'dashRepeat', attribs.slider));
   const sDashLength = createSlider(sliderOpts(0, 1, 0.01, 'dashLength', attribs.slider));
-  const msColorEdge = multiSlider(4, sliderOpts(0, 1, 0.01, 'ambColor', attribs.multislider));
-  const msColorFill = multiSlider(4, sliderOpts(0, 1, 0.01, 'lightColor', attribs.multislider));
+  const msColorEdge = multiSlider(4, sliderOpts(0, 1, 0.01, 'ambColor', attribs.multislider4));
+  const msColorFill = multiSlider(4, sliderOpts(0, 1, 0.01, 'lightColor', attribs.multislider4));
+  // const msCameraUp = multiSlider(3, sliderOpts(-10, 10, 0.01, 'cameraUp', attribs.multislider3));
+  // const msCameraPos = multiSlider(3, sliderOpts(-20, 20, 0.01, 'cameraPos', attribs.multislider3));
 
-  return (_: any, params: Params) => {
-    return [panel, attribs.panel,
+  return (_: any, params: Params) =>
+    [panel, attribs.panel,
       ['width', [sWidth, {}, params.width]],
       ['feather', [sFeather, {}, params.feather]],
       ['removeEdge', [cbRemoveEdge, {}, params.removeEdge]],
@@ -77,6 +75,7 @@ export const controls = (attribs: ControlAttribs, onchange: (name: string, v: an
       ['dashLength', [sDashLength, {}, params.dashLength]],
       ['colorEdge', [msColorEdge, {}, params.colorEdge]],
       ['colorFill', [msColorFill, {}, params.colorFill]],
+      // ['cameraUp', [msCameraUp, {}, params.cameraUp]],
+      // ['cameraPos', [msCameraPos, {}, params.cameraPos]],
     ];
-  }
 }

@@ -16,5 +16,5 @@ export const create = (args0?: Partial<CheckBoxArgs>) =>
     [checkbox, {
       id: args1.id || args0.id,
       attribs: args1.attribs || args0.attribs,
-      onchange: args1.onchange || args0.attribs
+      onchange: args1.onchange || args0.onchange
     }, value];

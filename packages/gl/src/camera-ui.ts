@@ -2,34 +2,37 @@ import { gestureStream, GestureType, GestureInfo, GestureEvent } from "@thi.ng/r
 import { ISubscribable } from "@thi.ng/rstream/api";
 import { fromEvent } from '@thi.ng/rstream/from/event';
 import { Vec2 } from '@thi.ng/vectors/vec2';
-import { Vec3, setS3 } from '@thi.ng/vectors/vec3';
+import {
+  Vec3,
+  // setS3
+} from '@thi.ng/vectors/vec3';
 // import { Mat44 } from '@thi.ng/vectors/mat44';
 // import { DEG2RAD } from '@thi.ng/math/api';
-import { quat } from 'gl-matrix';
+// import { quat } from 'gl-matrix';
 
 // import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 
-import { PerspectiveCamera } from './Camera';
+// import { PerspectiveCamera } from './Camera';
 
-function transformQuat(out: Vec3, a: Vec3, q: quat) {
-  let qx = q[0], qy = q[1], qz = q[2], qw = q[3];
-  let x = a[0], y = a[1], z = a[2];
-  let uvx = qy * z - qz * y,
-    uvy = qz * x - qx * z,
-    uvz = qx * y - qy * x;
-  let uuvx = qy * uvz - qz * uvy,
-    uuvy = qz * uvx - qx * uvz,
-    uuvz = qx * uvy - qy * uvx;
-  let w2 = qw * 2;
-  uvx *= w2;
-  uvy *= w2;
-  uvz *= w2;
-  uuvx *= 2;
-  uuvy *= 2;
-  uuvz *= 2;
+// function transformQuat(out: Vec3, a: Vec3, q: quat) {
+//   let qx = q[0], qy = q[1], qz = q[2], qw = q[3];
+//   let x = a[0], y = a[1], z = a[2];
+//   let uvx = qy * z - qz * y,
+//     uvy = qz * x - qx * z,
+//     uvz = qx * y - qy * x;
+//   let uuvx = qy * uvz - qz * uvy,
+//     uuvy = qz * uvx - qx * uvz,
+//     uuvz = qx * uvy - qy * uvx;
+//   let w2 = qw * 2;
+//   uvx *= w2;
+//   uvy *= w2;
+//   uvz *= w2;
+//   uuvx *= 2;
+//   uuvy *= 2;
+//   uuvz *= 2;
 
-  setS3(out.buf, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
-}
+//   setS3(out.buf, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
+// }
 
 // function mat44FromEulerYXZ(mat: Mat44, alpha: number, beta: number, gamma: number) {
 //   let x = alpha * DEG2RAD, y = beta * DEG2RAD, z = gamma * DEG2RAD;
@@ -58,7 +61,6 @@ export class CameraUI {
   sub2: ISubscribable<any>;
   sub3: ISubscribable<any>;
   speed: number = 5;
-  camera: PerspectiveCamera;
 
   private radius: number;
   private center: Vec2 = new Vec2();
@@ -69,14 +71,13 @@ export class CameraUI {
 
   private side: Vec3 = new Vec3();
   private axis: Vec3 = new Vec3();
-  private q: quat = quat.create();
-  private vd: Vec3 = new Vec3();
-  private u: Vec3 = new Vec3();
+  // private q: quat = quat.create();
+  // private vd: Vec3 = new Vec3();
+  // private u: Vec3 = new Vec3();
 
-  constructor(el: HTMLCanvasElement, camera: PerspectiveCamera) {
+  constructor(el: HTMLCanvasElement) {
     this.center.setS(el.width, el.height).mulN(0.5);
     this.radius = Math.max(el.width, el.height);
-    this.camera = camera;
 
     const $this = this;
 
@@ -113,16 +114,16 @@ export class CameraUI {
   //   this.camera.up = mat.mulV3(this.vd.setS(0, 1, 0));
   // }
 
-  private handleZoom(delta) {
-    this.vd.set(this.camera.target).sub(this.camera.position);
-    const speed = Math.pow(Math.E, 0.01 * delta) * this.vd.mag();
-    this.camera.position = this.u.set(this.camera.target).sub(this.vd.normalize().mulN(speed));
+  private handleZoom(_delta) {
+    // this.vd.set(this.camera.target).sub(this.camera.position);
+    // const speed = Math.pow(Math.E, 0.01 * delta) * this.vd.mag();
+    // this.camera.position = this.u.set(this.camera.target).sub(this.vd.normalize().mulN(speed));
   }
 
   private handleStart({ pos }: GestureInfo) {
     this.spherePos(this.clickPos, pos[0], pos[1]);
-    this.up.set(this.camera.up);
-    this.viewDir.set(this.camera.position).sub(this.camera.target);
+    // this.up.set(this.camera.up);
+    // this.viewDir.set(this.camera.position).sub(this.camera.target);
   }
 
   private handleDrag({ pos, delta }: GestureInfo) {
@@ -131,12 +132,12 @@ export class CameraUI {
     this.side.set(this.up).cross(this.viewDir).normalize().mulN(d[0]);
     this.axis.set(this.up).mulN(d[1]).add(this.side).cross(this.viewDir).normalize();
 
-    quat.setAxisAngle(this.q, this.axis, d.magSq() * this.speed);
-    transformQuat(this.vd, this.viewDir, this.q);
-    transformQuat(this.u, this.up, this.q);
+    // quat.setAxisAngle(this.q, this.axis, d.magSq() * this.speed);
+    // transformQuat(this.vd, this.viewDir, this.q);
+    // transformQuat(this.u, this.up, this.q);
 
-    this.camera.up = this.u;
-    this.camera.position = this.camera.target.addNew(this.vd);
+    // this.camera.up = this.u;
+    // this.camera.position = this.camera.target.addNew(this.vd);
   }
 
   spherePos(v: Vec3, x: number, y: number): Vec3 {

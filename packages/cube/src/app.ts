@@ -3,14 +3,8 @@ import { Atom } from "@thi.ng/atom/atom";
 import { isArray } from "@thi.ng/checks/is-array";
 import { start } from "@thi.ng/hdom";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
-import { initGraph, node1 } from "@thi.ng/rstream-graph/graph";
-import { map } from '@thi.ng/transducers/xform/map';
-import { identity } from '@thi.ng/transducers/func/identity';
-
-import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 
 import { AppConfig, AppContext, AppViews, ViewSpec } from "./api";
-import { ev } from "./events";
 
 export class App {
 
@@ -41,8 +35,6 @@ export class App {
   }
 
   start() {
-    this.initGraph();
-
     const root = this.config.rootComponent(this.ctx);
     let first = true;
     start(
@@ -55,22 +47,5 @@ export class App {
         }
       },
       { root: this.config.domRoot, ctx: this.ctx });
-  }
-
-  initGraph() {
-    const bus = this.ctx.bus;
-    const orient = fromOrientation();
-
-    initGraph(this.state, {
-      orient: {
-        fn: node1(map(identity)),
-        ins: { src: { stream: (_) => orient } },
-        outs: {
-          '*': node => node.subscribe({
-            next: e => bus.dispatch([ev.SET_ORIENTATION, [e.alpha, e.beta, e.gamma]])
-          })
-        }
-      }
-    });
   }
 }

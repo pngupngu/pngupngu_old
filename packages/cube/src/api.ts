@@ -43,13 +43,13 @@ export interface AppConfig {
 export interface UIAttribs {
   [key: string]: Partial<UIAttrib> | ComponentAttrib<string> | any;
 
-  select?: SelectAttribs;
-  slider?: SliderAttribs;
-  cslider?: SliderAttribs;
-  panel?: PanelAttribs;
-  checkbox?: CheckBoxAttribs;
-  multiSlider3?: MultiSliderAttribs;
-  multiSlider4?: MultiSliderAttribs;
+  select: SelectAttribs;
+  slider: SliderAttribs;
+  cslide?: SliderAttribs;
+  panel: PanelAttribs;
+  checkbox: CheckBoxAttribs;
+  multiSlider3: MultiSliderAttribs;
+  multiSlider4: MultiSliderAttribs;
 }
 
 export interface AppContext {

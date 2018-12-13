@@ -1,6 +1,5 @@
 import { Vec3 } from '@thi.ng/vectors/vec3';
 import { Vec4 } from '@thi.ng/vectors/vec4';
-import { Mat44 } from '@thi.ng/vectors/mat44';
 import { mapcat } from "@thi.ng/transducers/xform/mapcat";
 import { flatten } from "@thi.ng/transducers/xform/flatten";
 import { map } from "@thi.ng/transducers/xform/map";
@@ -15,7 +14,7 @@ import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
 import { AABB, Geometry, tessellate3 } from '@pngu/gl/geometry';
-import { PerspectiveCamera } from '@pngu/gl/Camera';
+import { PerspectiveCamera } from '@pngu/gl/camera';
 
 import vert from './vert.glsl';
 import frag from './frag.glsl';
@@ -33,7 +32,8 @@ export interface Params {
   dashLength: number;
   colorEdge: Vec4;
   colorFill: Vec4;
-  rotate: Mat44;
+  cameraUp: Vec3;
+  cameraPos: Vec3;
 }
 
 export const defaultParams: Params = {
@@ -47,7 +47,8 @@ export const defaultParams: Params = {
   dashLength: 0.5,
   colorEdge: new Vec4([0.3, 0.3, 0.3, 1.0]),
   colorFill: new Vec4([0.0, 0.0, 0.0, 0.25]),
-  rotate: Mat44.identity(),
+  cameraUp: new Vec3([0, 1, 0]),
+  cameraPos: new Vec3([0, 0, 8]),
 };
 
 export class App extends Application {
@@ -71,19 +72,20 @@ export class App extends Application {
     uniforms.colorEdge = params.colorEdge;
     uniforms.colorFill = params.colorFill;
 
-    const pd = this.camera.target.dist(this.camera.position);
+    this.camera.up = params.cameraUp;
+    this.camera.position = params.cameraPos;
 
-    this.camera.position = this.camera.target.addNew(
-      params.rotate.mulV3(this.vd.setS(0, 0, 1)).mulN(pd));
-    this.camera.up = params.rotate.mulV3(this.vd.setS(0, 1, 0));
+    // const pd = this.camera.target.dist(this.camera.position);
+
+    // this.camera.position = this.camera.target.addNew(
+    //   params.rotate.mulV3(this.vd.setS(0, 0, 1)).mulN(pd));
+    // this.camera.up = params.rotate.mulV3(this.vd.setS(0, 1, 0));
   }
 
   init(gl) {
     super.init(gl);
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
-    // this.camera.position = new Vec3([1, 4, 8]);
-    this.camera.position = new Vec3([0, 0, 8]);
 
     const faces = new AABB().toPolygon().tessellate(tessellate3);
     const points = transduce(
