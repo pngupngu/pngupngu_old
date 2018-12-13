@@ -6,18 +6,18 @@ import {
 
 import { AppConfig } from './api';
 import { handlers } from './events';
-// import { cube } from './cube';
-// import { defaultParams } from './scenes/pbr'
-import { wire } from './wire';
-import { defaultParams } from './scenes/wire'
+import { cube } from './cube';
+import { defaultParams } from './scenes/pbr'
+// import { wire } from './wire';
+// import { defaultParams } from './scenes/wire'
 
 export const CONFIG: AppConfig = {
   handlers,
 
   domRoot: 'app',
 
-  // rootComponent: cube,
-  rootComponent: wire,
+  rootComponent: cube,
+  // rootComponent: wire,
 
   initialState: {
     raf: false,

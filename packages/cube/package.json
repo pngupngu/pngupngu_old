@@ -7,6 +7,7 @@
   "scripts": {
     "start": "yarn run clean && parcel index.html --hmr-hostname 0.0.0.0 -p 8080 --open --log-level 3",
     "build": "yarn run clean && parcel build index.html -d out --no-source-maps --no-cache --detailed-report --public-url ./",
+    "build-lib": "yarn run clean && tsc -b",
     "clean": "rimraf out dist .cache"
   },
   "dependencies": {

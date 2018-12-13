@@ -46,6 +46,8 @@ export interface Params {
   geometryType: GeometryTypes;
   diffuseType: DiffuseTypes;
   showNormal: boolean;
+  cameraUp: Vec3;
+  cameraPos: Vec3;
 }
 
 export const defaultParams: Params = {
@@ -58,11 +60,13 @@ export const defaultParams: Params = {
   lightColor: new Vec3([1, 1, 1]),
   useTexNormal: true,
   useTexDiff: true,
-  useGamma: false,
+  useGamma: true,
   distributionType: DistTypes.BlinnPhong,
   geometryType: GeometryTypes.Implicit,
   diffuseType: DiffuseTypes.Default,
-  showNormal: false
+  showNormal: false,
+  cameraUp: new Vec3([0, 1, 0]),
+  cameraPos: new Vec3([1, 4, 8]),
 }
 
 export class App extends Application {
@@ -87,13 +91,14 @@ export class App extends Application {
     uniforms.geometryType = params.geometryType;
     uniforms.diffuseType = params.diffuseType;
     uniforms.showNormal = params.showNormal;
+    this.camera.up = params.cameraUp;
+    this.camera.position = params.cameraPos;
   }
 
   init(gl) {
     super.init(gl);
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
-    this.camera.position = new Vec3([1, 4, 10]);
 
     // const attribs = createTorusMesh();
     // const geom = new Geometry({
@@ -128,9 +133,9 @@ export class App extends Application {
 
     this.mat = new Material(vert, frag);
 
-    new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex; });
-    new Texture(gl, { src: brickNormal }, tex => { this.mat.uniforms.texNormal = tex; });
-    new Texture(gl, { src: brickSpecular }, tex => { this.mat.uniforms.texSpecular = tex; });
+    new Texture(gl, { src: brickDiffuse }, tex => { this.mat.uniforms.texDiffuse = tex.texture; });
+    new Texture(gl, { src: brickNormal }, tex => { this.mat.uniforms.texNormal = tex.texture; });
+    new Texture(gl, { src: brickSpecular }, tex => { this.mat.uniforms.texSpecular = tex.texture; });
 
     const scene = new Scene();
     scene.add(new Mesh(geom, this.mat));

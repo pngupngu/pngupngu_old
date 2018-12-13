@@ -1,4 +1,4 @@
-#version 300 es
+// #version 300 es
 
 #ifdef GL_ES
 precision mediump float;
@@ -11,14 +11,14 @@ uniform mat4 matModelView;
 uniform mat3 matNormal;
 uniform vec3 lightPos;
 
-in vec3 position;
-in vec3 normal;
-in vec2 texcoord;
+attribute vec3 position;
+attribute vec3 normal;
+attribute vec2 texcoord;
 
-out vec3 vVertPos;
-out vec3 vLightPos;
-out vec3 vNormal;
-out vec2 vUv;
+varying vec3 vVertPos;
+varying vec3 vLightPos;
+varying vec3 vNormal;
+varying vec2 vUv;
 
 void main () {
   vNormal = matNormal * normal;

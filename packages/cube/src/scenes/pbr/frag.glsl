@@ -1,4 +1,5 @@
-#version 300 es
+// #version 300 es
+#extension GL_OES_standard_derivatives : enable
 
 #ifdef GL_ES
 precision mediump float;
@@ -44,12 +45,12 @@ uniform int geometryType;
 uniform int diffuseType;
 uniform bool showNormal;
 
-in vec3 vNormal;
-in vec3 vLightPos;
-in vec3 vVertPos;
-in vec2 vUv;
+varying vec3 vNormal;
+varying vec3 vLightPos;
+varying vec3 vVertPos;
+varying vec2 vUv;
 
-out vec4 fragColor;
+// out vec4 fragColor;
 
 void main() {
   vec3 lightDir = normalize(vLightPos - vVertPos);
@@ -58,7 +59,7 @@ void main() {
 
   vec3 normal = normalize(vNormal);
   if (useTexNormal) {
-    vec3 normalMap = texture(texNormal, vUv).xyz * 2.0 - 1.0;
+    vec3 normalMap = texture2D(texNormal, vUv).xyz * 2.0 - 1.0;
     normal = perturb(normalMap, normal, viewDir, vUv);
   }
 
@@ -104,7 +105,7 @@ void main() {
 
   vec3 dcolor = albedo;
   if (useTexDiff) {
-    dcolor = texture(texDiffuse, vUv).rgb;
+    dcolor = texture2D(texDiffuse, vUv).rgb;
     if (useGamma) {
       dcolor = toLinear(dcolor);
     }
@@ -122,6 +123,6 @@ void main() {
     color = normal;
   }
 
-  // gl_FragColor = vec4(color, 1.0);
-  fragColor = vec4(color, 1.0);
+  gl_FragColor = vec4(color, 1.0);
+  // fragColor = vec4(color, 1.0);
 }
