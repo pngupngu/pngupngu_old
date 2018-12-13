@@ -6,7 +6,7 @@ import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
 
 import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
 
-import { SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
+import { CheckBoxAttribs, SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
@@ -40,11 +40,17 @@ export interface AppConfig {
 }
 
 export interface UIAttribs {
-  [key: string]: Partial<UIAttrib> | ComponentAttrib;
+  [key: string]: Partial<UIAttrib> | ComponentAttrib<any>;
 
-  select?: SelectAttribs;
-  slider?: SliderAttribs;
-  panel?: PanelAttribs;
+  checkbox: CheckBoxAttribs;
+  inlineCheckbox: CheckBoxAttribs;
+  select: SelectAttribs;
+  cselect: SelectAttribs;
+  inlineSelect: SelectAttribs;
+  slider: SliderAttribs;
+  cslider: SliderAttribs;
+  inlineSlider: SliderAttribs;
+  panel: PanelAttribs;
 }
 
 export interface AppContext {

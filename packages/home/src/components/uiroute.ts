@@ -17,13 +17,13 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
   const setChecked = n => bus.dispatch([ev.SET_CHECKED, n]);
 
   const options = [[1, 'fuck growth'], [2, 'hello 100 you']];
-  const iselect = createSelect(ui.inlineSelect);
-  const cselect = createSelect(ui.cselect);
-  const slider1 = createSlider(ui.inlineSlider);
-  const slider2 = createSlider(ui.cslider);
+  const iselect = createSelect({ attribs: ui.inlineSelect });
+  const cselect = createSelect({ attribs: ui.cselect});
+  const slider1 = createSlider({ min: 0, max: 100, step: 2, onchange: setValue, attribs: ui.inlineSlider });
+  const slider2 = createSlider({ min: 0, max: 100, step: 2, onchange: setValue, attribs: ui.cslider });
 
-  const chk1 = createCheckbox('chk1', ui.inlineCheckbox);
-  const chk2 = createCheckbox('chk2', ui.checkbox);
+  const chk1 = createCheckbox({ id: 'chk1', onchange: setChecked, attribs: ui.inlineCheckbox });
+  const chk2 = createCheckbox({ id: 'chk2', onchange: setChecked, attribs: ui.checkbox });
 
   return () =>
     ['div', ui.root,
@@ -36,7 +36,7 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
         'select growth', [iselect, {}, options, 1],
 
         'slider',
-        [slider1, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()],
+        [slider1, {}, views.value.deref()],
       ],
       ['div',
         'another button',
@@ -45,7 +45,7 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
         'select you', [iselect, {}, options, 2],
 
         'checked',
-        [chk1, setChecked, views.checked.deref()]
+        [chk1, {}, views.checked.deref()]
       ],
 
       [panel, ui.panel,
@@ -54,8 +54,8 @@ export const uiRoute = ({ ui, bus, views }: AppContext) => {
         ['param3', ['div', ui.container2, [cbtn, {}, 'cao'], [btn, {}, 'B']]],
         ['growth', [cselect, {}, options, 1]],
         ['param3', [cbtn, {}, 'caoB']],
-        ['param5', [slider2, { min: 0, max: 100, step: 2, onchange: setValue }, views.value.deref()]],
-        ['checked', [chk2, setChecked, views.checked.deref()]],
+        ['param5', [slider2, {}, views.value.deref()]],
+        ['checked', [chk2, {}, views.checked.deref()]],
         ['param3', [cbtn, {}, 'caoB']],
       ],
     ];

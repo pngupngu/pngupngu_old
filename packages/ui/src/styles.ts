@@ -53,6 +53,6 @@ export const multiSlider3 = multiSlider(3);
 export const multiSlider4 = multiSlider(4);
 
 export const inlineButton: UIAttrib = inline(button);
-export const inlineSelect: UIAttrib = inline(select, 'container');
-export const inlineCheckbox: UIAttrib = inline(checkbox, 'container');
-export const inlineSlider: UIAttrib = addClass(inline(slider, 'container'), 'w4', 'container');
+export const inlineSelect: SelectAttribs = inline(select, 'container');
+export const inlineCheckbox: CheckBoxAttribs = inline(checkbox, 'container');
+export const inlineSlider: SliderAttribs = addClass(inline(slider, 'container'), 'w4', 'container');

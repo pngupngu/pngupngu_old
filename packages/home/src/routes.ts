@@ -20,3 +20,8 @@ export const UI: Route = {
   id: 'ui',
   match: ['ui'],
 };
+
+export const ORIENT: Route = {
+  id: 'orient',
+  match: ['orient'],
+}

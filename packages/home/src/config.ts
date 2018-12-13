@@ -62,7 +62,7 @@ export const CONFIG: AppConfig = {
     nav: { class: 'list ma0 pa0' },
     link: { class: 'pointer link red' },
 
-    button, checkbox,
+    button, checkbox, select, slider,
     inlineButton, inlineSelect, inlineSlider, inlineCheckbox,
 
     panel: addClass(panel, 'w5', 'container'),
