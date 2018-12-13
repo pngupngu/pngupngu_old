@@ -74,18 +74,13 @@ export class App extends Application {
 
     this.camera.up = params.cameraUp;
     this.camera.position = params.cameraPos;
-
-    // const pd = this.camera.target.dist(this.camera.position);
-
-    // this.camera.position = this.camera.target.addNew(
-    //   params.rotate.mulV3(this.vd.setS(0, 0, 1)).mulN(pd));
-    // this.camera.up = params.rotate.mulV3(this.vd.setS(0, 1, 0));
   }
 
   init(gl) {
     super.init(gl);
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
+    this.camera.position = defaultParams.cameraPos;
 
     const faces = new AABB().toPolygon().tessellate(tessellate3);
     const points = transduce(
@@ -137,7 +132,6 @@ export class App extends Application {
   render(time) {
     const gl = this.gl;
     gl.disable(gl.DEPTH_TEST);
-    // gl.enable(gl.CULL_FACE);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.enable(gl.SAMPLE_COVERAGE);
