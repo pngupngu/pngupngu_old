@@ -3,6 +3,7 @@ import { Vec2 } from '@thi.ng/vectors/vec2';
 import { Vec3, setS3 } from '@thi.ng/vectors/vec3';
 import { Mat44 } from '@thi.ng/vectors/mat44';
 import { DEG2RAD } from '@thi.ng/math/api';
+import { Transducer } from '@thi.ng/transducers/api';
 import { map } from '@thi.ng/transducers/xform/map';
 import { comp } from '@thi.ng/transducers/func/comp';
 import { filter } from '@thi.ng/transducers/xform/filter';
@@ -64,7 +65,13 @@ export interface CameraUIOpts {
   speed?: number;
 }
 
-export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5}: CameraUIOpts) => {
+export interface CameraView {
+  position: Vec3;
+  target: Vec3;
+  up: Vec3;
+}
+
+export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5}: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
   const radius = Math.max(width, height);
   const center = new Vec2([width, height]).mulN(0.5);
   const click = new Vec3();
@@ -77,6 +84,7 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
   const q = quat.create();
   const u = new Vec3();
   const vd = new Vec3();
+  const camPos = new Vec3();
 
   return comp(
     filter(g => g[0] == GestureType.START || g[0] == GestureType.DRAG),
@@ -85,7 +93,7 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
         spherePos(click, pos, center, radius);
         up.set(camera.up);
         viewDir.set(camera.position).sub(camera.target);
-        return [up, camera.position];
+        return { up, position: camera.position, target: camera.target };
       } else {
         spherePos(delta, pos, center, radius).sub(click);
         side.set(up).cross(viewDir).normalize().mulN(delta[0]);
@@ -94,13 +102,16 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
 
         transformQuat(vd.set(viewDir), q);
         transformQuat(u.set(up), q);
-        return [u, camera.target.addNew(vd)];
+        return {
+          up: u, target: camera.target,
+          position: camPos.set(camera.target).add(vd)
+        };
       }
     })
   );
 }
 
-export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5 }: CameraUIOpts) => {
+export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5 }: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
   const radius = Math.max(width, height);
   const center = new Vec2([width, height]).mulN(0.5);
   const delta = new Vec3();
@@ -112,6 +123,7 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
   const q = quat.create();
   const u = new Vec3();
   const vd = new Vec3();
+  const camPos = new Vec3();
 
   return comp(
     filter(g => g[0] == GestureType.MOVE),
@@ -123,12 +135,15 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
 
       transformQuat(vd.set(viewDir), q);
       transformQuat(u.set(up), q);
-      return [u, camera.target.addNew(vd)];
+      return {
+        up: u, target: camera.target,
+        position: camPos.set(camera.target).add(vd)
+      };
     })
   );
 }
 
-export const orientCamera = (camera: PerspectiveCamera) => {
+export const orientCamera = (camera: PerspectiveCamera): Transducer<DeviceOrientationEvent, CameraView> => {
   const up0 = new Vec3();
   const vd = new Vec3();
   const pos = new Vec3();
@@ -141,11 +156,11 @@ export const orientCamera = (camera: PerspectiveCamera) => {
     const cameraPos = pos.set(camera.target)
       .add(mat.mulV3(vd.set(Vec3.Z_AXIS)).mulN(camera.pivotDistance));
     const cameraUp = mat.mulV3(up0.set(Vec3.Y_AXIS));
-    return [cameraUp, cameraPos];
+    return { up: cameraUp, position: cameraPos, target: camera.target };
   });
 }
 
-export const zoomCamera = (camera: PerspectiveCamera) => {
+export const zoomCamera = (camera: PerspectiveCamera): Transducer<GestureEvent, CameraView> => {
   const vd = new Vec3();
   const pos = new Vec3();
 
@@ -155,6 +170,6 @@ export const zoomCamera = (camera: PerspectiveCamera) => {
       vd.set(camera.target).sub(camera.position);
       const speed = Math.pow(Math.E, 0.01 * zoom) * vd.mag();
       pos.set(camera.target).sub(vd.normalize().mulN(speed));
-      return [camera.up, pos];
+      return { up: camera.up, position: pos, target: camera.target };
     }));
 }

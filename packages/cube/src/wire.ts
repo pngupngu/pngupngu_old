@@ -30,9 +30,9 @@ export const wire = ({ ui, views, bus }: AppContext) => {
       const sub3 = gestures.transform(zoomCamera(app.camera));
 
       sub = merge({ src: [sub1, sub2, sub3] }).subscribe({
-        next({ 0: up, 1: pos }) {
+        next({ up, position }) {
           bus.dispatch([ev.SET_PARAM, ['cameraUp', up]]);
-          bus.dispatch([ev.SET_PARAM, ['cameraPos', pos]]);
+          bus.dispatch([ev.SET_PARAM, ['cameraPos', position]]);
         }
       });
 
