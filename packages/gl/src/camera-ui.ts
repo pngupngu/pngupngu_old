@@ -28,7 +28,8 @@ function transformQuat(a: Vec3, q: quat) {
   uuvy *= 2;
   uuvz *= 2;
 
-  return setS3(a.buf, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
+  setS3(a.buf, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
+  return a;
 }
 
 function mat44FromEulerYXZ(mat: Mat44, alpha: number, beta: number, gamma: number) {
@@ -71,7 +72,7 @@ export interface CameraView {
   up: Vec3;
 }
 
-export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5}: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
+export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5 }: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
   const radius = Math.max(width, height);
   const center = new Vec2([width, height]).mulN(0.5);
   const click = new Vec3();
@@ -100,11 +101,10 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
         axis.set(up).mulN(delta[1]).add(side).cross(viewDir).normalize();
         quat.setAxisAngle(q, axis, delta.magSq() * speed);
 
-        transformQuat(vd.set(viewDir), q);
-        transformQuat(u.set(up), q);
         return {
-          up: u, target: camera.target,
-          position: camPos.set(camera.target).add(vd)
+          up: transformQuat(u.set(up), q),
+          position: camPos.set(camera.target).add(transformQuat(vd.set(viewDir), q)),
+          target: camera.target
         };
       }
     })
@@ -133,11 +133,10 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
       axis.set(up).mulN(delta[1]).add(side).cross(viewDir).normalize();
       quat.setAxisAngle(q, axis, delta.magSq() * speed);
 
-      transformQuat(vd.set(viewDir), q);
-      transformQuat(u.set(up), q);
       return {
-        up: u, target: camera.target,
-        position: camPos.set(camera.target).add(vd)
+        up: transformQuat(u.set(up), q),
+        position: camPos.set(camera.target).add(transformQuat(vd.set(viewDir), q)),
+        target: camera.target
       };
     })
   );
@@ -153,10 +152,11 @@ export const orientCamera = (camera: PerspectiveCamera): Transducer<DeviceOrient
   return map((e: DeviceOrientationEvent) => {
     mat44FromEulerYXZ(mat, e.beta, e.alpha, -e.gamma).mul(rot);
 
-    const cameraPos = pos.set(camera.target)
-      .add(mat.mulV3(vd.set(Vec3.Z_AXIS)).mulN(camera.pivotDistance));
-    const cameraUp = mat.mulV3(up0.set(Vec3.Y_AXIS));
-    return { up: cameraUp, position: cameraPos, target: camera.target };
+    return {
+      up: mat.mulV3(up0.set(Vec3.Y_AXIS)),
+      position: pos.set(camera.target).add(mat.mulV3(vd.set(Vec3.Z_AXIS)).mulN(camera.pivotDistance)),
+      target: camera.target
+    };
   });
 }
 
