@@ -123,7 +123,7 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
   const q = quat.create();
   const u = new Vec3();
   const vd = new Vec3();
-  const camPos = new Vec3();
+  const position = new Vec3();
 
   return comp(
     filter(g => g[0] == GestureType.MOVE),
@@ -133,10 +133,13 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
       axis.set(up).mulN(delta[1]).add(side).cross(viewDir).normalize();
       quat.setAxisAngle(q, axis, delta.magSq() * speed);
 
+      position.set(camera.target).add(
+        transformQuat(vd.set(
+          viewDir.normalize().mulN(camera.pivotDistance)), q));
+
       return {
         up: transformQuat(u.set(up), q),
-        position: camPos.set(camera.target).add(transformQuat(vd.set(viewDir), q)),
-        target: camera.target
+        position, target: camera.target
       };
     })
   );

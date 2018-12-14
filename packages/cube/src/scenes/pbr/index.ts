@@ -99,6 +99,7 @@ export class App extends Application {
     super.init(gl);
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
+    this.camera.position = defaultParams.cameraPos;
 
     // const attribs = createTorusMesh();
     // const geom = new Geometry({
