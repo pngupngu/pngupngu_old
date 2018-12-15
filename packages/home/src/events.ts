@@ -10,6 +10,7 @@ export enum ev {
   SET_VALUE,
   SET_CHECKED,
   SET_PARAM,
+  SET_LOCATION,
 };
 
 export enum fx {
@@ -28,6 +29,7 @@ export const handlers: Handlers = {
     [ev.ALERT]: forwardSideFx(fx.ALERT),
     [ev.SET_VALUE]: valueSetter('value'),
     [ev.SET_CHECKED]: [trace, valueSetter('checked')],
+    [ev.SET_LOCATION]: valueSetter('location'),
     [ev.SET_PARAM]: (state, [_, [name, v]]) => ({
       [FX_STATE]: setIn(state, ['params', name], v)
     })

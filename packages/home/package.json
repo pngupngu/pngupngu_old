@@ -17,7 +17,8 @@
     "@thi.ng/paths": "^1.6.5",
     "@thi.ng/router": "^0.1.29",
     "@thi.ng/rstream": "^1.14.3",
-    "@thi.ng/rstream-gestures": "^0.6.3"
+    "@thi.ng/rstream-gestures": "^0.6.3",
+    "@thi.ng/transducers": "^2.2.5"
   },
   "browserslist": [
     ">2%",

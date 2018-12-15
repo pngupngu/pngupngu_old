@@ -24,6 +24,7 @@ interface Views {
   value: number;
   checked: boolean;
   params: Params;
+  location: number[];
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };

@@ -52,6 +52,7 @@ export const CONFIG: AppConfig = {
     value: 50,
     checked: false,
     params: defaultParams,
+    location: [0, 0, 0],
   },
 
   views: {
@@ -59,6 +60,7 @@ export const CONFIG: AppConfig = {
     value: 'value',
     checked: 'checked',
     params: 'params',
+    location: 'location'
   },
 
   ui: {
@@ -79,5 +81,7 @@ export const CONFIG: AppConfig = {
     cbutton: addClass(button, 'db mr-2 ctrl'),
     cselect: addClass(select, 'mr-2 ctrl', 'container'),
     cslider: addClass(slider, 'mr-2 ctrl', 'container'),
+
+    orient: { class: 'absolute off-center tc code f7' },
   }
 };
