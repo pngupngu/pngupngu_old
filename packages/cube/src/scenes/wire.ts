@@ -16,10 +16,10 @@ import { Command } from '@pngu/gl/command';
 import { AABB, Geometry, tessellate3 } from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/camera';
 
-import vert from './vert.glsl';
-import frag from './frag.glsl';
-import lineVert from './line.vert';
-import lineFrag from './line.frag';
+import vert from '../shaders/wire/vert.glsl';
+import frag from '../shaders/wire/frag.glsl';
+import lineVert from '../shaders/wire/line.vert';
+import lineFrag from '../shaders/wire/line.frag';
 
 export interface Params {
   width: number;
@@ -76,7 +76,7 @@ export class App extends Application {
     this.camera.position = params.cameraPos;
   }
 
-  init(gl) {
+  init(gl: WebGLRenderingContext) {
     super.init(gl);
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
@@ -129,7 +129,7 @@ export class App extends Application {
     this.cmd = new Command(gl, scene);
   }
 
-  render(time) {
+  render(time: number) {
     const gl = this.gl;
     gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);

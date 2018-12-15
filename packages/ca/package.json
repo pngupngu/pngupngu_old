@@ -14,11 +14,11 @@
     "@pngu/core": "^1.0.0",
     "@pngu/gl": "^1.0.0",
     "@pngu/ui": "^1.0.0",
-    "@thi.ng/hdom": "^5.2.0",
-    "@thi.ng/interceptors": "^1.9.0",
+    "@thi.ng/hdom": "^6.0.0",
+    "@thi.ng/interceptors": "^1.9.1",
     "@thi.ng/math": "^0.2.1",
     "@thi.ng/paths": "^1.6.5",
-    "@thi.ng/rstream-gestures": "^0.6.1",
+    "@thi.ng/rstream-gestures": "^0.6.3",
     "gl-matrix": "^2.8.1"
   },
   "devDependencies": {

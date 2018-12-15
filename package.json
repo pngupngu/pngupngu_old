@@ -7,7 +7,7 @@
   "scripts": {
     "bootstrap": "yarn install && lerna bootstrap",
     "build": "lerna run build --sort",
-    "clean": "lerna run clean",
+    "clean": "lerna run clean && rimraf dist",
     "test": "jest --watch"
   },
   "browserslist": [

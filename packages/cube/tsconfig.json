@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "es6",
     "rootDir": "src",
-    "outDir": "out"
+    "outDir": "."
   },
   "include": ["src"],
   "references": [

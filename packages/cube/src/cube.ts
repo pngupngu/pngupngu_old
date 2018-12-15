@@ -11,9 +11,7 @@ import {
 import { AppContext } from "./api";
 import { ev } from "./events";
 import { App } from './scenes/pbr';
-import { canvas,
-  controls
-} from './components/pbr';
+import { canvas, controls } from './components/pbr';
 
 export const cube = ({ ui, views, bus }: AppContext) => {
   let sub: ISubscribable<any>;

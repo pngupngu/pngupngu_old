@@ -21,11 +21,11 @@ import {
 import { PerspectiveCamera } from '@pngu/gl/Camera';
 import { Texture } from '@pngu/gl/texture';
 
-import vert from './vert.glsl';
-import frag from './frag.glsl';
-import brickDiffuse from '../../assets/images/brick-diffuse.jpg';
-import brickNormal from '../../assets/images/brick-normal.jpg';
-import brickSpecular from '../../assets/images/brick-specular.jpg';
+import vert from '../shaders/pbr/vert.glsl';
+import frag from '../shaders/pbr/frag.glsl';
+import brickDiffuse from '../../../assets/images/brick-diffuse.jpg';
+import brickNormal from '../../../assets/images/brick-normal.jpg';
+import brickSpecular from '../../../assets/images/brick-specular.jpg';
 
 export enum DistTypes { BlinnPhong, GGX, Beckmann }
 export enum GeometryTypes { Implicit, Schlick, GGX, CookTorrance }
@@ -58,7 +58,7 @@ export const defaultParams: Params = {
   roughness: 0.3,
   ambColor: new Vec3([0.03, 0.03, 0.03]),
   lightColor: new Vec3([1, 1, 1]),
-  useTexNormal: true,
+  useTexNormal: false,
   useTexDiff: true,
   useGamma: true,
   distributionType: DistTypes.BlinnPhong,

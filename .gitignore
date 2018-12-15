@@ -26,9 +26,11 @@ lerna-debug.log*
 !types.d.ts
 .nyc_output
 
-packages/core/components
-packages/core/gl
 packages/core/rstream
+packages/core/utils
+packages/cube/components
+packages/cube/scenes
+packages/cube/shaders
 
 packages/*/build
 packages/*/node_modules

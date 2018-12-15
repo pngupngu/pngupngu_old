@@ -7,6 +7,7 @@ import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
 import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
 
 import { CheckBoxAttribs, SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
+import { Params } from '@pngu/cube/scenes/wire';
 
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
@@ -22,6 +23,7 @@ interface Views {
   raf: boolean;
   value: number;
   checked: boolean;
+  params: Params;
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };

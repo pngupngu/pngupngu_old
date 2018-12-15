@@ -1,4 +1,4 @@
-import * as uuid from 'uuid/v4';
+import uuid from 'uuid/v4';
 import { IObjectOf } from "@thi.ng/api/api";
 
 type Uniforms = IObjectOf<any>;

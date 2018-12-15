@@ -1,16 +1,20 @@
 import { IObjectOf } from "@thi.ng/api/api";
-import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
+import { EventDef, EffectDef, FX_STATE } from "@thi.ng/interceptors/api";
 import { forwardSideFx, valueSetter, trace } from "@thi.ng/interceptors/interceptors";
+import { setIn } from '@thi.ng/paths';
 
-export const ev: IObjectOf<string> = {
-  ALERT: 'alert',
-  SET_VALUE: 'set-value',
-  SET_CHECKED: 'set-checked',
+export enum ev {
+  ALERT,
+  ROUTE_TO,
+  SET_RAF,
+  SET_VALUE,
+  SET_CHECKED,
+  SET_PARAM,
 };
 
-export const fx: IObjectOf<string> = {
-  ALERT: 'alert',
-  ROUTE_TO: 'route-to',
+export enum fx {
+  ALERT = '1',
+  ROUTE_TO = '2',
 };
 
 type Handlers = {
@@ -20,9 +24,13 @@ type Handlers = {
 
 export const handlers: Handlers = {
   events: {
+    [ev.SET_RAF]: valueSetter('raf'),
     [ev.ALERT]: forwardSideFx(fx.ALERT),
     [ev.SET_VALUE]: valueSetter('value'),
-    [ev.SET_CHECKED]: [trace, valueSetter('checked')]
+    [ev.SET_CHECKED]: [trace, valueSetter('checked')],
+    [ev.SET_PARAM]: (state, [_, [name, v]]) => ({
+      [FX_STATE]: setIn(state, ['params', name], v)
+    })
   },
 
   effects: {

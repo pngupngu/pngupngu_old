@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@pngu/core": "^1.0.0",
-    "@pngu/ui": "^1.0.0",
     "@pngu/cube": "^1.0.0",
-    "@thi.ng/interceptors": "^1.9.0",
+    "@pngu/ui": "^1.0.0",
+    "@thi.ng/interceptors": "^1.9.1",
     "@thi.ng/paths": "^1.6.5",
-    "@thi.ng/router": "^0.1.28"
+    "@thi.ng/router": "^0.1.29",
+    "@thi.ng/rstream": "^1.14.3",
+    "@thi.ng/rstream-gestures": "^0.6.3"
   },
   "browserslist": [
     ">2%",

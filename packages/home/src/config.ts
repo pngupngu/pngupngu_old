@@ -4,13 +4,14 @@ import {
   inlineButton, inlineSelect, inlineSlider, inlineCheckbox,
   addClass
 } from '@pngu/ui/styles';
+import { defaultParams } from '@pngu/cube/scenes/wire';
 
 import { AppConfig } from './api';
 import { handlers } from './events';
 import * as routes from './routes';
-
 import { home } from './components/home';
 import { uiRoute } from './components/uiroute';
+import { orientRoute } from './components/orient-route';
 
 // const modules = {
 //   ca: {
@@ -31,6 +32,7 @@ export const CONFIG: AppConfig = {
     routes: [
       routes.HOME,
       routes.UI,
+      routes.ORIENT,
     ]
   },
 
@@ -40,6 +42,7 @@ export const CONFIG: AppConfig = {
   components: {
     [routes.HOME.id]: home,
     [routes.UI.id]: uiRoute,
+    [routes.ORIENT.id]: orientRoute,
   },
 
   domRoot: 'app',
@@ -48,12 +51,14 @@ export const CONFIG: AppConfig = {
     raf: false,
     value: 50,
     checked: false,
+    params: defaultParams,
   },
 
   views: {
     raf: 'raf',
     value: 'value',
     checked: 'checked',
+    params: 'params',
   },
 
   ui: {

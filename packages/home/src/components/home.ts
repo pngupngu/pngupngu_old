@@ -9,7 +9,7 @@ export function home(ctx: AppContext) {
   const ui = ctx.ui;
   return ['div', ui.root,
     ['ul', ui.nav,
-      ['li', [routeLink, ui.link, 'ca', { id: 1 }, 'ca']],
+      ['li', [routeLink, ui.link, 'orient', {}, 'orient']],
       ['li', [routeLink, ui.link, 'ui', {}, 'ui']],
       ['li', [eventLink, ui.link, [ev.ALERT, 'it works'], 'test alert']],
     ],
