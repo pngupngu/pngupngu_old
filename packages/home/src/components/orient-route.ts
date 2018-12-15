@@ -7,6 +7,7 @@ import { canvas } from '@pngu/cube/components/wire';
 import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
 
+import { routeLink } from './route-link';
 import { AppContext } from '../api';
 import { ev } from "../events";
 
@@ -20,7 +21,6 @@ export const orientRoute = ({ bus, views, ui }: AppContext) => {
 
       sub = merge({
         src: [
-          // gestures.transform(dragCamera(app.camera, opts)),
           gestures.transform(moveCamera(app.camera, opts)),
           fromOrientation(1e-2).transform(orientCamera(app.camera)),
           gestures.transform(zoomCamera(app.camera))
@@ -44,6 +44,7 @@ export const orientRoute = ({ bus, views, ui }: AppContext) => {
     const params = views.params.deref();
     return ['div', ui.root,
       [canvas_, ui.ca, params],
+      ['div', ui.logoBr, [routeLink, ui.link, 'home', {}, 'pngupngu']],
     ];
   }
 }

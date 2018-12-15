@@ -166,3 +166,9 @@ code,
   background-color: #777;
   border: solid 0.21rem rgba(0,0,0,.9);
 }
+
+.center-child {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

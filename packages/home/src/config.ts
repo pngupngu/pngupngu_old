@@ -63,6 +63,8 @@ export const CONFIG: AppConfig = {
 
   ui: {
     root,
+    logo: { class: 'absolute red center-child' },
+    logoBr: { class: 'absolute red bottom-1 right-1' },
 
     nav: { class: 'list ma0 pa0' },
     link: { class: 'pointer link red' },
