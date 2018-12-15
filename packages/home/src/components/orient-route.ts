@@ -1,8 +1,6 @@
-import { GestureType } from "@thi.ng/rstream-gestures";
 import { gestureStream } from "@thi.ng/rstream-gestures";
 import { ISubscribable } from "@thi.ng/rstream/api";
 import { merge } from '@thi.ng/rstream/stream-merge';
-import { filter } from '@thi.ng/transducers/xform/filter';
 
 import { App } from '@pngu/cube/scenes/wire';
 import { canvas } from '@pngu/cube/components/wire';
