@@ -9,6 +9,11 @@ import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
 import { CheckBoxAttribs, SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
 import { Params } from '@pngu/cube/scenes/wire';
 
+export type Handlers = {
+  events: IObjectOf<EventDef>;
+  effects: IObjectOf<EffectDef>;
+}
+
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
 export interface Module {

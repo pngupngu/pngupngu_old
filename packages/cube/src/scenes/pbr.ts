@@ -23,9 +23,9 @@ import { Texture } from '@pngu/gl/texture';
 
 import vert from '../shaders/pbr/vert.glsl';
 import frag from '../shaders/pbr/frag.glsl';
-import brickDiffuse from '../../../assets/images/brick-diffuse.jpg';
-import brickNormal from '../../../assets/images/brick-normal.jpg';
-import brickSpecular from '../../../assets/images/brick-specular.jpg';
+import brickDiffuse from '../../assets/images/brick-diffuse.jpg';
+import brickNormal from '../../assets/images/brick-normal.jpg';
+import brickSpecular from '../../assets/images/brick-specular.jpg';
 
 export enum DistTypes { BlinnPhong, GGX, Beckmann }
 export enum GeometryTypes { Implicit, Schlick, GGX, CookTorrance }
@@ -69,7 +69,7 @@ export const defaultParams: Params = {
   cameraPos: new Vec3([1, 4, 8]),
 }
 
-export class App extends Application {
+export class App extends Application<Params> {
   mat: Material;
   cmd: Command;
   camera: PerspectiveCamera;

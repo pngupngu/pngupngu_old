@@ -1,6 +1,3 @@
-import { addExtensionsToContext } from 'twgl.js';
-import fit from 'canvas-fit';
-import { canvasWebGL, CanvasHandlers } from "@thi.ng/hdom-components/canvas";
 import { partial } from '@thi.ng/compose/partial';
 
 import { enumNames } from '@pngu/core/utils/enum-names';
@@ -10,31 +7,7 @@ import { create as createCheckbox } from '@pngu/ui/checkbox';
 import { create as createSelect } from '@pngu/ui/select';
 import { create as createSlider, multiSlider } from '@pngu/ui/slider';
 
-import { App, Params, DistTypes, GeometryTypes, DiffuseTypes } from '../scenes/pbr';
-
-export const canvas = (app: App, { init, update, release }: Partial<CanvasHandlers<WebGLRenderingContext>>) => {
-  let resize;
-  return canvasWebGL({
-    init(el: HTMLCanvasElement, gl: WebGLRenderingContext, _: any) {
-      addExtensionsToContext(gl);
-      resize = fit(el);
-      resize();
-
-      app.init(gl);
-
-      init && init(el, gl);
-    },
-    update(el: HTMLCanvasElement, gl: WebGLRenderingContext, _: any, time: number, __: number, ___: any, params: Params) {
-      app.params = params;
-      app.render(time);
-
-      update && update(el, gl);
-    },
-    release(el: HTMLCanvasElement, gl: WebGLRenderingContext, _: any) {
-      release && release(el, gl);
-    }
-  });
-};
+import { Params, DistTypes, GeometryTypes, DiffuseTypes } from '../scenes/pbr';
 
 export interface ControlAttribs {
   panel: PanelAttribs;

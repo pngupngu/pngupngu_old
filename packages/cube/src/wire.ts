@@ -9,11 +9,12 @@ import {
   moveCamera,
   orientCamera, zoomCamera
 } from '@pngu/gl/camera-ui';
+import { canvas } from '@pngu/gl/canvas';
 
 import { AppContext } from "./api";
 import { ev } from "./events";
 import { App } from './scenes/wire';
-import { canvas, controls } from './components/wire';
+import { controls } from './components/wire';
 
 export const wire = ({ ui, views, bus }: AppContext) => {
   let sub: ISubscribable<any>;

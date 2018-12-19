@@ -8,10 +8,13 @@ import {
   // moveCamera,
   orientCamera, zoomCamera
 } from '@pngu/gl/camera-ui';
+import { canvas } from '@pngu/gl/canvas';
+
+
 import { AppContext } from "./api";
 import { ev } from "./events";
 import { App } from './scenes/pbr';
-import { canvas, controls } from './components/pbr';
+import { controls } from './components/pbr';
 
 export const cube = ({ ui, views, bus }: AppContext) => {
   let sub: ISubscribable<any>;

@@ -51,7 +51,7 @@ export const defaultParams: Params = {
   cameraPos: new Vec3([0, 0, 8]),
 };
 
-export class App extends Application {
+export class App extends Application<Params> {
   cmd: Command;
   camera: PerspectiveCamera;
   mat: Material;
