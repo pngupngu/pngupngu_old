@@ -2,10 +2,10 @@ import { gestureStream } from "@thi.ng/rstream-gestures";
 import { ISubscribable } from "@thi.ng/rstream/api";
 import { merge } from '@thi.ng/rstream/stream-merge';
 
-import { App } from '@pngu/cube/scenes/wire';
-import { canvas } from '@pngu/cube/components/wire';
-import { fromOrientation } from '@pngu/core/rstream/from-orientation';
+import { canvas } from '@pngu/gl/canvas';
 import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
+import { App } from '@pngu/cube/scenes/wire';
+import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 
 import { routeLink } from './route-link';
 import { AppContext } from '../api';

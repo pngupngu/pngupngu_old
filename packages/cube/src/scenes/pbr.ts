@@ -13,11 +13,7 @@ import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import {
-  AABB,
-  tessellate3,
-  Geometry
-} from '@pngu/gl/geometry';
+import { AABB, tessellate3, Geometry } from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/Camera';
 import { Texture } from '@pngu/gl/texture';
 
