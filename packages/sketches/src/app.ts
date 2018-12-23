@@ -41,7 +41,6 @@ export class App {
       ([id, params]) => this.router.routeTo(this.router.format(id, params))
     );
     this.addViews({
-      route: "route",
       routeComponent: ["route.id", id => this.config.components[id](this.ctx)]
     });
   }

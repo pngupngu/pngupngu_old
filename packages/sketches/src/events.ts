@@ -9,7 +9,6 @@ export enum ev {
   ROUTE_TO,
   SET_RAF,
   SET_PARAM,
-  SET_ORIENTATION,
 };
 
 export enum fx {
@@ -22,7 +21,6 @@ export const handlers: Handlers = {
     [ev.ROUTE_TO]: (_, [__, route]) => ({ [fx.ROUTE_TO]: route }),
 
     [ev.SET_RAF]: valueSetter('raf'),
-    [ev.SET_ORIENTATION]: valueSetter('orientation'),
     [ev.SET_PARAM]: (state, [_, [sketch, name, v]]) => ({
       [FX_STATE]: setIn(state, ['params', sketch, name], v)
     })

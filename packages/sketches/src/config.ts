@@ -6,7 +6,7 @@ import {
 
 import { AppConfig } from './api';
 import { handlers } from './events';
-import * as routes from './routes';
+import  routes from './routes';
 
 import { home } from './home';
 import { pbr } from './pbr';
@@ -46,6 +46,7 @@ export const CONFIG: AppConfig = {
 
   views: {
     raf: 'raf',
+    route: 'route',
     params: 'params',
   },
 

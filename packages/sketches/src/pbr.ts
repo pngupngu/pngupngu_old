@@ -18,6 +18,7 @@ import { controls } from './components/pbr';
 export const pbr = ({ ui, views, bus }: AppContext) => {
   let sub: ISubscribable<any>;
   const app = new App();
+  const setParam = (name, value) => bus.dispatch([ev.SET_PARAM, ['pbr', name, value]]);
   const canvas_ = canvas(app, {
     init(el) {
       const gestures = gestureStream(el, { absZoom: false });
@@ -32,8 +33,8 @@ export const pbr = ({ ui, views, bus }: AppContext) => {
         ]
       }).subscribe({
         next({ up, position }) {
-          bus.dispatch([ev.SET_PARAM, ['pbr', 'cameraUp', up]]);
-          bus.dispatch([ev.SET_PARAM, ['pbr', 'cameraPos', position]]);
+          setParam('cameraUp', up);
+          setParam('cameraPos', position);
         }
       });
 
@@ -52,7 +53,7 @@ export const pbr = ({ ui, views, bus }: AppContext) => {
     checkbox: ui.checkbox,
     multislider3: ui.multiSlider3,
     multislider4: ui.multiSlider4
-  }, (name, value) => bus.dispatch([ev.SET_PARAM, ['pbr', name, value]]));
+  }, setParam);
 
   return () => {
     const params = views.params.deref().pbr;

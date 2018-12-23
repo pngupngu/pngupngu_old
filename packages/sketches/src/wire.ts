@@ -3,11 +3,7 @@ import { ISubscribable } from "@thi.ng/rstream/api";
 import { merge } from '@thi.ng/rstream/stream-merge';
 
 import { fromOrientation } from '@pngu/core/rstream/from-orientation';
-import {
-  // dragCamera,
-  moveCamera,
-  orientCamera, zoomCamera
-} from '@pngu/gl/camera-ui';
+import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/gl/canvas';
 
 import { AppContext } from "./api";
@@ -20,6 +16,8 @@ export const wire = ({ ui, views, bus }: AppContext) => {
 
   const app = new App();
 
+  const setParam = (name, value) => bus.dispatch([ev.SET_PARAM, ['wire', name, value]]);
+
   const canvas_ = canvas(app, {
     init(el) {
       const gestures = gestureStream(el, { absZoom: false });
@@ -27,15 +25,14 @@ export const wire = ({ ui, views, bus }: AppContext) => {
 
       sub = merge({
         src: [
-          // gestures.transform(dragCamera(app.camera, opts)),
           gestures.transform(moveCamera(app.camera, opts)),
           fromOrientation(1e-2).transform(orientCamera(app.camera)),
           gestures.transform(zoomCamera(app.camera))
         ]
       }).subscribe({
         next({ up, position }) {
-          bus.dispatch([ev.SET_PARAM, ['wire', 'cameraUp', up]]);
-          bus.dispatch([ev.SET_PARAM, ['wire', 'cameraPos', position]]);
+          setParam('cameraUp', up);
+          setParam('cameraPos', position);
         }
       });
 
@@ -52,7 +49,7 @@ export const wire = ({ ui, views, bus }: AppContext) => {
     checkbox: ui.checkbox,
     multislider3: ui.multiSlider3,
     multislider4: ui.multiSlider4
-  }, (name, value) => bus.dispatch([ev.SET_PARAM, ['wire', name, value]]));
+  }, setParam);
 
   return () => {
     const params = views.params.deref().wire;
