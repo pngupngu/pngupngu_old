@@ -7,7 +7,7 @@ import {
   MultiSliderAttribs
 } from './api';
 
-export const addClass = (attribs, klass, path?: string) =>
+export const addClass = (attribs: UIAttrib | ComponentAttrib<string>, klass: string, path?: string) =>
   updateIn(attribs, path ? toPath(path).concat(['class']) : 'class', cls => cx(cls, klass));
 
 export const inline = (attribs: UIAttrib | ComponentAttrib<string>, path?: string) =>

@@ -10,7 +10,6 @@ import {
 } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/gl/canvas';
 
-
 import { AppContext } from "./api";
 import { ev } from "./events";
 import { App } from './scenes/pbr';

@@ -9,8 +9,7 @@ const routeLink = ({ bus, ui }: AppContext, routeId: PropertyKey, routeParams: a
       e.preventDefault();
       bus.dispatch([ev.ROUTE_TO, [routeId, routeParams]])
     }
-  },
-    body];
+  }, body];
 
 export const home = ({ ui }: AppContext) => {
   return ['div', ui.root,

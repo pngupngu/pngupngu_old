@@ -49,7 +49,7 @@ export interface UIAttribs {
 
   select: SelectAttribs;
   slider: SliderAttribs;
-  cslide?: SliderAttribs;
+  cslider: SliderAttribs;
   panel: PanelAttribs;
   checkbox: CheckBoxAttribs;
   multiSlider3: MultiSliderAttribs;

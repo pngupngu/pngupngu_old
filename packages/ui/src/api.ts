@@ -24,8 +24,7 @@ export interface SliderArgs {
   attribs: SliderAttribs;
 }
 
-export interface MultiSliderAttribs {
-  container: UIAttrib;
+export interface MultiSliderAttribs extends ComponentAttrib<'container'> {
   slider: SliderAttribs;
 }
 
