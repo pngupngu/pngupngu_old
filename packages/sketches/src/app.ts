@@ -61,7 +61,7 @@ export class App {
     this.router.start();
 
     start(
-      ({ bus, views: { raf, routeComponent } }) => {
+      ({ bus, views: { raf, routeComponent } }: AppContext) => {
         if (bus.processQueue() || raf.deref()) {
           return routeComponent;
         } else {
