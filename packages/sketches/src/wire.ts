@@ -1,4 +1,3 @@
-import { float } from '@thi.ng/strings/float';
 import { gestureStream } from "@thi.ng/rstream-gestures";
 import { ISubscribable } from "@thi.ng/rstream/api";
 import { merge } from '@thi.ng/rstream/stream-merge';
@@ -35,8 +34,8 @@ export const wire = ({ ui, views, bus }: AppContext) => {
         ]
       }).subscribe({
         next({ up, position }) {
-          bus.dispatch([ev.SET_PARAM, ['cameraUp', up]]);
-          bus.dispatch([ev.SET_PARAM, ['cameraPos', position]]);
+          bus.dispatch([ev.SET_PARAM, ['wire', 'cameraUp', up]]);
+          bus.dispatch([ev.SET_PARAM, ['wire', 'cameraPos', position]]);
         }
       });
 
@@ -53,17 +52,13 @@ export const wire = ({ ui, views, bus }: AppContext) => {
     checkbox: ui.checkbox,
     multislider3: ui.multiSlider3,
     multislider4: ui.multiSlider4
-  }, (name, value) => bus.dispatch([ev.SET_PARAM, [name, value]]));
-
-  const fmt = float(2);
+  }, (name, value) => bus.dispatch([ev.SET_PARAM, ['wire', name, value]]));
 
   return () => {
-    const params = views.params.deref();
-    const orient = views.orientation.deref();
+    const params = views.params.deref().wire;
     return ['div', ui.root,
       [canvas_, ui.ca, params],
       [controls_, params],
-      ['div', ui.orient, `${fmt(orient[0])}, ${fmt(orient[1])}, ${fmt(orient[2])}`],
     ];
   };
 }

@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "@pngu/core": "^1.0.0",
-    "@thi.ng/geom": "^0.2.5",
-    "@thi.ng/math": "^0.2.1",
-    "@thi.ng/rstream": "^1.14.3",
-    "@thi.ng/rstream-gestures": "^0.6.3",
-    "@thi.ng/transducers": "^2.2.5",
-    "@thi.ng/vectors": "^1.4.6",
+    "@thi.ng/geom": "^0.2.7",
+    "@thi.ng/math": "^0.2.2",
+    "@thi.ng/rstream": "^1.14.5",
+    "@thi.ng/rstream-gestures": "^0.6.5",
+    "@thi.ng/transducers": "^2.2.7",
+    "@thi.ng/vectors": "^1.4.8",
     "gl-matrix": "^2.8.1",
     "twgl.js": "^4.5.2"
   }

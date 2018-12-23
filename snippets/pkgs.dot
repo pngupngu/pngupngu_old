@@ -1,0 +1,15 @@
+digraph title {
+  // graph [ dpi = 150 ]
+  label="@pngu packages";
+  rankdir=LR;labeljust="l";penwidth=0.3;pencolor="#333333";fontcolor="#666666";fontname="Inconsolata";fontsize=10.0;compound=true;
+  graph [style=filled, fillcolor="#fafafa", splines=spline]
+  node [shape=oval, penwidth=0.0, color="#dddddd", style="filled", fontcolor="#333333", fontname="Inconsolata", fontsize=10.0];
+  edge [penwidth=0.5, color="#333333", arrowsize=0.5, fontname="Inconsolata", fontsize=9.0];
+
+  core -> ui;
+  core -> gl;
+  ui -> sketches;
+  gl -> sketches;
+  sketches -> home;
+  ui -> home;
+}

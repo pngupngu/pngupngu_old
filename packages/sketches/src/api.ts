@@ -2,6 +2,7 @@ import { IObjectOf } from "@thi.ng/api/api";
 import { ViewTransform, IView } from "@thi.ng/atom/api";
 import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
 import { EventBus } from "@thi.ng/interceptors/event-bus";
+import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
 
 import {
   UIAttrib, ComponentAttrib,
@@ -15,9 +16,13 @@ import { Params as wireParams } from './scenes/wire';
 export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
 
 interface Views {
+  route: RouteMatch;
+  routeComponent: any;
   raf: boolean;
-  params: pbrParams & wireParams;
-  orientation: number[];
+  params: {
+    wire: wireParams,
+    pbr: pbrParams
+  };
 }
 
 export type AppViews = { [P in keyof Views]: IView<Views[P]> };
@@ -31,7 +36,8 @@ export type Handlers = {
 
 export interface AppConfig {
   domRoot: string | Element;
-  rootComponent: any;
+  router: HTMLRouterConfig;
+  components: IObjectOf<any>;
   handlers: Handlers;
   initialState: any;
   ui: UIAttribs;

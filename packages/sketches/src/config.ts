@@ -6,34 +6,56 @@ import {
 
 import { AppConfig } from './api';
 import { handlers } from './events';
-import { cube } from './cube';
-import { defaultParams } from './scenes/pbr'
-// import { wire } from './wire';
-// import { defaultParams } from './scenes/wire'
+import * as routes from './routes';
+
+import { home } from './home';
+import { pbr } from './pbr';
+import { defaultParams as pbrParams } from './scenes/pbr'
+import { wire } from './wire';
+import { defaultParams as wireParams } from './scenes/wire'
 
 export const CONFIG: AppConfig = {
+
+  router: {
+    useFragment: true,
+    defaultRouteID: routes.HOME.id,
+    routes: [
+      routes.HOME,
+      routes.WIRE,
+      routes.PBR,
+    ]
+  },
+
   handlers,
 
   domRoot: 'app',
 
-  rootComponent: cube,
-  // rootComponent: wire,
+  components: {
+    [routes.HOME.id]: home,
+    [routes.WIRE.id]: wire,
+    [routes.PBR.id]: pbr,
+  },
 
   initialState: {
     raf: false,
-    params: defaultParams,
+    params: {
+      wire: wireParams,
+      pbr: pbrParams
+    },
     orientation: [0, 0, 0],
   },
 
   views: {
     raf: 'raf',
     params: 'params',
-    orientation: 'orientation'
   },
 
   ui: {
     root, button, select, slider, checkbox,
     multiSlider3, multiSlider4,
+
+    nav: { class: 'list ma0 pa0' },
+    link: { class: 'pointer link red' },
 
     panel: addClass(panel, 'absolute w5', 'container'),
 

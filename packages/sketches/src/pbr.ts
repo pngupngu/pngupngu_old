@@ -16,7 +16,7 @@ import { ev } from "./events";
 import { App } from './scenes/pbr';
 import { controls } from './components/pbr';
 
-export const cube = ({ ui, views, bus }: AppContext) => {
+export const pbr = ({ ui, views, bus }: AppContext) => {
   let sub: ISubscribable<any>;
   const app = new App();
   const canvas_ = canvas(app, {
@@ -33,8 +33,8 @@ export const cube = ({ ui, views, bus }: AppContext) => {
         ]
       }).subscribe({
         next({ up, position }) {
-          bus.dispatch([ev.SET_PARAM, ['cameraUp', up]]);
-          bus.dispatch([ev.SET_PARAM, ['cameraPos', position]]);
+          bus.dispatch([ev.SET_PARAM, ['pbr', 'cameraUp', up]]);
+          bus.dispatch([ev.SET_PARAM, ['pbr', 'cameraPos', position]]);
         }
       });
 
@@ -53,10 +53,10 @@ export const cube = ({ ui, views, bus }: AppContext) => {
     checkbox: ui.checkbox,
     multislider3: ui.multiSlider3,
     multislider4: ui.multiSlider4
-  }, (name, value) => bus.dispatch([ev.SET_PARAM, [name, value]]));
+  }, (name, value) => bus.dispatch([ev.SET_PARAM, ['pbr', name, value]]));
 
   return () => {
-    const params = views.params.deref();
+    const params = views.params.deref().pbr;
     return ['div', ui.root,
       [canvas_, ui.ca, params],
       [controls_, params],

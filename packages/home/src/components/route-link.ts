@@ -5,7 +5,7 @@ export function routeLink(ctx: AppContext, attribs: any, routeID: PropertyKey, r
   return ["a",
     {
       ...attribs,
-      onclick: (e) => {
+      onclick: (e: MouseEvent) => {
         e.preventDefault();
         ctx.bus.dispatch([ev.ROUTE_TO, [routeID, routeParams]]);
       }
