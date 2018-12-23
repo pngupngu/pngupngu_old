@@ -6,12 +6,11 @@ import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/gl/canvas';
 
-import { AppContext } from "./api";
-import { ev } from "./events";
+import { Context, ev } from "./api";
 import { App } from './scenes/wire';
 import { controls } from './components/wire';
 
-export const wire = ({ ui, views, bus }: AppContext) => {
+export const wire = ({ ui, views, bus }: Context) => {
   let sub: ISubscribable<any>;
 
   const app = new App();

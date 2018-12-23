@@ -13,7 +13,17 @@ import {
 import { Params as pbrParams } from './scenes/pbr';
 import { Params as wireParams } from './scenes/wire';
 
-export type AppComponent = (ctx: AppContext, ...args: any[]) => any;
+export enum ev {
+  ROUTE_TO,
+  SET_RAF,
+  SET_PARAM,
+};
+
+export enum fx {
+  ROUTE_TO = '1'
+};
+
+export type AppComponent = (ctx: Context, ...args: any[]) => any;
 
 interface Views {
   route: RouteMatch;
@@ -29,16 +39,12 @@ export type AppViews = { [P in keyof Views]: IView<Views[P]> };
 
 export type ViewSpec = string | [string, ViewTransform<any>];
 
-export type Handlers = {
-  events: IObjectOf<EventDef>;
-  effects: IObjectOf<EffectDef>;
-}
-
-export interface AppConfig {
+export interface Config {
   domRoot: string | Element;
   router: HTMLRouterConfig;
   components: IObjectOf<any>;
-  handlers: Handlers;
+  events: IObjectOf<EventDef>;
+  effects: IObjectOf<EffectDef>;
   initialState: any;
   ui: UIAttribs;
   views: Partial<Record<keyof AppViews, ViewSpec>>;
@@ -56,7 +62,7 @@ export interface UIAttribs {
   multiSlider4: MultiSliderAttribs;
 }
 
-export interface AppContext {
+export interface Context {
   bus: EventBus;
   views: AppViews;
   ui: UIAttribs;

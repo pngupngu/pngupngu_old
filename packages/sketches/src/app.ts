@@ -6,22 +6,21 @@ import { EventBus } from "@thi.ng/interceptors/event-bus";
 import { EVENT_ROUTE_CHANGED } from "@thi.ng/router/api";
 import { HTMLRouter } from "@thi.ng/router/history";
 
-import { AppConfig, AppContext, AppViews, ViewSpec } from "./api";
-import { fx } from './events';
+import { Config, Context, AppViews, ViewSpec, fx } from "./api";
 
 export class App {
 
-  config: AppConfig;
-  ctx: AppContext;
+  config: Config;
+  ctx: Context;
   state: Atom<any>;
   router: HTMLRouter;
 
-  constructor(config: AppConfig) {
+  constructor(config: Config) {
     this.config = config;
     this.state = new Atom(config.initialState || {});
 
-    const { ui, handlers, views } = config;
-    const bus = new EventBus(this.state, handlers.events, handlers.effects);
+    const { ui, events, effects, views } = config;
+    const bus = new EventBus(this.state, events, effects);
     this.ctx = { bus, ui, views: <AppViews>{} };
     this.addViews(views);
 
@@ -61,7 +60,7 @@ export class App {
     this.router.start();
 
     start(
-      ({ bus, views: { raf, routeComponent } }: AppContext) => {
+      ({ bus, views: { raf, routeComponent } }: Context) => {
         if (bus.processQueue() || raf.deref()) {
           return routeComponent;
         } else {

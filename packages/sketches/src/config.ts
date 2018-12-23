@@ -1,12 +1,17 @@
+import { vals } from '@thi.ng/transducers/iter/vals';
+import { EVENT_ROUTE_CHANGED } from "@thi.ng/router/api";
+import { FX_STATE } from "@thi.ng/interceptors/api";
+import { valueSetter } from "@thi.ng/interceptors/interceptors";
+import { setIn } from '@thi.ng/paths';
+
 import {
   root, panel, select, button, slider, checkbox,
   multiSlider3, multiSlider4,
   addClass
 } from '@pngu/ui/styles';
 
-import { AppConfig } from './api';
-import { handlers } from './events';
-import  routes from './routes';
+import { Config, ev, fx } from './api';
+import routes from './routes';
 
 import { home } from './home';
 import { pbr } from './pbr';
@@ -14,19 +19,27 @@ import { defaultParams as pbrParams } from './scenes/pbr'
 import { wire } from './wire';
 import { defaultParams as wireParams } from './scenes/wire'
 
-export const CONFIG: AppConfig = {
+export const CONFIG: Config = {
 
   router: {
     useFragment: true,
     defaultRouteID: routes.HOME.id,
-    routes: [
-      routes.HOME,
-      routes.WIRE,
-      routes.PBR,
-    ]
+    routes: [...vals(routes)]
   },
 
-  handlers,
+  events: {
+    [EVENT_ROUTE_CHANGED]: valueSetter("route"),
+    [ev.ROUTE_TO]: (_, [__, route]) => ({ [fx.ROUTE_TO]: route }),
+
+    [ev.SET_RAF]: valueSetter('raf'),
+    [ev.SET_PARAM]: (state, [_, [sketch, name, v]]) => ({
+      [FX_STATE]: setIn(state, ['params', sketch, name], v)
+    })
+  },
+
+  effects: {
+
+  },
 
   domRoot: 'app',
 

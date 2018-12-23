@@ -10,12 +10,11 @@ import {
 } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/gl/canvas';
 
-import { AppContext } from "./api";
-import { ev } from "./events";
+import { Context, ev } from "./api";
 import { App } from './scenes/pbr';
 import { controls } from './components/pbr';
 
-export const pbr = ({ ui, views, bus }: AppContext) => {
+export const pbr = ({ ui, views, bus }: Context) => {
   let sub: ISubscribable<any>;
   const app = new App();
   const setParam = (name, value) => bus.dispatch([ev.SET_PARAM, ['pbr', name, value]]);
