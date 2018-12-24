@@ -8,36 +8,33 @@ import { range } from '@thi.ng/transducers/iter/range'
 import { SliderArgs, MultiSliderArgs } from './api';
 import { streamDrag } from './utils';
 
-const NOOP = _ => { };
+const NOOP = () => { };
 
-export const slider = () => {
-  let sub, elm: HTMLElement;
-  return {
-    init(el: HTMLElement, _: any, { max, min, step, onchange = NOOP }: SliderArgs, value: number) {
-      const steps = Math.floor((max - min) / step);
-      elm = el;
+export const slider = () => ({
+  init(el: HTMLElement, _: any, { max, min, step, onchange = NOOP }: SliderArgs, value: number) {
+    const steps = Math.floor((max - min) / step);
+    this.elm = el;
 
-      sub = streamDrag(el).transform(
-        map(({ pos, delta }) => {
-          const { left, width } = el.getBoundingClientRect();
-          const pct = clamp(fit(pos[0] + delta[0] - left, 0, width, 0, steps), 0, steps);
-          return min + Math.floor(pct + 0.5) * step;
-        }),
-        dedupe()).subscribe({ next: onchange });
+    this.sub = streamDrag(el).transform(
+      map(({ pos, delta }) => {
+        const { left, width } = el.getBoundingClientRect();
+        const pct = clamp(fit(pos[0] + delta[0] - left, 0, width, 0, steps), 0, steps);
+        return min + Math.floor(pct + 0.5) * step;
+      }),
+      dedupe()).subscribe({ next: onchange });
 
-      onchange(value);
-    },
-    render(_: any, { max, min, attribs, precision = 2 }: SliderArgs, value: number) {
-      const w = elm ? fit(value, min, max, 0, elm.getBoundingClientRect().width) : 0;
-      return ['div', attribs.container,
-        ['div', { style: { width: `${w.toFixed(3)}px` }, ...attribs.handle },
-          ['span', attribs.value, value.toFixed(precision)]]];
-    },
-    release() {
-      sub.done();
-    }
-  };
-};
+    onchange(value);
+  },
+  render(_: any, { max, min, attribs, precision = 2 }: SliderArgs, value: number) {
+    const w = this.elm ? fit(value, min, max, 0, this.elm.getBoundingClientRect().width) : 0;
+    return ['div', attribs.container,
+      ['div', { style: { width: `${w.toFixed(3)}px` }, ...attribs.handle },
+        ['span', attribs.value, value.toFixed(precision)]]];
+  },
+  release() {
+    this.sub.done();
+  }
+});
 
 export const create = (args0?: Partial<SliderArgs>) => {
   const slider_ = slider();

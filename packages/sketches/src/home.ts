@@ -1,7 +1,7 @@
 import { appLink } from '@thi.ng/hdom-components/link';
 
 import { Context, ev } from "./api";
-import routes from './routes';
+import * as routes from './routes';
 
 export const home = ({ ui, bus }: Context) => {
   const routeTo = route => () => bus.dispatch([ev.ROUTE_TO, route]);

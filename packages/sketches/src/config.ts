@@ -11,7 +11,7 @@ import {
 } from '@pngu/ui/styles';
 
 import { Config, ev, fx } from './api';
-import routes from './routes';
+import * as routes from './routes';
 
 import { home } from './home';
 import { pbr } from './pbr';
@@ -38,7 +38,6 @@ export const CONFIG: Config = {
   },
 
   effects: {
-
   },
 
   domRoot: 'app',
