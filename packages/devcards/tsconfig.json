@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es6",
+    "rootDir": "src",
+    "outDir": "."
+  },
+  "include": ["src"],
+  "references": [
+    { "path": "../core" },
+    { "path": "../ui" },
+    { "path": "../gl" }
+  ]
+}

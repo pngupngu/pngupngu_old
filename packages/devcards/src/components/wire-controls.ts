@@ -5,7 +5,7 @@ import { panel } from '@pngu/ui/panel';
 import { create as createCheckbox } from '@pngu/ui/checkbox';
 import { create as createSlider, multiSlider } from '@pngu/ui/slider';
 
-import { Params } from '../scenes/wire';
+import { Params } from '@pngu/sketches/wire';
 
 export interface UIAttribs {
   panel: PanelAttribs;

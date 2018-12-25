@@ -1,17 +1,20 @@
 {
-  "name": "@pngu/sketches",
+  "name": "@pngu/devcards",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "yarn run clean && tsc -b",
-    "clean": "rimraf *.js *.d.ts *.d.ts.map build .nyc_output",
-    "test": "yarn run clean && tsc -b test && nyc mocha build/**/*.js"
+    "start": "yarn run clean && parcel index.html --hmr-hostname 0.0.0.0 -p 8080 --open --log-level 3",
+    "build": "yarn run clean && parcel build index.html -d out --no-source-maps --no-cache --detailed-report --public-url ./",
+    "build-lib": "yarn run clean && tsc -b && cp -R src/{assets,shaders} .",
+    "clean": "rimraf *.js *.d.ts *.d.ts.map components scenes shaders assets out dist .cache"
   },
   "dependencies": {
     "@pngu/core": "^1.0.0",
     "@pngu/gl": "^1.0.0",
+    "@pngu/ui": "^1.0.0",
+    "@pngu/sketches": "^1.0.0",
     "@thi.ng/api": "^4.2.4",
     "@thi.ng/checks": "^1.5.14",
     "@thi.ng/compose": "^0.2.2",
@@ -32,5 +35,15 @@
     "gl-matrix": "^2.8.1",
     "primitive-torus": "^1.0.4",
     "twgl.js": "^4.5.2"
-  }
+  },
+  "devDependencies": {
+    "glslify-bundle": "^5.1.1",
+    "glslify-deps": "^1.3.1"
+  },
+  "browserslist": [
+    ">2%",
+    "last 1 edge versions",
+    "not ie > 0",
+    "not op_mini all"
+  ]
 }

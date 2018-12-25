@@ -15,9 +15,9 @@ import * as routes from './routes';
 
 import { home } from './home';
 import { pbr } from './pbr';
-import { defaultParams as pbrParams } from './scenes/pbr'
+import { defaultParams as pbrParams } from '@pngu/sketches/pbr';
 import { wire } from './wire';
-import { defaultParams as wireParams } from './scenes/wire'
+import { defaultParams as wireParams } from '@pngu/sketches/wire';
 
 export const CONFIG: Config = {
 

@@ -28,9 +28,7 @@ lerna-debug.log*
 
 packages/core/rstream
 packages/core/utils
-packages/cube/components
-packages/cube/scenes
-packages/cube/shaders
+packages/devcards/components
 
 packages/*/build
 packages/*/node_modules
