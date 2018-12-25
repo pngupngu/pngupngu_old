@@ -9,7 +9,7 @@ import {
   orientCamera, zoomCamera
 } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/gl/canvas';
-import { App } from '@pngu/sketches/pbr';
+import { App } from '@pngu/scenes/pbr';
 
 import { Context, ev } from "../api";
 import { controls } from './pbr-controls';

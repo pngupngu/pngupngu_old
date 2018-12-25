@@ -6,8 +6,7 @@ import { panel } from '@pngu/ui/panel';
 import { create as createCheckbox } from '@pngu/ui/checkbox';
 import { create as createSelect } from '@pngu/ui/select';
 import { create as createSlider, multiSlider } from '@pngu/ui/slider';
-
-import { Params, DistTypes, GeometryTypes, DiffuseTypes } from '@pngu/sketches/pbr';
+import { Params, DistTypes, GeometryTypes, DiffuseTypes } from '@pngu/scenes/pbr';
 
 export interface ControlAttribs {
   panel: PanelAttribs;

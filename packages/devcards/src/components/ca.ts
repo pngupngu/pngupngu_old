@@ -1,5 +1,5 @@
 import { canvas } from '@pngu/gl/canvas';
-import { App } from '@pngu/sketches/ca';
+import { App } from '@pngu/scenes/ca';
 
 import { Context, ev } from "../api";
 

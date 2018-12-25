@@ -9,9 +9,9 @@ import {
   multiSlider3, multiSlider4,
   addClass
 } from '@pngu/ui/styles';
-import { defaultParams as pbrParams } from '@pngu/sketches/pbr';
-import { defaultParams as wireParams } from '@pngu/sketches/wire';
-import { presets } from '@pngu/sketches/ca';
+import { defaultParams as pbrParams } from '@pngu/scenes/pbr';
+import { defaultParams as wireParams } from '@pngu/scenes/wire';
+import { presets } from '@pngu/scenes/ca';
 
 import { Config, ev, fx } from './api';
 import * as routes from './routes';

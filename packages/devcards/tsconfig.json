@@ -9,6 +9,7 @@
   "references": [
     { "path": "../core" },
     { "path": "../ui" },
-    { "path": "../gl" }
+    { "path": "../gl" },
+    { "path": "../scenes" }
   ]
 }
