@@ -11,13 +11,14 @@ import {
 } from '@pngu/ui/styles';
 import { defaultParams as pbrParams } from '@pngu/sketches/pbr';
 import { defaultParams as wireParams } from '@pngu/sketches/wire';
+import { presets } from '@pngu/sketches/ca';
 
 import { Config, ev, fx } from './api';
 import * as routes from './routes';
-
 import { home } from './components/home';
 import { pbr } from './components/pbr';
 import { wire } from './components/wire';
+import { ca } from './components/ca';
 
 export const CONFIG: Config = {
 
@@ -46,13 +47,15 @@ export const CONFIG: Config = {
     [routes.HOME.id]: home,
     [routes.WIRE.id]: wire,
     [routes.PBR.id]: pbr,
+    [routes.CA.id]: ca,
   },
 
   initialState: {
     raf: false,
     params: {
       wire: wireParams,
-      pbr: pbrParams
+      pbr: pbrParams,
+      ca: presets.growth
     },
   },
 

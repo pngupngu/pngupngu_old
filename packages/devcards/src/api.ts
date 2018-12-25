@@ -10,8 +10,9 @@ import {
   MultiSliderAttribs
 } from '@pngu/ui/api';
 
-import { Params as pbrParams } from './scenes/pbr';
-import { Params as wireParams } from './scenes/wire';
+import { Params as pbrParams } from '@pngu/sketches/pbr';
+import { Params as wireParams } from '@pngu/sketches/wire';
+import { Params as caParams } from '@pngu/sketches/ca';
 
 export enum ev {
   ROUTE_TO,
@@ -30,8 +31,9 @@ interface Views {
   routeComponent: any;
   raf: boolean;
   params: {
-    wire: wireParams,
-    pbr: pbrParams
+    wire: wireParams;
+    pbr: pbrParams;
+    ca: caParams;
   };
 }
 

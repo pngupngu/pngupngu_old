@@ -14,3 +14,8 @@ export const PBR: Route = {
   id: 'pbr',
   match: ['pbr']
 };
+
+export const CA: Route = {
+  id: 'ca',
+  match: ['ca']
+};

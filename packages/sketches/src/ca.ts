@@ -11,14 +11,22 @@ import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
 import { Quad3, Geometry, tessellate3 } from '@pngu/gl/geometry';
 import { Texture } from '@pngu/gl/texture';
-import { OrthoCamera } from '@pngu/gl/Camera';
+import { OrthoCamera } from '@pngu/gl/camera';
 
-import { Presets, Params } from './api';
-import vert from './vert.glsl';
-import ca from './ca.frag';
-import copy from './copy.frag';
-import google from '../../assets/images/google.png';
-import nopro from '../../assets/images/no_pro.png';
+import vert from './shaders/ca/vert.glsl';
+import ca from './shaders/ca/ca.frag';
+import copy from './shaders/ca/copy.frag';
+import google from './assets/images/google.png';
+import nopro from './assets/images/no_pro.png';
+
+export interface Params {
+  e1: number;
+  e2: number;
+  f1: number;
+}
+
+type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
+type Presets = Record<PresetKeys, Params>;
 
 export const presets: Presets = {
   gol: { e1: 2, e2: 3, f1: 3 },
@@ -29,7 +37,7 @@ export const presets: Presets = {
   gus: { e1: 2, e2: 5, f1: 0 }
 };
 
-export class CA extends Application {
+export class App extends Application<Params> {
   cmd1: Command;
   cmd2: Command;
 
@@ -38,8 +46,6 @@ export class CA extends Application {
   backTex: Texture;
   backFbo: any;
   isFront: boolean = true;
-
-  params: Params;
 
   fade: number = 1.0;
 
@@ -51,12 +57,14 @@ export class CA extends Application {
 
   camera: OrthoCamera;
 
-  constructor(params: Params = presets.growth) {
-    super();
-    this.params = params;
+  set params(params: Params) {
+    let uni = this.mat1.uniforms;
+    uni.e1 = params.e1;
+    uni.e2 = params.e2;
+    uni.f1 = params.f1;
   }
 
-  init(gl) {
+  init(gl: WebGLRenderingContext) {
     super.init(gl);
 
     this.stampTexs = Object.keys(this.stamps).reduce((a, s) => {
@@ -101,7 +109,7 @@ export class CA extends Application {
 
     const scene1 = new Scene();
     this.mat1 = new Material(vert, ca, {
-      e1: this.params.e1, e2: this.params.e2, f1: this.params.f1,
+      // e1: this.params.e1, e2: this.params.e2, f1: this.params.f1,
       fade: this.fade,
       useStamp: 0
       // stamp: this.stampTexs[0].texture,
@@ -116,7 +124,7 @@ export class CA extends Application {
     this.cmd2 = new Command(gl, scene2);
   }
 
-  render(time) {
+  render(time: number) {
     const gl = this.gl;
     gl.disable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
@@ -128,9 +136,6 @@ export class CA extends Application {
 
     let uni1 = this.mat1.uniforms;
     uni1.state = state.texture;
-    uni1.e1 = this.params.e1;
-    uni1.e2 = this.params.e2;
-    uni1.f1 = this.params.f1;
     uni1.fade = this.fade;
     uni1.screen = [this.camera.width, this.camera.height];
 

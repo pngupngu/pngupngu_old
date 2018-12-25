@@ -4,7 +4,7 @@ import { merge } from '@thi.ng/rstream/stream-merge';
 
 import { canvas } from '@pngu/gl/canvas';
 import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
-import { App } from '@pngu/cube/scenes/wire';
+import { App } from '@pngu/sketches/wire';
 import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 
 import { routeLink } from './route-link';

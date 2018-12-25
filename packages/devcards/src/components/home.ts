@@ -10,6 +10,7 @@ export const home = ({ ui, bus }: Context) => {
     ['ul', ui.nav,
       ['li', [appLink, ui.link, routeTo([routes.WIRE.id, {}]), 'wire']],
       ['li', [appLink, ui.link, routeTo([routes.PBR.id, {}]), 'pbr']],
+      ['li', [appLink, ui.link, routeTo([routes.CA.id, {}]), 'ca']],
     ]
   ];
 }

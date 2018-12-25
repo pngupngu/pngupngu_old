@@ -7,8 +7,7 @@
   "scripts": {
     "start": "yarn run clean && parcel index.html --hmr-hostname 0.0.0.0 -p 8080 --open --log-level 3",
     "build": "yarn run clean && parcel build index.html -d out --no-source-maps --no-cache --detailed-report --public-url ./",
-    "build-lib": "yarn run clean && tsc -b && cp -R src/{assets,shaders} .",
-    "clean": "rimraf *.js *.d.ts *.d.ts.map components scenes shaders assets out dist .cache"
+    "clean": "rimraf *.js *.d.ts *.d.ts.map components scenes out dist .cache"
   },
   "dependencies": {
     "@pngu/core": "^1.0.0",
@@ -30,11 +29,7 @@
     "@thi.ng/rstream-graph": "^2.1.46",
     "@thi.ng/strings": "^0.7.1",
     "@thi.ng/transducers": "^2.2.7",
-    "@thi.ng/vectors": "^1.4.8",
-    "bunny": "^1.0.1",
-    "gl-matrix": "^2.8.1",
-    "primitive-torus": "^1.0.4",
-    "twgl.js": "^4.5.2"
+    "@thi.ng/vectors": "^1.4.8"
   },
   "devDependencies": {
     "glslify-bundle": "^5.1.1",
