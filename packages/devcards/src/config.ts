@@ -9,15 +9,15 @@ import {
   multiSlider3, multiSlider4,
   addClass
 } from '@pngu/ui/styles';
+import { defaultParams as pbrParams } from '@pngu/sketches/pbr';
+import { defaultParams as wireParams } from '@pngu/sketches/wire';
 
 import { Config, ev, fx } from './api';
 import * as routes from './routes';
 
-import { home } from './home';
-import { pbr } from './pbr';
-import { defaultParams as pbrParams } from '@pngu/sketches/pbr';
-import { wire } from './wire';
-import { defaultParams as wireParams } from '@pngu/sketches/wire';
+import { home } from './components/home';
+import { pbr } from './components/pbr';
+import { wire } from './components/wire';
 
 export const CONFIG: Config = {
 
