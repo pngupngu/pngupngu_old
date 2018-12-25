@@ -23,18 +23,19 @@ export interface Params {
   e1: number;
   e2: number;
   f1: number;
+  mouse: number[];
 }
 
 type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
 type Presets = Record<PresetKeys, Params>;
 
 export const presets: Presets = {
-  gol: { e1: 2, e2: 3, f1: 3 },
-  growth: { e1: 2, e2: 5, f1: 3 },
-  noise: { e1: 1, e2: 3, f1: 3 },
-  brush: { e1: 2, e2: 7, f1: 4 },
-  tim: { e1: 2, e2: 4, f1: 1 },
-  gus: { e1: 2, e2: 5, f1: 0 }
+  gol: { e1: 2, e2: 3, f1: 3, mouse: [0, 0] },
+  growth: { e1: 2, e2: 5, f1: 3, mouse: [0, 0] },
+  noise: { e1: 1, e2: 3, f1: 3, mouse: [0, 0] },
+  brush: { e1: 2, e2: 7, f1: 4, mouse: [0, 0] },
+  tim: { e1: 2, e2: 4, f1: 1, mouse: [0, 0] },
+  gus: { e1: 2, e2: 5, f1: 0, mouse: [0, 0] }
 };
 
 export class App extends Application<Params> {
@@ -62,6 +63,11 @@ export class App extends Application<Params> {
     uni.e1 = params.e1;
     uni.e2 = params.e2;
     uni.f1 = params.f1;
+
+    uni.mouse = [
+      params.mouse[0] / this.gl.canvas.clientWidth,
+      params.mouse[1] / this.gl.canvas.clientHeight
+    ];
   }
 
   init(gl: WebGLRenderingContext) {
@@ -147,11 +153,6 @@ export class App extends Application<Params> {
     this.cmd2.draw(time, this.camera);
 
     this.isFront = !this.isFront;
-  }
-
-  move(ox, oy) {
-    const canvas = this.gl.canvas;
-    this.mat1.uniforms.mouse = [ox / canvas.clientWidth, oy / canvas.clientHeight];
   }
 
   randomize(gen) {
