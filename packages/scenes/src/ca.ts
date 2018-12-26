@@ -26,8 +26,7 @@ export interface Params {
   mouse: number[];
 }
 
-type PresetKeys = 'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus';
-type Presets = Record<PresetKeys, Params>;
+type Presets = Record<'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus', Params>
 
 export const presets: Presets = {
   gol: { e1: 2, e2: 3, f1: 3, mouse: [0, 0] },
@@ -115,11 +114,8 @@ export class App extends Application<Params> {
 
     const scene1 = new Scene();
     this.mat1 = new Material(vert, ca, {
-      // e1: this.params.e1, e2: this.params.e2, f1: this.params.f1,
       fade: this.fade,
       useStamp: 0
-      // stamp: this.stampTexs[0].texture,
-      // stampSize: vec2.fromValues(this.stampTexs[0].width, this.stampTexs[0].height)
     });
     scene1.add(new Mesh(plane, this.mat1));
     this.cmd1 = new Command(gl, scene1);

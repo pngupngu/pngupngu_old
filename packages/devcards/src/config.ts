@@ -15,10 +15,10 @@ import { presets } from '@pngu/scenes/ca';
 
 import { Config, ev, fx } from './api';
 import * as routes from './routes';
-import { home } from './components/home';
-import { pbr } from './components/pbr';
-import { wire } from './components/wire';
-import { ca } from './components/ca';
+import home from './components/home';
+import pbr from './components/pbr';
+import wire from './components/wire';
+import ca from './components/ca';
 
 export const CONFIG: Config = {
 

@@ -14,7 +14,7 @@ import { App } from '@pngu/scenes/pbr';
 import { Context, ev } from "../api";
 import { controls } from './pbr-controls';
 
-export const pbr = ({ ui, views, bus }: Context) => {
+export default ({ ui, views, bus }: Context) => {
   let sub: ISubscribable<any>;
   const app = new App();
   const setParam = (name, value) => bus.dispatch([ev.SET_PARAM, ['pbr', name, value]]);

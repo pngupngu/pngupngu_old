@@ -10,7 +10,7 @@ import { App } from '@pngu/scenes/wire';
 import { Context, ev } from "../api";
 import { controls } from './wire-controls';
 
-export const wire = ({ ui, views, bus }: Context) => {
+export default ({ ui, views, bus }: Context) => {
   let sub: ISubscribable<any>;
 
   const app = new App();
