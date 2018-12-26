@@ -18,6 +18,7 @@ export enum ev {
   ROUTE_TO,
   SET_RAF,
   SET_PARAM,
+  SET_PARAMS,
 };
 
 export enum fx {

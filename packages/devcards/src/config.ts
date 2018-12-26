@@ -2,7 +2,8 @@ import { vals } from '@thi.ng/transducers/iter/vals';
 import { EVENT_ROUTE_CHANGED } from "@thi.ng/router/api";
 import { FX_STATE } from "@thi.ng/interceptors/api";
 import { valueSetter } from "@thi.ng/interceptors/interceptors";
-import { setIn } from '@thi.ng/paths';
+import { setIn, updateIn } from '@thi.ng/paths';
+import { mergeObj } from '@thi.ng/associative/merge';
 
 import {
   root, panel, select, button, slider, checkbox,
@@ -35,6 +36,9 @@ export const CONFIG: Config = {
     [ev.SET_RAF]: valueSetter('raf'),
     [ev.SET_PARAM]: (state, [_, [sketch, name, v]]) => ({
       [FX_STATE]: setIn(state, ['params', sketch, name], v)
+    }),
+    [ev.SET_PARAMS]: (state, [_, [sketch, v]]) => ({
+      [FX_STATE]: updateIn(state, ['params', sketch], v0 => mergeObj(v0, v))
     })
   },
 
