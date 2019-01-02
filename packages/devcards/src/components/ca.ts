@@ -30,6 +30,7 @@ const controls = (attribs: ControlAttribs, onchange: (name: string, v: any) => v
   const sE1 = createSlider(sliderOpts(0, 8, 1, 'e1', attribs.slider));
   const sE2 = createSlider(sliderOpts(0, 8, 1, 'e2', attribs.slider));
   const sF1 = createSlider(sliderOpts(0, 8, 1, 'f1', attribs.slider));
+  const sFade = createSlider(sliderOpts(0, 1, 0.01, 'fade', attribs.slider));
 
   const selOpts = [...map(x => [x, x], keys(presets))];
   const selPresets = createSelect({
@@ -47,6 +48,7 @@ const controls = (attribs: ControlAttribs, onchange: (name: string, v: any) => v
       ['e1', [sE1, {}, params.e1]],
       ['e2', [sE2, {}, params.e2]],
       ['f1', [sF1, {}, params.f1]],
+      ['fade', [sFade, {}, params.fade]],
     ];
 }
 

@@ -7,7 +7,7 @@ import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
 import { UIAttrib, ComponentAttrib } from '@pngu/ui/api';
 
 import { CheckBoxAttribs, SelectAttribs, SliderAttribs, PanelAttribs } from '@pngu/ui/api';
-import { Params } from '@pngu/cube/scenes/wire';
+import { Params } from '@pngu/scenes/wire';
 
 export type Handlers = {
   events: IObjectOf<EventDef>;

@@ -4,7 +4,7 @@ import {
   inlineButton, inlineSelect, inlineSlider, inlineCheckbox,
   addClass
 } from '@pngu/ui/styles';
-import { defaultParams } from '@pngu/sketches/wire';
+import { defaultParams } from '@pngu/scenes/wire';
 
 import { AppConfig } from './api';
 import { handlers } from './events';

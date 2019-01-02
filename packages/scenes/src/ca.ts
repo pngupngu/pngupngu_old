@@ -23,18 +23,24 @@ export interface Params {
   e1: number;
   e2: number;
   f1: number;
+  fade: number;
   mouse: number[];
 }
 
-type Presets = Record<'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus', Partial<Params>>
+type Presets = Record<'gol' | 'growth' | 'noise' | 'brush' | 'tim' | 'gus', Params>;
+
+const defaults = {
+  mouse: [0, 0],
+  fade: 1.0
+}
 
 export const presets: Presets = {
-  gol: { e1: 2, e2: 3, f1: 3 },
-  growth: { e1: 2, e2: 5, f1: 3 },
-  noise: { e1: 1, e2: 3, f1: 3 },
-  brush: { e1: 2, e2: 7, f1: 4 },
-  tim: { e1: 2, e2: 4, f1: 1 },
-  gus: { e1: 2, e2: 5, f1: 0 }
+  gol: { ...defaults, e1: 2, e2: 3, f1: 3 },
+  growth: { ...defaults, e1: 2, e2: 5, f1: 3 },
+  noise: { ...defaults, e1: 1, e2: 3, f1: 3 },
+  brush: { ...defaults, e1: 2, e2: 7, f1: 4 },
+  tim: { ...defaults, e1: 2, e2: 4, f1: 1 },
+  gus: { ...defaults, e1: 2, e2: 5, f1: 0 }
 };
 
 export class App extends Application<Params> {
@@ -47,14 +53,11 @@ export class App extends Application<Params> {
   backFbo: any;
   isFront: boolean = true;
 
-  fade: number = 1.0;
-
   stamps: IObjectOf<string> = { google, nopro };
   stampTexs: IObjectOf<Texture> = {};
 
   mat1: Material;
   mat2: Material;
-
   camera: OrthoCamera;
 
   set params(params: Params) {
@@ -62,10 +65,10 @@ export class App extends Application<Params> {
     uni.e1 = params.e1;
     uni.e2 = params.e2;
     uni.f1 = params.f1;
-
+    uni.fade = params.fade;
     uni.mouse = [
-      (params.mouse ? params.mouse[0] : 0) / this.gl.canvas.clientWidth,
-      (params.mouse ? params.mouse[1] : 0) / this.gl.canvas.clientHeight
+      params.mouse[0] / this.gl.canvas.clientWidth,
+      params.mouse[1] / this.gl.canvas.clientHeight
     ];
   }
 
@@ -113,10 +116,7 @@ export class App extends Application<Params> {
       width, height);
 
     const scene1 = new Scene();
-    this.mat1 = new Material(vert, ca, {
-      fade: this.fade,
-      useStamp: 0
-    });
+    this.mat1 = new Material(vert, ca, { useStamp: 0 });
     scene1.add(new Mesh(plane, this.mat1));
     this.cmd1 = new Command(gl, scene1);
 
@@ -138,7 +138,6 @@ export class App extends Application<Params> {
 
     let uni1 = this.mat1.uniforms;
     uni1.state = state.texture;
-    uni1.fade = this.fade;
     uni1.screen = [this.camera.width, this.camera.height];
 
     let uni2 = this.mat2.uniforms;
