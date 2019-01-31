@@ -1,6 +1,6 @@
-import { fromEvent } from '@thi.ng/rstream/from/event';
-import { dedupe } from '@thi.ng/transducers/xform/dedupe';
-import { eqDelta } from '@thi.ng/math/eqdelta';
+import { fromEvent } from '@thi.ng/rstream';
+import { dedupe } from '@thi.ng/transducers';
+import { eqDelta } from '@thi.ng/math';
 
 export const fromOrientation = (eps = 1e-1) =>
   fromEvent(window, 'deviceorientation').transform(dedupe(

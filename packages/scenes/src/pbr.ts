@@ -1,19 +1,14 @@
 // import createTorusMesh from 'primitive-torus';
-import { Vec3 } from '@thi.ng/vectors/vec3';
-import { repeat } from '@thi.ng/transducers/iter/repeat';
-import { mapcat } from "@thi.ng/transducers/xform/mapcat";
-import { flatten } from "@thi.ng/transducers/xform/flatten";
-import { map } from "@thi.ng/transducers/xform/map";
-import { push } from '@thi.ng/transducers/rfn/push';
-import { comp } from "@thi.ng/transducers/func/comp";
-import { transduce } from '@thi.ng/transducers/transduce';
+import { Vec3, Vec, subN } from '@thi.ng/vectors';
+import { repeat, mapcat, flatten, transduce, comp, map, push } from '@thi.ng/transducers';
+import { AABB, tessellate } from '@thi.ng/geom';
 
 import { Application } from '@pngu/gl/application';
 import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import { AABB, tessellate3, Geometry } from '@pngu/gl/geometry';
+import { tessellate3, Geometry, asPolygon3 } from '@pngu/gl/geometry';
 import { PerspectiveCamera } from '@pngu/gl/Camera';
 import { Texture } from '@pngu/gl/texture';
 
@@ -25,7 +20,7 @@ import brickSpecular from './assets/images/brick-specular.jpg';
 
 export enum DistTypes { BlinnPhong, GGX, Beckmann }
 export enum GeometryTypes { Implicit, Schlick, GGX, CookTorrance }
-export enum DiffuseTypes { Default , Disney, NormalizedDisney, OrenNayar }
+export enum DiffuseTypes { Default, Disney, NormalizedDisney, OrenNayar }
 
 export interface Params {
   f0: Vec3;
@@ -103,9 +98,9 @@ export class App extends Application<Params> {
     //   indices: [...flatten(attribs.cells)],
     //   texcoord: [...flatten(attribs.uvs)],
     //   normal: [...flatten(attribs.normals)]
-    // });
+    // });q
 
-    const faces = new AABB().toPolygon().tessellate(tessellate3);
+    // const faces = new AABB().toPolygon().tessellate(tessellate3);
 
     const faceNormals = [
       [+1, 0, 0],
@@ -116,11 +111,15 @@ export class App extends Application<Params> {
       [0, 0, -1],
     ];
 
+    const polygon = asPolygon3(new AABB());
+    const faces = tessellate(polygon, [tessellate3]);
+
     const points = transduce(
-      comp(mapcat((f: Vec3[]) => f), map(v => v.subNewN(0.5))),
+      comp(mapcat((f: Vec[]) => f), map(v => subN([], v, 0.5) )),
       push(),
       faces);
-    const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), points);
+
+    const position = Vec3.intoBuffer(new Float32Array(polygon.faces.length * 3 * 3), <Vec3[]>points);
 
     const geom = new Geometry({
       position,

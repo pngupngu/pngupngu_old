@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4';
-import { IObjectOf } from "@thi.ng/api/api";
+import { IObjectOf } from "@thi.ng/api";
 
 type Uniforms = IObjectOf<any>;
 

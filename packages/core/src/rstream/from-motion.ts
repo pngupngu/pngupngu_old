@@ -1,7 +1,6 @@
-import { fromEvent } from '@thi.ng/rstream/from/event';
-import { dedupe } from '@thi.ng/transducers/xform/dedupe';
-import { EPS } from '@thi.ng/math/api';
-import { eqDelta } from '@thi.ng/math/eqdelta';
+import { fromEvent } from '@thi.ng/rstream';
+import { dedupe } from '@thi.ng/transducers';
+import { EPS, eqDelta } from '@thi.ng/math';
 
 export const fromMotion = (epsAccel = EPS, epsRot = EPS) =>
   fromEvent(window, 'devicemotion').transform(dedupe(

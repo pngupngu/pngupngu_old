@@ -11,7 +11,7 @@ import {
   addClass
 } from '@pngu/ui/styles';
 import { defaultParams as pbrParams } from '@pngu/scenes/pbr';
-import { defaultParams as wireParams } from '@pngu/scenes/wire';
+// import { defaultParams as wireParams } from '@pngu/scenes/wire';
 import { presets } from '@pngu/scenes/ca';
 
 import { Config, ev, fx } from './api';
@@ -57,7 +57,7 @@ export const CONFIG: Config = {
   initialState: {
     raf: false,
     params: {
-      wire: wireParams,
+      // wire: wireParams,
       pbr: pbrParams,
       ca: presets.growth
     },

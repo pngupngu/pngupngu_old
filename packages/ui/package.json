@@ -21,6 +21,6 @@
     "tachyons": "^4.11.1"
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.6"
+    "@types/classnames": "^2.2.7"
   }
 }

@@ -13,7 +13,7 @@
     "@pngu/core": "^1.0.0",
     "@pngu/gl": "^1.0.0",
     "bunny": "^1.0.1",
-    "gl-matrix": "^2.8.1",
+    "gl-matrix": "^3.0.0",
     "primitive-torus": "^1.0.4",
     "twgl.js": "^4.5.2"
   }

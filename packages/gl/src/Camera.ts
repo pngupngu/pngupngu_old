@@ -1,13 +1,13 @@
-import { Vec3 } from '@thi.ng/vectors/vec3';
-import { Mat44, lookAt, perspective, ortho } from '@thi.ng/vectors/mat44';
+import { Vec3, set, dist } from '@thi.ng/vectors';
+import { Mat, identity44, lookAt, perspective, ortho } from '@thi.ng/matrices';
 
 import { Node } from './node';
 
 export class Camera extends Node {
   protected _width: number;
   protected _height: number;
-  protected _view: Mat44 = Mat44.identity();
-  protected _projection: Mat44 = Mat44.identity();
+  protected _view: Mat = identity44([]);
+  protected _projection: Mat = identity44([]);
 
   constructor(width: number, height: number) {
     super();
@@ -19,8 +19,8 @@ export class Camera extends Node {
   get width(): number { return this._width; }
   set height(val: number) { this._height = val; }
   get height(): number { return this._height; }
-  get projection(): Mat44 { return this._projection; }
-  get view(): Mat44 { return this._view; }
+  get projection(): Mat { return this._projection; }
+  get view(): Mat { return this._view; }
 }
 
 export class PerspectiveCamera extends Camera {
@@ -43,28 +43,26 @@ export class PerspectiveCamera extends Camera {
   get near(): number { return this._near; }
   set far(val: number) { this._far = val; this._projectionCached = false; }
   get far(): number { return this._far; }
-  set position(val: Vec3) { this._position.set(val); this._viewCached = false; }
+  set position(val: Vec3) { set(this._position, val); this._viewCached = false; }
   get position(): Vec3 { return this._position; }
-  set target(val: Vec3) { this._target.set(val); this._viewCached = false; }
+  set target(val: Vec3) { set(this._target, val); this._viewCached = false; }
   get target(): Vec3 { return this._target; }
-  set up(val: Vec3) { this._up.set(val); this._viewCached = false; }
+  set up(val: Vec3) { set(this._up, val); this._viewCached = false; }
   get up(): Vec3 { return this._up; }
 
-  get pivotDistance(): number {
-    return this.target.dist(this.position);
-  }
+  get pivotDistance(): number { return dist(this.target, this.position); }
 
-  get projection(): Mat44 {
+  get projection(): Mat {
     if (!this._projectionCached) {
-      perspective(this._projection.buf, this.fov, this.aspect, this.near, this.far);
+      perspective(this._projection, this.fov, this.aspect, this.near, this.far);
       this._projectionCached = true;
     }
     return this._projection;
   }
 
-  get view(): Mat44 {
+  get view(): Mat {
     if (!this._viewCached) {
-      lookAt(this._view.buf, this.position.buf, this.target.buf, this.up.buf);
+      lookAt(this._view, this.position.buf, this.target.buf, this.up.buf);
       this._viewCached = true;
     }
     return this._view;
@@ -83,7 +81,7 @@ export class OrthoCamera extends Camera {
 
   get projection() {
     if (!this._projectionCached) {
-      ortho(this._projection.buf, this.left, this.right, this.bottom, this.top, this.near, this.far);
+      ortho(this._projection, this.left, this.right, this.bottom, this.top, this.near, this.far);
       this._projectionCached = true;
     }
     return this._projection;

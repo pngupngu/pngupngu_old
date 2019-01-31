@@ -1,17 +1,11 @@
-import { IObjectOf } from "@thi.ng/api/api";
-import { Vec3 } from '@thi.ng/vectors/vec3';
+import { IObjectOf } from "@thi.ng/api";
+import { add, Vec } from '@thi.ng/vectors';
+import { mapcat } from '@thi.ng/transducers';
 import {
-  Attribs,
-  IToPolygon,
-  IVertices,
-  SamplingOpts,
-  ITessellateable,
-  Tessellator
-} from '@thi.ng/geom/api';
-import { tessellate } from "@thi.ng/geom/tessellate";
-import { PointContainer3 } from '@thi.ng/geom/container3';
-import { IVector } from '@thi.ng/vectors/api';
-import { mapcat } from '@thi.ng/transducers/xform/mapcat';
+  APC, IHiccupShape, copyPoints, Type, vertices, AABB, SamplingOpts,
+  IShape, Attribs, tessellate, tessellatePoints
+} from '@thi.ng/geom';
+import { defmulti, MultiFn1O } from "@thi.ng/defmulti";
 
 type GeomAttribs = IObjectOf<any>;
 
@@ -23,7 +17,7 @@ export class Geometry {
   }
 }
 
-export const tessellate3 = <T extends IVector<T>>(pts: ReadonlyArray<T>): T[][] => {
+export const tessellate3 = (pts: Vec[]): Vec[][] => {
   if (pts.length == 3) {
     return [[pts[0], pts[1], pts[2]]];
   } else if (pts.length == 4) {
@@ -31,63 +25,84 @@ export const tessellate3 = <T extends IVector<T>>(pts: ReadonlyArray<T>): T[][] 
   }
 }
 
-export class Polygon3 extends PointContainer3 implements
-  ITessellateable<Vec3> {
+export class Polygon3 extends APC implements IHiccupShape {
 
-  faces: Vec3[][];
+  faces: Vec[][];
 
-  constructor(pts: Vec3[], faces: Vec3[][], attribs?: Attribs) {
-    super(pts, attribs);
+  constructor(points: Vec[], faces: Vec[][], attribs?: Attribs) {
+    super(points, attribs);
     this.faces = faces;
   }
 
-  tessellate(tessel: Tessellator<Vec3>, iter?: number): Vec3[][];
-  tessellate(tessel: Iterable<Tessellator<Vec3>>): Vec3[][];
-  tessellate(...args: any[]) {
-    return [...mapcat(pts => tessellate.apply(null, [pts, ...args]), this.faces)];
+  get type() {
+    return Type.POLYGON3;
+  }
+
+  copy() {
+    // TODO: copy faces
+    return new Polygon3(copyPoints(this.points), this.faces, { ...this.attribs });
+  }
+
+  toHiccup() {
+    return ["polygon3", this.attribs, this.points];
   }
 }
 
-export class Quad3 extends Polygon3 {
-  constructor(pts: Vec3[], attribs?: Attribs) {
-    super(pts, [pts], attribs);
+export class Quad3 extends APC implements
+  IHiccupShape {
+
+  get type() {
+    return Type.QUAD3;
+  }
+
+  copy() {
+    return new Quad3(copyPoints(this.points), { ...this.attribs });
+  }
+
+  toHiccup() {
+    return ["polygon", this.attribs, this.points];
   }
 }
 
-export class AABB implements
-  IToPolygon<number | Partial<SamplingOpts>>,
-  IVertices<Vec3, number | Partial<SamplingOpts>> {
+export const faces: MultiFn1O<IShape, number | Partial<SamplingOpts>, Vec[][]> = defmulti((x: IShape) => x.type);
 
-  position: Vec3;
-  size: Vec3;
+faces.addAll(
+  {
+    [Type.AABB]: ($: AABB, opts?: Partial<SamplingOpts>) => {
+      const pts = vertices($, opts);
+      const faces = [
+        [pts[2], pts[3], pts[7], pts[6]], // right
+        [pts[0], pts[1], pts[5], pts[4]], // left
+        [pts[4], pts[5], pts[6], pts[7]], // top
+        [pts[0], pts[3], pts[2], pts[1]], // bottom
+        [pts[1], pts[2], pts[6], pts[5]], // back
+        [pts[0], pts[4], pts[7], pts[3]] // front
+      ];
+      return faces;
+    },
+    [Type.QUAD3]: ($: Quad3, _?: Partial<SamplingOpts>) => [$.points]
+  });
 
-  constructor(position: Vec3 = Vec3.ZERO.copy(), size: Vec3 = Vec3.ONE.copy()) {
-    this.position = position;
-    this.size = size;
-  }
+vertices.addAll(
+  {
+    [Type.AABB]: ($: AABB, _: Partial<SamplingOpts>) => {
+      const a = $.pos;
+      const g = add([], a, $.size);
+      const b = [a[0], a[1], g[2]];
+      const c = [g[0], a[1], g[2]];
+      const d = [g[0], a[1], a[2]];
+      const e = [a[0], g[1], a[2]];
+      const f = [a[0], g[1], g[2]];
+      const h = [g[0], g[1], a[2]];
+      return [a, b, c, d, e, f, g, h];
+    },
+    [Type.QUAD3]: ($: Quad3, _: Partial<SamplingOpts>) => $.points
+  });
 
-  vertices(_?: number | Partial<SamplingOpts>) {
-    const a = this.position;
-    const g = a.addNew(this.size);
-    const b = new Vec3([a.x, a.y, g.z]);
-    const c = new Vec3([g.x, a.y, g.z]);
-    const d = new Vec3([g.x, a.y, a.z]);
-    const e = new Vec3([a.x, g.y, a.z]);
-    const f = new Vec3([a.x, g.y, g.z]);
-    const h = new Vec3([g.x, g.y, a.z]);
-    return [a, b, c, d, e, f, g, h];
-  }
+export const asPolygon3: MultiFn1O<IShape, number | Partial<SamplingOpts>, Polygon3> = defmulti((x: IShape) => x.type);
 
-  toPolygon(opts?: number | Partial<SamplingOpts>) {
-    const pts = this.vertices(opts);
-    const faces = [
-      [pts[2], pts[3], pts[7], pts[6]], // right
-      [pts[0], pts[1], pts[5], pts[4]], // left
-      [pts[4], pts[5], pts[6], pts[7]], // top
-      [pts[0], pts[3], pts[2], pts[1]], // bottom
-      [pts[1], pts[2], pts[6], pts[5]], // back
-      [pts[0], pts[4], pts[7], pts[3]] // front
-    ];
-    return new Polygon3(pts, faces);
-  }
-}
+asPolygon3.add(Type.POINTS3, ($, opts) => new Polygon3(vertices($, opts), faces($, opts), { ...$.attribs }));
+asPolygon3.isa(Type.AABB, Type.POINTS3);
+asPolygon3.isa(Type.QUAD3, Type.POINTS3);
+
+tessellate.add(Type.POLYGON3, ($: Polygon3, fns) => [...mapcat(face => tessellatePoints(face, fns), $.faces)]);

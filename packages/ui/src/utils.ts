@@ -1,7 +1,6 @@
 import { gestureStream, GestureType, GestureInfo } from '@thi.ng/rstream-gestures';
-import { merge } from '@thi.ng/rstream/stream-merge';
-import { filter } from '@thi.ng/transducers/xform/filter';
-import { map } from '@thi.ng/transducers/xform/map';
+import { merge } from '@thi.ng/rstream';
+import { filter, map } from '@thi.ng/transducers';
 
 import { takeUntil } from '@pngu/core/rstream/take-until';
 

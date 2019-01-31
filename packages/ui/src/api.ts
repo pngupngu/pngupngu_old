@@ -1,4 +1,4 @@
-import { IVec } from '@thi.ng/vectors/api';
+import { Vec } from '@thi.ng/vectors';
 
 export interface UIAttrib {
   class: string;
@@ -33,7 +33,7 @@ export interface MultiSliderArgs {
   max: number;
   step: number;
   precision?: number;
-  onchange?(v: IVec): void;
+  onchange?(v: Vec): void;
   attribs: MultiSliderAttribs;
 }
 

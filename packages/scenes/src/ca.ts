@@ -1,7 +1,7 @@
-import { IObjectOf } from "@thi.ng/api/api";
-import { Vec3 } from '@thi.ng/vectors/vec3';
-import { mapcat } from "@thi.ng/transducers/xform/mapcat";
-import { flatten } from "@thi.ng/transducers/xform/flatten";
+import { IObjectOf } from "@thi.ng/api";
+import { Vec3 } from '@thi.ng/vectors';
+import { mapcat, flatten } from "@thi.ng/transducers";
+import { tessellate } from '@thi.ng/geom';
 import { createFramebufferInfo } from 'twgl.js';
 
 import { Application } from '@pngu/gl/application';
@@ -9,7 +9,7 @@ import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import { Quad3, Geometry, tessellate3 } from '@pngu/gl/geometry';
+import { Geometry, tessellate3, asPolygon3, Quad3 } from '@pngu/gl/geometry';
 import { Texture } from '@pngu/gl/texture';
 import { OrthoCamera } from '@pngu/gl/camera';
 
@@ -85,13 +85,13 @@ export class App extends Application<Params> {
       return a;
     }, {});
 
-    const pts = [
-      new Vec3([-1, 1, 0]),
-      new Vec3([-1, -1, 0]),
-      new Vec3([1, -1, 0]),
-      new Vec3([1, 1, 0])
-    ];
-    const faces = new Quad3(pts).tessellate(tessellate3);
+    const quad = new Quad3([
+      [-1, 1, 0],
+      [-1, -1, 0],
+      [1, -1, 0],
+      [1, 1, 0]
+    ]);
+    const faces = tessellate(asPolygon3(quad), [tessellate3]);
     const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), mapcat((f: Vec3[]) => f, faces));
     const plane = new Geometry({
       position,

@@ -1,5 +1,5 @@
 import * as twgl from 'twgl.js';
-import { IObjectOf } from "@thi.ng/api/api";
+import { IObjectOf } from "@thi.ng/api";
 
 import { Camera } from './camera';
 import { Scene } from './scene';

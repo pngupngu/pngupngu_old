@@ -1,17 +1,12 @@
 import { GestureEvent, GestureType } from "@thi.ng/rstream-gestures";
-import { Vec2 } from '@thi.ng/vectors/vec2';
-import { Vec3, setS3 } from '@thi.ng/vectors/vec3';
-import { Mat44 } from '@thi.ng/vectors/mat44';
-import { DEG2RAD } from '@thi.ng/math/api';
-import { Transducer } from '@thi.ng/transducers/api';
-import { map } from '@thi.ng/transducers/xform/map';
-import { comp } from '@thi.ng/transducers/func/comp';
-import { filter } from '@thi.ng/transducers/xform/filter';
-import { quat } from 'gl-matrix';
+import { Vec, Vec2, Vec3, set, setC3, divN, mulN, sub, add, cross3, mag, magSq, normalize } from '@thi.ng/vectors';
+import { Mat, identity44, rotationX44, mul44, mulV, quatFromAxisAngle } from '@thi.ng/matrices';
+import { DEG2RAD } from '@thi.ng/math';
+import { Transducer, map, comp, filter } from '@thi.ng/transducers';
 
 import { PerspectiveCamera } from './Camera';
 
-function transformQuat(a: Vec3, q: quat) {
+function transformQuat(a: Vec, q: Vec): Vec {
   let qx = q[0], qy = q[1], qz = q[2], qw = q[3];
   let x = a[0], y = a[1], z = a[2];
   let uvx = qy * z - qz * y,
@@ -28,11 +23,10 @@ function transformQuat(a: Vec3, q: quat) {
   uuvy *= 2;
   uuvz *= 2;
 
-  setS3(a.buf, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
-  return a;
+  return setC3(a, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
 }
 
-function mat44FromEulerYXZ(mat: Mat44, alpha: number, beta: number, gamma: number) {
+function mat44FromEulerYXZ(mat: Mat, alpha: number, beta: number, gamma: number) {
   let x = alpha * DEG2RAD, y = beta * DEG2RAD, z = gamma * DEG2RAD;
   let a = Math.cos(x), b = Math.sin(x);
   let c = Math.cos(y), d = Math.sin(y);
@@ -54,10 +48,10 @@ function mat44FromEulerYXZ(mat: Mat44, alpha: number, beta: number, gamma: numbe
   return mat;
 }
 
-const spherePos = (v: Vec3, pos: number[], center: Vec2, radius: number): Vec3 => {
-  v.setS(pos[0] - center[0], -(pos[1] - center[1]), 0).divN(radius);
-  const mag = v.magSq()
-  return mag > 1.0 ? v.normalize() : v.setS(v[0], v[1], Math.sqrt(1.0 - mag));
+const spherePos = (v: Vec3, pos: number[], center: Vec, radius: number): Vec => {
+  divN(null, setC3(v, pos[0] - center[0], -(pos[1] - center[1]), 0), radius);
+  const mag = magSq(v);
+  return mag > 1.0 ? normalize(null, v) : setC3(v, v[0], v[1], Math.sqrt(1.0 - mag));
 }
 
 export interface CameraUIOpts {
@@ -74,7 +68,7 @@ export interface CameraView {
 
 export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5 }: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
   const radius = Math.max(width, height);
-  const center = new Vec2([width, height]).mulN(0.5);
+  const center = mulN(null, new Vec2([width, height]), 0.5);
   const click = new Vec3();
   const delta = new Vec3();
 
@@ -82,7 +76,7 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
   const side = new Vec3();
   const up = new Vec3();
   const viewDir = new Vec3();
-  const q = quat.create();
+  let q;
   const u = new Vec3();
   const vd = new Vec3();
   const camPos = new Vec3();
@@ -92,18 +86,18 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
     map(({ 0: type, 1: { pos } }: GestureEvent) => {
       if (type == GestureType.START) {
         spherePos(click, pos, center, radius);
-        up.set(camera.up);
-        viewDir.set(camera.position).sub(camera.target);
+        set(up, camera.up);
+        sub(null, set(viewDir, camera.position), camera.target);
         return { up, position: camera.position, target: camera.target };
       } else {
-        spherePos(delta, pos, center, radius).sub(click);
-        side.set(up).cross(viewDir).normalize().mulN(delta[0]);
-        axis.set(up).mulN(delta[1]).add(side).cross(viewDir).normalize();
-        quat.setAxisAngle(q, axis, delta.magSq() * speed);
+        sub(null, spherePos(delta, pos, center, radius), click);
+        mulN(null, normalize(null, cross3(null, set(side, up), viewDir)), delta[0]);
+        normalize(null, cross3(null, add(null, mulN(null, set(axis, up), delta[1]), side), viewDir))
+        q = quatFromAxisAngle(axis, magSq(delta) * speed);
 
         return {
-          up: transformQuat(u.set(up), q),
-          position: camPos.set(camera.target).add(transformQuat(vd.set(viewDir), q)),
+          up: transformQuat(set(u, up), q),
+          position: add(null, set(camPos, camera.target), transformQuat(set(vd, viewDir), q)),
           target: camera.target
         };
       }
@@ -113,14 +107,14 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
 
 export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5 }: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
   const radius = Math.max(width, height);
-  const center = new Vec2([width, height]).mulN(0.5);
+  const center = mulN(null, new Vec2([width, height]), 0.5);
   const delta = new Vec3();
 
   const axis = new Vec3();
   const side = new Vec3();
   const up = camera.up.copy();
-  const viewDir = camera.position.copy().sub(camera.target);
-  const q = quat.create();
+  const viewDir = sub(null, set([], camera.position), camera.target);
+  let q: Vec;
   const u = new Vec3();
   const vd = new Vec3();
   const position = new Vec3();
@@ -128,17 +122,19 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
   return comp(
     filter(g => g[0] == GestureType.MOVE),
     map(({ 1: { pos } }: GestureEvent) => {
-      spherePos(delta, pos, center, radius).sub(Vec3.Z_AXIS);
-      side.set(up).cross(viewDir).normalize().mulN(delta[0]);
-      axis.set(up).mulN(delta[1]).add(side).cross(viewDir).normalize();
-      quat.setAxisAngle(q, axis, delta.magSq() * speed);
+      sub(null, spherePos(delta, pos, center, radius), Vec3.Z_AXIS);
+      mulN(null, normalize(null, cross3(null, set(side, up), viewDir)), delta[0]);
+      normalize(null, cross3(null, add(null, mulN(null, set(axis, up), delta[1]), side), viewDir))
+      q = quatFromAxisAngle(axis, magSq(delta) * speed);
 
-      position.set(camera.target).add(
-        transformQuat(vd.set(
-          viewDir.normalize().mulN(camera.pivotDistance)), q));
+      add(null,
+        set(position, camera.target),
+        transformQuat(
+          set(vd, mulN(null, normalize(null, viewDir), camera.pivotDistance)),
+          q));
 
       return {
-        up: transformQuat(u.set(up), q),
+        up: transformQuat(set(u, up), q),
         position, target: camera.target
       };
     })
@@ -149,15 +145,17 @@ export const orientCamera = (camera: PerspectiveCamera): Transducer<DeviceOrient
   const up0 = new Vec3();
   const vd = new Vec3();
   const pos = new Vec3();
-  const mat = Mat44.identity();
-  const rot = Mat44.rotationX(-90 * DEG2RAD);
+  const mat = identity44([]);
+  const rot = rotationX44([], -90 * DEG2RAD);
 
   return map((e: DeviceOrientationEvent) => {
-    mat44FromEulerYXZ(mat, e.beta, e.alpha, -e.gamma).mul(rot);
+    mul44(null, mat44FromEulerYXZ(mat, e.beta, e.alpha, -e.gamma), rot);
 
     return {
-      up: mat.mulV3(up0.set(Vec3.Y_AXIS)),
-      position: pos.set(camera.target).add(mat.mulV3(vd.set(Vec3.Z_AXIS)).mulN(camera.pivotDistance)),
+      up: mulV(null, mat, set(up0, Vec3.Y_AXIS)),
+      position: add(pos,
+        camera.target,
+        mulN(null, mulV(null, mat, set(vd, Vec3.Z_AXIS)), camera.pivotDistance)),
       target: camera.target
     };
   });
@@ -170,9 +168,9 @@ export const zoomCamera = (camera: PerspectiveCamera): Transducer<GestureEvent, 
   return comp(
     filter(g => g[0] == GestureType.ZOOM),
     map(({ 1: { zoom } }: GestureEvent) => {
-      vd.set(camera.target).sub(camera.position);
-      const speed = Math.pow(Math.E, 0.01 * zoom) * vd.mag();
-      pos.set(camera.target).sub(vd.normalize().mulN(speed));
+      sub(null, set(vd, camera.target), camera.position);
+      const speed = Math.pow(Math.E, 0.01 * zoom) * mag(vd);
+      mulN(null, sub(null, set(pos, camera.target), normalize(null, vd)), speed);
       return { up: camera.up, position: pos, target: camera.target };
     }));
 }

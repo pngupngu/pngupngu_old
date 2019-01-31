@@ -11,7 +11,7 @@ import {
 } from '@pngu/ui/api';
 
 import { Params as pbrParams } from '@pngu/scenes/pbr';
-import { Params as wireParams } from '@pngu/scenes/wire';
+// import { Params as wireParams } from '@pngu/scenes/wire';
 import { Params as caParams } from '@pngu/scenes/ca';
 
 export enum ev {
@@ -32,7 +32,7 @@ interface Views {
   routeComponent: any;
   raf: boolean;
   params: {
-    wire: wireParams;
+    // wire: wireParams;
     pbr: pbrParams;
     ca: caParams;
   };

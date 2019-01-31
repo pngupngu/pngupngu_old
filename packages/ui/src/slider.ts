@@ -1,9 +1,6 @@
-import { IVec } from '@thi.ng/vectors/api';
-import { clamp } from '@thi.ng/math/interval';
-import { fit } from '@thi.ng/math/fit';
-import { map } from "@thi.ng/transducers/xform/map";
-import { dedupe } from "@thi.ng/transducers/xform/dedupe";
-import { range } from '@thi.ng/transducers/iter/range'
+import { Vec } from '@thi.ng/vectors';
+import { clamp, fit } from '@thi.ng/math';
+import { map, dedupe, range } from "@thi.ng/transducers";
 
 import { SliderArgs, MultiSliderArgs } from './api';
 import { streamDrag } from './utils';
@@ -49,7 +46,7 @@ export const multiSlider = (n: number, args0?: Partial<MultiSliderArgs>) => {
   };
   const sliders = [...map(() => create(opts), range(n))];
 
-  return (_: any, args1: Partial<MultiSliderArgs>, value: IVec) =>
+  return (_: any, args1: Partial<MultiSliderArgs>, value: Vec) =>
     ['div', args1.attribs ? args1.attribs.container : args0.attribs.container,
       ...map((i: number) =>
         [sliders[i], {

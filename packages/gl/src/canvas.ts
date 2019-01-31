@@ -1,6 +1,6 @@
 import { addExtensionsToContext } from 'twgl.js';
 import fit from 'canvas-fit';
-import { canvasWebGL, CanvasHandlers } from "@thi.ng/hdom-components/canvas";
+import { canvasWebGL, CanvasHandlers } from "@thi.ng/hdom-components";
 
 import { Application } from './application';
 

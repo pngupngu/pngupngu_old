@@ -1,4 +1,4 @@
-import { mapcat } from '@thi.ng/transducers/xform/mapcat';
+import { mapcat } from '@thi.ng/transducers';
 
 import { PanelAttribs } from './api';
 

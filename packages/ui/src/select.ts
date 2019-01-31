@@ -1,4 +1,4 @@
-import { dropdown, DropDownOption } from "@thi.ng/hdom-components/dropdown";
+import { dropdown, DropDownOption } from "@thi.ng/hdom-components";
 
 import { SelectArgs } from './api';
 
