@@ -1,4 +1,7 @@
-import * as twgl from 'twgl.js';
+import {
+  createBufferInfoFromArrays, createVertexArrayInfo, bindFramebufferInfo,
+  drawObjectList, createProgramInfo
+} from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api";
 
 import { Camera } from './camera';
@@ -15,8 +18,8 @@ export class Command {
     scene.children.forEach(node => {
       const mesh = <Mesh>node;
       const programInfo = this.getProgram(mesh.material);
-      const bufferInfo = twgl.createBufferInfoFromArrays(gl, mesh.geometry.attributes);
-      const vertexArrayInfo = twgl.createVertexArrayInfo(gl, programInfo, bufferInfo);
+      const bufferInfo = createBufferInfoFromArrays(gl, mesh.attribs);
+      const vertexArrayInfo = createVertexArrayInfo(gl, programInfo, bufferInfo);
 
       this.objects.push({
         programInfo, vertexArrayInfo, mesh,
@@ -25,11 +28,11 @@ export class Command {
     });
   }
 
-  draw(_, camera: Camera, fbo = null) {
+  draw(_: number, camera: Camera, fbo = null) {
     const gl = this.gl;
     gl.viewport(0, 0, camera.width, camera.height);
 
-    twgl.bindFramebufferInfo(gl, fbo);
+    bindFramebufferInfo(gl, fbo);
 
     this.objects.forEach(obj => {
       const { mesh } = obj;
@@ -44,12 +47,12 @@ export class Command {
       };
     });
 
-    twgl.drawObjectList(gl, this.objects);
+    drawObjectList(gl, this.objects);
   }
 
   getProgram({ id, vert, frag }: Material) {
     if (!this.programInfos[id]) {
-      this.programInfos[id] = twgl.createProgramInfo(this.gl, [vert, frag]);
+      this.programInfos[id] = createProgramInfo(this.gl, [vert, frag]);
     }
     return this.programInfos[id];
   }

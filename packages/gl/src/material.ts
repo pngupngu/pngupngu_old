@@ -7,7 +7,7 @@ export class Material {
   id: string = uuid();
 
   constructor(
-    readonly vert: String,
-    readonly frag: String,
+    readonly vert: string,
+    readonly frag: string,
     readonly uniforms: Uniforms = {}) { }
 }

@@ -13,6 +13,6 @@
   "dependencies": {
     "@pngu/core": "^1.0.0",
     "gl-matrix": "^3.0.0",
-    "twgl.js": "^4.5.2"
+    "twgl.js": "^4.8.2"
   }
 }

@@ -1,6 +1,7 @@
 import { IObjectOf } from "@thi.ng/api";
-import { Vec3 } from '@thi.ng/vectors';
-import { mapcat, flatten } from "@thi.ng/transducers";
+import { Vec } from '@thi.ng/vectors';
+import { AttribPool, GLType } from '@thi.ng/vector-pools';
+import { mapcat, pairs, transduce, map, assocObj, flatten } from "@thi.ng/transducers";
 import { tessellate } from '@thi.ng/geom';
 import { createFramebufferInfo } from 'twgl.js';
 
@@ -9,7 +10,7 @@ import { Scene } from '@pngu/gl/scene';
 import { Mesh } from '@pngu/gl/mesh';
 import { Material } from '@pngu/gl/material';
 import { Command } from '@pngu/gl/command';
-import { Geometry, tessellate3, asPolygon3, Quad3 } from '@pngu/gl/geometry';
+import { tessellate3, asPolygon3, Quad3 } from '@pngu/gl/geometry';
 import { Texture } from '@pngu/gl/texture';
 import { OrthoCamera } from '@pngu/gl/camera';
 
@@ -92,11 +93,24 @@ export class App extends Application<Params> {
       [1, 1, 0]
     ]);
     const faces = tessellate(asPolygon3(quad), [tessellate3]);
-    const position = Vec3.intoBuffer(new Float32Array(faces.length * 3 * 3), mapcat((f: Vec3[]) => f, faces));
-    const plane = new Geometry({
-      position,
-      texcoord: [...flatten([[0, 1], [0, 0], [1, 0], [0, 1], [1, 0], [1, 1]])],
+
+    const plane = new AttribPool({
+      num: 6,
+      attribs: {
+        position: { type: GLType.F32, size: 3, byteOffset: 0 },
+        texcoord: { type: GLType.F32, size: 2, byteOffset: 12 }
+      },
+      mem: { size: 0x200 }
     });
+
+    plane.setAttribValues('position', [...mapcat((f: Vec[]) => f, faces)]);
+    plane.setAttribValues('texcoord', [[0, 1], [0, 0], [1, 0], [0, 1], [1, 0], [1, 1]]);
+
+    const arraySpecs = transduce(
+      map(([name, { size }]) => [name, { numComponents: size, data: [...flatten(plane.attribValues(name))] }]),
+      assocObj(),
+      pairs(plane.specs)
+    );
 
     const scale = 1;
     const width = gl.canvas.clientWidth / scale;
@@ -117,12 +131,12 @@ export class App extends Application<Params> {
 
     const scene1 = new Scene();
     this.mat1 = new Material(vert, ca, { useStamp: 0 });
-    scene1.add(new Mesh(plane, this.mat1));
+    scene1.add(new Mesh(arraySpecs, this.mat1));
     this.cmd1 = new Command(gl, scene1);
 
     const scene2 = new Scene();
     this.mat2 = new Material(vert, copy);
-    scene2.add(new Mesh(plane, this.mat2));
+    scene2.add(new Mesh(arraySpecs, this.mat2));
     this.cmd2 = new Command(gl, scene2);
   }
 

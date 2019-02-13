@@ -1,10 +1,9 @@
 import { IObjectOf } from "@thi.ng/api";
-import { add, Vec } from '@thi.ng/vectors';
+import { add, Vec, copyVectors } from '@thi.ng/vectors';
 import { mapcat } from '@thi.ng/transducers';
-import {
-  APC, IHiccupShape, copyPoints, Type, vertices, AABB, SamplingOpts,
-  IShape, Attribs, tessellate, tessellatePoints
-} from '@thi.ng/geom';
+import { APC, vertices, AABB, tessellate } from '@thi.ng/geom';
+import { tessellate as _tessellate } from "@thi.ng/geom-tessellate";
+import { Type, SamplingOpts, IShape, Attribs, IHiccupShape } from '@thi.ng/geom-api';
 import { defmulti, MultiFn1O } from "@thi.ng/defmulti";
 
 type GeomAttribs = IObjectOf<any>;
@@ -40,7 +39,7 @@ export class Polygon3 extends APC implements IHiccupShape {
 
   copy() {
     // TODO: copy faces
-    return new Polygon3(copyPoints(this.points), this.faces, { ...this.attribs });
+    return new Polygon3(copyVectors(this.points), this.faces, { ...this.attribs });
   }
 
   toHiccup() {
@@ -56,7 +55,7 @@ export class Quad3 extends APC implements
   }
 
   copy() {
-    return new Quad3(copyPoints(this.points), { ...this.attribs });
+    return new Quad3(copyVectors(this.points), { ...this.attribs });
   }
 
   toHiccup() {
@@ -105,4 +104,4 @@ asPolygon3.add(Type.POINTS3, ($, opts) => new Polygon3(vertices($, opts), faces(
 asPolygon3.isa(Type.AABB, Type.POINTS3);
 asPolygon3.isa(Type.QUAD3, Type.POINTS3);
 
-tessellate.add(Type.POLYGON3, ($: Polygon3, fns) => [...mapcat(face => tessellatePoints(face, fns), $.faces)]);
+tessellate.add(Type.POLYGON3, ($: Polygon3, fns) => [...mapcat(face => _tessellate(face, fns), $.faces)]);
