@@ -1,20 +1,9 @@
-import { IObjectOf } from "@thi.ng/api";
 import { add, Vec, copyVectors } from '@thi.ng/vectors';
 import { mapcat } from '@thi.ng/transducers';
 import { APC, vertices, AABB, tessellate } from '@thi.ng/geom';
 import { tessellate as _tessellate } from "@thi.ng/geom-tessellate";
 import { Type, SamplingOpts, IShape, Attribs, IHiccupShape } from '@thi.ng/geom-api';
 import { defmulti, MultiFn1O } from "@thi.ng/defmulti";
-
-type GeomAttribs = IObjectOf<any>;
-
-export class Geometry {
-  attributes: GeomAttribs;
-
-  constructor(attribs: GeomAttribs) {
-    this.attributes = attribs;
-  }
-}
 
 export const tessellate3 = (pts: Vec[]): Vec[][] => {
   if (pts.length == 3) {
