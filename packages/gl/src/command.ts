@@ -1,6 +1,7 @@
 import {
   createBufferInfoFromArrays, createVertexArrayInfo, bindFramebufferInfo,
-  drawObjectList, createProgramInfo
+  drawObjectList, createProgramInfo,
+  FramebufferInfo, ProgramInfo
 } from 'twgl.js';
 import { IObjectOf } from "@thi.ng/api";
 
@@ -11,7 +12,7 @@ import { Material } from './material';
 
 export class Command {
   scene: Scene;
-  programInfos: IObjectOf<any> = {};
+  programInfos: IObjectOf<ProgramInfo> = {};
   objects: Array<any> = [];
 
   constructor(readonly gl: WebGLRenderingContext, scene: Scene) {
@@ -28,7 +29,7 @@ export class Command {
     });
   }
 
-  draw(_: number, camera: Camera, fbo = null) {
+  draw(_: number, camera: Camera, fbo: FramebufferInfo = null) {
     const gl = this.gl;
     gl.viewport(0, 0, camera.width, camera.height);
 
@@ -36,14 +37,14 @@ export class Command {
 
     this.objects.forEach(obj => {
       const { mesh } = obj;
-      mesh.updateMatrices(camera.view);
+      // mesh.updateMatrices(camera.view);
       obj.uniforms = {
         ...mesh.material.uniforms,
         matModel: mesh.model,
         matView: camera.view,
         matProj: camera.projection,
-        matModelView: mesh.modelView,
-        matNormal: mesh.normal,
+        // matModelView: mesh.modelView,
+        // matNormal: mesh.normal,
       };
     });
 

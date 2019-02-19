@@ -1,5 +1,8 @@
-import { Vec3, Vec4, set } from '@thi.ng/vectors';
-import { Mat, identity44, identity33, normal44, mulM44, set44 } from '@thi.ng/matrices';
+import { Vec3, Vec4, set, copy, W4, ONE3 } from '@thi.ng/vectors';
+import {
+  Mat, identity44, identity33, normal44, mulM44,
+  set44
+} from '@thi.ng/matrices';
 
 function fromRotationTranslationScale(out: Mat, q: Vec4, v: Vec3, s: Vec3) {
   let x = q[0], y = q[1], z = q[2], w = q[3];
@@ -73,8 +76,8 @@ function fromRotationTranslationScale(out: Mat, q: Vec4, v: Vec3, s: Vec3) {
 
 export class Node {
   protected _position: Vec3 = new Vec3();
-  protected _rotation: Vec4 = new Vec4();
-  protected _scale: Vec3 = new Vec3([1, 1, 1]);
+  protected _rotation: Vec4 = new Vec4(copy(W4));
+  protected _scale: Vec3 = new Vec3(copy(ONE3));
 
   protected _model: Mat = identity44([]);
   protected _modelDirty: boolean = true;
@@ -107,7 +110,7 @@ export class Node {
     normal44(this.normal, this.modelView);
   }
 
-  add(node) {
+  add(node: Node) {
     node.parent = this;
     this.children.push(node);
   }

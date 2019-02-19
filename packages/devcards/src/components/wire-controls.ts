@@ -1,4 +1,4 @@
-import { partial } from '@thi.ng/compose/partial';
+import { partial } from '@thi.ng/compose';
 
 import { PanelAttribs, SliderAttribs, CheckBoxAttribs, MultiSliderAttribs } from '@pngu/ui/api';
 import { panel } from '@pngu/ui/panel';
@@ -33,7 +33,7 @@ export const controls = (ui: UIAttribs, onchange: (name: string, v: any) => void
   const msColorEdge = multiSlider(4, sliderOpts(0, 1, 0.01, 'ambColor', ui.multislider4));
   const msColorFill = multiSlider(4, sliderOpts(0, 1, 0.01, 'lightColor', ui.multislider4));
   const msCameraUp = multiSlider(3, sliderOpts(-10, 10, 0.01, 'cameraUp', ui.multislider3));
-  const msCameraPos = multiSlider(3, sliderOpts(-20, 20, 0.01, 'cameraPos', ui.multislider3));
+  const msCameraPos = multiSlider(3, sliderOpts(-10, 10, 0.01, 'cameraPos', ui.multislider3));
 
   return (_: any, params: Params) =>
     [panel, ui.panel,

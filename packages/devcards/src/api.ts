@@ -1,8 +1,8 @@
-import { IObjectOf } from "@thi.ng/api/api";
-import { ViewTransform, IView } from "@thi.ng/atom/api";
-import { EventDef, EffectDef } from "@thi.ng/interceptors/api";
-import { EventBus } from "@thi.ng/interceptors/event-bus";
-import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router/api";
+import { IObjectOf } from "@thi.ng/api";
+import { ViewTransform, IView } from "@thi.ng/atom";
+import { EventDef, EffectDef } from "@thi.ng/interceptors";
+import { EventBus } from "@thi.ng/interceptors";
+import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router";
 
 import {
   UIAttrib, ComponentAttrib,
@@ -10,8 +10,8 @@ import {
   MultiSliderAttribs
 } from '@pngu/ui/api';
 
-import { Params as pbrParams } from '@pngu/scenes/pbr';
-// import { Params as wireParams } from '@pngu/scenes/wire';
+// import { Params as pbrParams } from '@pngu/scenes/pbr';
+import { Params as wireParams } from '@pngu/scenes/wire';
 import { Params as caParams } from '@pngu/scenes/ca';
 
 export enum ev {
@@ -32,8 +32,8 @@ interface Views {
   routeComponent: any;
   raf: boolean;
   params: {
-    // wire: wireParams;
-    pbr: pbrParams;
+    wire: wireParams;
+    // pbr: pbrParams;
     ca: caParams;
   };
 }

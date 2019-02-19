@@ -1,18 +1,30 @@
-import { Vec3, set, dist } from '@thi.ng/vectors';
-import { Mat, identity44, lookAt, perspective, ortho } from '@thi.ng/matrices';
+import {
+  Vec3, set, dist,
+  // sub
+} from '@thi.ng/vectors';
+import {
+  Mat,
+  IDENT44,
+  lookAt,
+  perspective,
+  ortho,
+  set44
+} from '@thi.ng/matrices';
 
 import { Node } from './node';
 
 export class Camera extends Node {
   protected _width: number;
   protected _height: number;
-  protected _view: Mat = identity44([]);
-  protected _projection: Mat = identity44([]);
+  protected _view: Mat = [];
+  protected _projection: Mat = [];
 
   constructor(width: number, height: number) {
     super();
     this.width = width;
     this.height = height;
+    set44(this._view, IDENT44);
+    set44(this._projection, IDENT44);
   }
 
   set width(val: number) { this._width = val; }
@@ -43,14 +55,35 @@ export class PerspectiveCamera extends Camera {
   get near(): number { return this._near; }
   set far(val: number) { this._far = val; this._projectionCached = false; }
   get far(): number { return this._far; }
-  set position(val: Vec3) { set(this._position, val); this._viewCached = false; }
+
+  set position(val: Vec3) {
+    if (!val.eqDelta(this._position)) {
+      set(this._position, val);
+      this._viewCached = false;
+      this._modelDirty = true;
+    }
+  }
   get position(): Vec3 { return this._position; }
-  set target(val: Vec3) { set(this._target, val); this._viewCached = false; }
+
+  set target(val: Vec3) {
+    if (!val.eqDelta(this._target)) {
+      set(this._target, val);
+      this._viewCached = false;
+    }
+  }
   get target(): Vec3 { return this._target; }
-  set up(val: Vec3) { set(this._up, val); this._viewCached = false; }
+
+  set up(val: Vec3) {
+    if (!val.eqDelta(this._up)) {
+      set(this._up, val);
+      this._viewCached = false;
+    }
+  }
   get up(): Vec3 { return this._up; }
 
-  get pivotDistance(): number { return dist(this.target, this.position); }
+  get pivotDistance(): number {
+    return dist(this.target, this.position);
+  }
 
   get projection(): Mat {
     if (!this._projectionCached) {
@@ -62,7 +95,7 @@ export class PerspectiveCamera extends Camera {
 
   get view(): Mat {
     if (!this._viewCached) {
-      lookAt(this._view, this.position.buf, this.target.buf, this.up.buf);
+      lookAt(this._view, this.position, this.target, this.up);
       this._viewCached = true;
     }
     return this._view;
@@ -70,7 +103,7 @@ export class PerspectiveCamera extends Camera {
 }
 
 export class OrthoCamera extends Camera {
-  left: number = -1 ;
+  left: number = -1;
   right: number = 1;
   top: number = 1;
   bottom: number = -1;

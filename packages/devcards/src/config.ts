@@ -1,17 +1,16 @@
-import { vals } from '@thi.ng/transducers/iter/vals';
-import { EVENT_ROUTE_CHANGED } from "@thi.ng/router/api";
-import { FX_STATE } from "@thi.ng/interceptors/api";
-import { valueSetter } from "@thi.ng/interceptors/interceptors";
+import { vals } from '@thi.ng/transducers';
+import { EVENT_ROUTE_CHANGED } from "@thi.ng/router";
+import { FX_STATE, valueSetter } from "@thi.ng/interceptors";
 import { setIn, updateIn } from '@thi.ng/paths';
-import { mergeObj } from '@thi.ng/associative/merge';
+import { mergeObj } from '@thi.ng/associative';
 
 import {
   root, panel, select, button, slider, checkbox,
   multiSlider3, multiSlider4,
   addClass
 } from '@pngu/ui/styles';
-import { defaultParams as pbrParams } from '@pngu/scenes/pbr';
-// import { defaultParams as wireParams } from '@pngu/scenes/wire';
+// import { defaultParams as pbrParams } from '@pngu/scenes/pbr';
+import { defaultParams as wireParams } from '@pngu/scenes/wire';
 import { presets } from '@pngu/scenes/ca';
 
 import { Config, ev, fx } from './api';
@@ -57,8 +56,8 @@ export const CONFIG: Config = {
   initialState: {
     raf: false,
     params: {
-      // wire: wireParams,
-      pbr: pbrParams,
+      wire: wireParams,
+      // pbr: pbrParams,
       ca: presets.growth
     },
   },

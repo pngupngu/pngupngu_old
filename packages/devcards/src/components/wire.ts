@@ -1,9 +1,9 @@
-import { gestureStream } from "@thi.ng/rstream-gestures";
-import { ISubscribable } from "@thi.ng/rstream/api";
-import { merge } from '@thi.ng/rstream/stream-merge';
+// import { gestureStream } from "@thi.ng/rstream-gestures";
+// import { ISubscribable, merge } from "@thi.ng/rstream";
+import { ISubscribable } from "@thi.ng/rstream";
 
-import { fromOrientation } from '@pngu/core/rstream/from-orientation';
-import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
+// import { fromOrientation } from '@pngu/core/rstream/from-orientation';
+// import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/gl/canvas';
 import { App } from '@pngu/scenes/wire';
 
@@ -18,22 +18,22 @@ export default ({ ui, views, bus }: Context) => {
   const setParam = (name, value) => bus.dispatch([ev.SET_PARAM, ['wire', name, value]]);
 
   const canvas_ = canvas(app, {
-    init(el) {
-      const gestures = gestureStream(el, { absZoom: false });
-      const opts = { width: el.width, height: el.height };
+    init(_) {
+      // const gestures = gestureStream(el, { absZoom: false });
+      // const opts = { width: el.width, height: el.height };
 
-      sub = merge({
-        src: [
-          fromOrientation(1e-2).transform(orientCamera(app.camera)),
-          gestures.transform(moveCamera(app.camera, opts)),
-          gestures.transform(zoomCamera(app.camera))
-        ]
-      }).subscribe({
-        next({ up, position }) {
-          setParam('cameraUp', up);
-          setParam('cameraPos', position);
-        }
-      });
+      // sub = merge({
+      //   src: [
+      //     fromOrientation(1e-2).transform(orientCamera(app.camera)),
+      //     gestures.transform(moveCamera(app.camera, opts)),
+      //     gestures.transform(zoomCamera(app.camera))
+      //   ]
+      // }).subscribe({
+      //   next({ up, position }) {
+      //     // setParam('cameraUp', up);
+      //     // setParam('cameraPos', position);
+      //   }
+      // });
 
       bus.dispatch([ev.SET_RAF, true]);
     },

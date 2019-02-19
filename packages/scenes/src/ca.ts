@@ -1,5 +1,4 @@
 import { IObjectOf } from "@thi.ng/api";
-import { Vec } from '@thi.ng/vectors';
 import { SIZEOF } from "@thi.ng/malloc";
 import { AttribPool, GLType, GL2TYPE } from '@thi.ng/vector-pools';
 import { mapcat } from "@thi.ng/transducers";
@@ -104,7 +103,7 @@ export class App extends Application<Params> {
       }
     });
 
-    ap.setAttribValues('position', [...mapcat((f: Vec[]) => f, faces)]);
+    ap.setAttribValues('position', [...mapcat(f => f, faces)]);
     ap.setAttribValues('texcoord', [[0, 1], [0, 0], [1, 0], [0, 1], [1, 0], [1, 1]]);
 
     const scale = 1;
