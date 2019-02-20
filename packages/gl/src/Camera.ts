@@ -1,14 +1,10 @@
-import {
-  Vec3, set, dist,
-  // sub
-} from '@thi.ng/vectors';
+import { Vec3, set, dist } from '@thi.ng/vectors';
 import {
   Mat,
-  IDENT44,
   lookAt,
   perspective,
   ortho,
-  set44
+  identity44
 } from '@thi.ng/matrices';
 
 import { Node } from './node';
@@ -23,8 +19,8 @@ export class Camera extends Node {
     super();
     this.width = width;
     this.height = height;
-    set44(this._view, IDENT44);
-    set44(this._projection, IDENT44);
+    identity44(this._view);
+    identity44(this._projection);
   }
 
   set width(val: number) { this._width = val; }

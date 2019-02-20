@@ -43,7 +43,7 @@ export const defaultParams: Params = {
   colorEdge: new Vec4([0.3, 0.3, 0.3, 1.0]),
   colorFill: new Vec4([0.0, 0.0, 0.0, 0.25]),
   cameraUp: new Vec3([0, 1, 0]),
-  cameraPos: new Vec3([0, 0, 0.1]),
+  cameraPos: new Vec3([0, 0, 8]),
 };
 
 export class App extends Application<Params> {

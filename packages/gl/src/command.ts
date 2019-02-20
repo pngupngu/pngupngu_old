@@ -37,14 +37,14 @@ export class Command {
 
     this.objects.forEach(obj => {
       const { mesh } = obj;
-      // mesh.updateMatrices(camera.view);
+      mesh.updateMatrices(camera.view);
       obj.uniforms = {
         ...mesh.material.uniforms,
         matModel: mesh.model,
         matView: camera.view,
         matProj: camera.projection,
-        // matModelView: mesh.modelView,
-        // matNormal: mesh.normal,
+        matModelView: mesh.modelView,
+        matNormal: mesh.normal,
       };
     });
 
