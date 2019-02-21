@@ -1,6 +1,6 @@
 import { GestureEvent, GestureType } from "@thi.ng/rstream-gestures";
 import { Vec, Vec2, Vec3, set, setC3, divN, mulN, sub, add, cross3, mag, magSq, normalize } from '@thi.ng/vectors';
-import { Mat, identity44, rotationX44, mul44, mulV, quatFromAxisAngle } from '@thi.ng/matrices';
+import { Mat, identity44, rotationX44, mul44, mulV, quatFromAxisAngle, mulVQ } from '@thi.ng/matrices';
 import { DEG2RAD } from '@thi.ng/math';
 import { Transducer, map, comp, filter } from '@thi.ng/transducers';
 
@@ -105,7 +105,8 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
   );
 }
 
-export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5 }: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
+export const moveCamera = (camera: PerspectiveCamera, opts: CameraUIOpts): Transducer<GestureEvent, CameraView> => {
+  const { width, height, speed = 5 } = opts;
   const radius = Math.max(width, height);
   const center = mulN(null, new Vec2([width, height]), 0.5);
   const delta = new Vec3();
@@ -113,7 +114,7 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
   const axis = new Vec3();
   const side = new Vec3();
   const up = camera.up.copy();
-  const viewDir = sub(null, set([], camera.position), camera.target);
+  const viewDir = normalize(null, sub([], camera.position, camera.target));
   let q: Vec;
   const u = new Vec3();
   const vd = new Vec3();
@@ -123,19 +124,25 @@ export const moveCamera = (camera: PerspectiveCamera, { width, height, speed = 5
     filter(g => g[0] == GestureType.MOVE),
     map(({ 1: { pos } }: GestureEvent) => {
       sub(null, spherePos(delta, pos, center, radius), Vec3.Z_AXIS);
-      mulN(null, normalize(null, cross3(null, set(side, up), viewDir)), delta[0]);
-      normalize(null, cross3(null, add(null, mulN(null, set(axis, up), delta[1]), side), viewDir))
+      mulN(null, normalize(null, cross3(side, up, viewDir)), delta[0]);
+      normalize(null,
+        cross3(null,
+          add(null,
+            mulN(axis, up, delta[1]),
+            side),
+          viewDir));
       q = quatFromAxisAngle(axis, magSq(delta) * speed);
 
-      add(null,
-        set(position, camera.target),
-        transformQuat(
-          set(vd, mulN(null, normalize(null, viewDir), camera.pivotDistance)),
-          q));
+      add(position,
+        camera.target,
+        mulVQ(null, q,
+          mulN(vd, viewDir, camera.pivotDistance))
+      );
 
       return {
-        up: transformQuat(set(u, up), q),
-        position, target: camera.target
+        position,
+        up: mulVQ(u, q, up),
+        target: camera.target
       };
     })
   );
