@@ -51,8 +51,6 @@ export class App extends Application<Params> {
   camera: PerspectiveCamera;
   mat: Material;
 
-  vd: Vec3 = new Vec3();
-
   set params(params: Params) {
     const uniforms = this.mat.uniforms;
 
@@ -77,8 +75,7 @@ export class App extends Application<Params> {
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
     this.camera.position = defaultParams.cameraPos;
 
-    const aabb = new AABB();
-    const faces = tessellate(asPolygon3(aabb), [tessellate3]);
+    const faces = tessellate(asPolygon3(new AABB()), [tessellate3]);
 
     const ap = new AttribPool({
       num: faces.length * 3,

@@ -9,7 +9,7 @@ import {
   multiSlider3, multiSlider4,
   addClass
 } from '@pngu/ui/styles';
-// import { defaultParams as pbrParams } from '@pngu/scenes/pbr';
+import { defaultParams as pbrParams } from '@pngu/scenes/pbr';
 import { defaultParams as wireParams } from '@pngu/scenes/wire';
 import { presets } from '@pngu/scenes/ca';
 
@@ -57,7 +57,7 @@ export const CONFIG: Config = {
     raf: false,
     params: {
       wire: wireParams,
-      // pbr: pbrParams,
+      pbr: pbrParams,
       ca: presets.growth
     },
   },

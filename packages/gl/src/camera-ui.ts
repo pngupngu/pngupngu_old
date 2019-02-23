@@ -6,26 +6,6 @@ import { Transducer, map, comp, filter } from '@thi.ng/transducers';
 
 import { PerspectiveCamera } from './Camera';
 
-function transformQuat(a: Vec, q: Vec): Vec {
-  let qx = q[0], qy = q[1], qz = q[2], qw = q[3];
-  let x = a[0], y = a[1], z = a[2];
-  let uvx = qy * z - qz * y,
-    uvy = qz * x - qx * z,
-    uvz = qx * y - qy * x;
-  let uuvx = qy * uvz - qz * uvy,
-    uuvy = qz * uvx - qx * uvz,
-    uuvz = qx * uvy - qy * uvx;
-  let w2 = qw * 2;
-  uvx *= w2;
-  uvy *= w2;
-  uvz *= w2;
-  uuvx *= 2;
-  uuvy *= 2;
-  uuvz *= 2;
-
-  return setC3(a, x + uvx + uuvx, y + uvy + uuvy, z + uvz + uuvz);
-}
-
 function mat44FromEulerYXZ(mat: Mat, alpha: number, beta: number, gamma: number) {
   let x = alpha * DEG2RAD, y = beta * DEG2RAD, z = gamma * DEG2RAD;
   let a = Math.cos(x), b = Math.sin(x);
@@ -74,9 +54,8 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
 
   const axis = new Vec3();
   const side = new Vec3();
-  const up = new Vec3();
+  const camUp = new Vec3();
   const viewDir = new Vec3();
-  let q;
   const u = new Vec3();
   const vd = new Vec3();
   const camPos = new Vec3();
@@ -86,18 +65,18 @@ export const dragCamera = (camera: PerspectiveCamera, { width, height, speed = 5
     map(({ 0: type, 1: { pos } }: GestureEvent) => {
       if (type == GestureType.START) {
         spherePos(click, pos, center, radius);
-        set(up, camera.up);
-        sub(null, set(viewDir, camera.position), camera.target);
-        return { up, position: camera.position, target: camera.target };
+        set(camUp, camera.up);
+        sub(viewDir, camera.position, camera.target);
+        return { up: camUp, position: camera.position, target: camera.target };
       } else {
         sub(null, spherePos(delta, pos, center, radius), click);
-        mulN(null, normalize(null, cross3(null, set(side, up), viewDir)), delta[0]);
-        normalize(null, cross3(null, add(null, mulN(null, set(axis, up), delta[1]), side), viewDir))
-        q = quatFromAxisAngle(axis, magSq(delta) * speed);
+        mulN(null, normalize(null, cross3(side, camUp, viewDir)), delta[0]);
+        normalize(null, cross3(null, add(null, mulN(axis, camUp, delta[1]), side), viewDir))
+        const q = quatFromAxisAngle(axis, magSq(delta) * speed);
 
         return {
-          up: transformQuat(set(u, up), q),
-          position: add(null, set(camPos, camera.target), transformQuat(set(vd, viewDir), q)),
+          up: mulVQ(u, q, camUp),
+          position: add(camPos, camera.target, mulVQ(vd, q, viewDir)),
           target: camera.target
         };
       }
@@ -113,10 +92,9 @@ export const moveCamera = (camera: PerspectiveCamera, opts: CameraUIOpts): Trans
 
   const axis = new Vec3();
   const side = new Vec3();
-  const up = camera.up.copy();
+  const camUp = camera.up.copy();
   const viewDir = normalize(null, sub([], camera.position, camera.target));
-  let q: Vec;
-  const u = new Vec3();
+  const up = new Vec3();
   const vd = new Vec3();
   const position = new Vec3();
 
@@ -124,26 +102,22 @@ export const moveCamera = (camera: PerspectiveCamera, opts: CameraUIOpts): Trans
     filter(g => g[0] == GestureType.MOVE),
     map(({ 1: { pos } }: GestureEvent) => {
       sub(null, spherePos(delta, pos, center, radius), Vec3.Z_AXIS);
-      mulN(null, normalize(null, cross3(side, up, viewDir)), delta[0]);
       normalize(null,
         cross3(null,
           add(null,
-            mulN(axis, up, delta[1]),
-            side),
+            mulN(axis, camUp, delta[1]),
+            mulN(null, normalize(null, cross3(side, camUp, viewDir)), delta[0])),
           viewDir));
-      q = quatFromAxisAngle(axis, magSq(delta) * speed);
+
+      const q = quatFromAxisAngle(axis, magSq(delta) * speed);
 
       add(position,
         camera.target,
         mulVQ(null, q,
-          mulN(vd, viewDir, camera.pivotDistance))
-      );
+          mulN(vd, viewDir, camera.pivotDistance)));
+      mulVQ(up, q, camUp);
 
-      return {
-        position,
-        up: mulVQ(u, q, up),
-        target: camera.target
-      };
+      return { position, up, target: camera.target };
     })
   );
 }
@@ -170,14 +144,14 @@ export const orientCamera = (camera: PerspectiveCamera): Transducer<DeviceOrient
 
 export const zoomCamera = (camera: PerspectiveCamera): Transducer<GestureEvent, CameraView> => {
   const vd = new Vec3();
-  const pos = new Vec3();
+  const position = new Vec3();
 
   return comp(
     filter(g => g[0] == GestureType.ZOOM),
     map(({ 1: { zoom } }: GestureEvent) => {
-      sub(null, set(vd, camera.target), camera.position);
+      sub(vd, camera.target, camera.position);
       const speed = Math.pow(Math.E, 0.01 * zoom) * mag(vd);
-      mulN(null, sub(null, set(pos, camera.target), normalize(null, vd)), speed);
-      return { up: camera.up, position: pos, target: camera.target };
+      mulN(null, sub(position, camera.target, normalize(null, vd)), speed);
+      return { up: camera.up, position, target: camera.target };
     }));
 }

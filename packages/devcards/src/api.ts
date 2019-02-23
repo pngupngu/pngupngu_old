@@ -1,7 +1,6 @@
 import { IObjectOf } from "@thi.ng/api";
 import { ViewTransform, IView } from "@thi.ng/atom";
-import { EventDef, EffectDef } from "@thi.ng/interceptors";
-import { EventBus } from "@thi.ng/interceptors";
+import { EventDef, EffectDef, EventBus } from "@thi.ng/interceptors";
 import { HTMLRouterConfig, RouteMatch } from "@thi.ng/router";
 
 import {
@@ -10,7 +9,7 @@ import {
   MultiSliderAttribs
 } from '@pngu/ui/api';
 
-// import { Params as pbrParams } from '@pngu/scenes/pbr';
+import { Params as pbrParams } from '@pngu/scenes/pbr';
 import { Params as wireParams } from '@pngu/scenes/wire';
 import { Params as caParams } from '@pngu/scenes/ca';
 
@@ -33,7 +32,7 @@ interface Views {
   raf: boolean;
   params: {
     wire: wireParams;
-    // pbr: pbrParams;
+    pbr: pbrParams;
     ca: caParams;
   };
 }

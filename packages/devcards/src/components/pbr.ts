@@ -1,6 +1,5 @@
 import { gestureStream } from "@thi.ng/rstream-gestures";
-import { ISubscribable } from "@thi.ng/rstream/api";
-import { merge } from '@thi.ng/rstream/stream-merge';
+import { ISubscribable, merge } from "@thi.ng/rstream";
 
 import { fromOrientation } from '@pngu/core/rstream/from-orientation';
 import {
@@ -25,9 +24,9 @@ export default ({ ui, views, bus }: Context) => {
 
       sub = merge({
         src: [
+          fromOrientation().transform(orientCamera(app.camera)),
           gestures.transform(dragCamera(app.camera, opts)),
           // gestures.transform(moveCamera(app.camera, opts)),
-          fromOrientation(1e-2).transform(orientCamera(app.camera)),
           gestures.transform(zoomCamera(app.camera))
         ]
       }).subscribe({

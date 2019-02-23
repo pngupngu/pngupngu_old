@@ -23,7 +23,7 @@ export default ({ ui, views, bus }: Context) => {
 
       sub = merge({
         src: [
-          fromOrientation(1e-2).transform(orientCamera(app.camera)),
+          fromOrientation().transform(orientCamera(app.camera)),
           gestures.transform(moveCamera(app.camera, opts)),
           gestures.transform(zoomCamera(app.camera))
         ]
