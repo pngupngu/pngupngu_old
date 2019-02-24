@@ -51,14 +51,14 @@ export const defaultParams: Params = {
   ambColor: new Vec3([0.03, 0.03, 0.03]),
   lightColor: new Vec3([1, 1, 1]),
   useTexNormal: false,
-  useTexDiff: true,
+  useTexDiff: false,
   useGamma: true,
   distributionType: DistTypes.BlinnPhong,
   geometryType: GeometryTypes.Implicit,
   diffuseType: DiffuseTypes.Default,
-  showNormal: false,
+  showNormal: true,
   cameraUp: new Vec3([0, 1, 0]),
-  cameraPos: new Vec3([1, 4, 8]),
+  cameraPos: new Vec3([0, 0, 4]),
 }
 
 export class App extends Application<Params> {
@@ -125,11 +125,11 @@ export class App extends Application<Params> {
     ap.setAttribValues('texcoord', [...mapcat(f => f, repeat(tc, 6))]);
 
     const faceNormals = [
-      [+1, 0, 0],
+      [1, 0, 0],
       [-1, 0, 0],
-      [0, +1, 0],
+      [0, 1, 0],
       [0, -1, 0],
-      [0, 0, +1],
+      [0, 0, 1],
       [0, 0, -1],
     ];
     ap.setAttribValues('normal', [...mapcat(n => repeat(n, 6), faceNormals)]);

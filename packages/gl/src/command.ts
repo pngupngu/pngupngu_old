@@ -13,7 +13,7 @@ import { Material } from './material';
 export class Command {
   scene: Scene;
   programInfos: IObjectOf<ProgramInfo> = {};
-  objects: Array<any> = [];
+  objects: any[] = [];
 
   constructor(readonly gl: WebGLRenderingContext, scene: Scene) {
     scene.children.forEach(node => {

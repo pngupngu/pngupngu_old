@@ -30,7 +30,7 @@ export const controls = (attribs: ControlAttribs, onchange: (name: string, v: an
 
   const msF0 = multiSlider(3, sliderOpts(0, 1, 0.01, 'f0', attribs.multislider3));
   const msAlbedo = multiSlider(3, sliderOpts(0, 1, 0.01, 'albedo', attribs.multislider3));
-  const msLightPos = multiSlider(3, sliderOpts(-3, 3, 0.01, 'lightPos', attribs.multislider3));
+  const msLightPos = multiSlider(3, sliderOpts(-8, 8, 0.01, 'lightPos', attribs.multislider3));
   const msAmbColor = multiSlider(3, sliderOpts(0, 1, 0.01, 'ambColor', attribs.multislider3));
   const msLightColor = multiSlider(3, sliderOpts(0, 1, 0.01, 'lightColor', attribs.multislider3));
   const sMetalic = createSlider(sliderOpts(0, 1, 0.01, 'metalic', attribs.slider));

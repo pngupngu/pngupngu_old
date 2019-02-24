@@ -6,6 +6,7 @@ precision mediump float;
 
 uniform mat4 matProj;
 uniform mat4 matModel;
+
 uniform mat4 matView;
 uniform mat4 matModelView;
 uniform mat3 matNormal;

@@ -64,7 +64,7 @@ faces.addAll(
         [pts[4], pts[5], pts[6], pts[7]], // top
         [pts[0], pts[3], pts[2], pts[1]], // bottom
         [pts[1], pts[2], pts[6], pts[5]], // back
-        [pts[0], pts[4], pts[7], pts[3]] // front
+        [pts[0], pts[4], pts[7], pts[3]]  // front
       ];
       return faces;
     },
