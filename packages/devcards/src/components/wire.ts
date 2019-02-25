@@ -2,7 +2,11 @@ import { gestureStream } from "@thi.ng/rstream-gestures";
 import { ISubscribable, merge } from "@thi.ng/rstream";
 
 import { fromOrientation } from '@pngu/core/rstream/from-orientation';
-import { moveCamera, orientCamera, zoomCamera } from '@pngu/gl/camera-ui';
+import {
+  moveCamera,
+  zoomCamera ,
+  orientCamera,
+} from '@pngu/gl/camera-ui';
 import { canvas } from '@pngu/gl/canvas';
 import { App } from '@pngu/scenes/wire';
 

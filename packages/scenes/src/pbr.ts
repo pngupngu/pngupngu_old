@@ -87,7 +87,7 @@ export class App extends Application<Params> {
     this.camera.position = params.cameraPos;
   }
 
-  init(gl) {
+  init(gl: WebGLRenderingContext) {
     super.init(gl);
 
     this.camera = new PerspectiveCamera(gl.canvas.clientWidth, gl.canvas.clientHeight);
@@ -133,22 +133,6 @@ export class App extends Application<Params> {
       [0, 0, -1],
     ];
     ap.setAttribValues('normal', [...mapcat(n => repeat(n, 6), faceNormals)]);
-
-    // const polygon = asPolygon3(new AABB());
-    // const faces = tessellate(polygon, [tessellate3]);
-
-    // const points = transduce(
-    //   comp(mapcat((f: Vec[]) => f), map(v => subN([], v, 0.5) )),
-    //   push(),
-    //   faces);
-
-    // const position = Vec3.intoBuffer(new Float32Array(polygon.faces.length * 3 * 3), <Vec3[]>points);
-
-    // const geom = new Geometry({
-    //   position,
-    //   texcoord: [...flatten(repeat([[1, 0], [0, 0], [0, 1], [1, 0], [0, 1], [1, 1]], 6))],
-    //   normal: [...flatten(mapcat(n => repeat(n, 6), faceNormals))]
-    // });
 
     this.mat = new Material(vert, frag);
 

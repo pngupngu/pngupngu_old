@@ -1,6 +1,6 @@
 import { GestureEvent, GestureType } from "@thi.ng/rstream-gestures";
 import { Vec, Vec2, Vec3, set, setC3, divN, mulN, sub, add, cross3, mag, magSq, normalize } from '@thi.ng/vectors';
-import { Mat, identity44, rotationX44, mul44, mulV, quatFromAxisAngle, mulVQ } from '@thi.ng/matrices';
+import { Mat, identity44, rotationX44, mulM, mulV344, quatFromAxisAngle, mulVQ } from '@thi.ng/matrices';
 import { DEG2RAD } from '@thi.ng/math';
 import { Transducer, map, comp, filter } from '@thi.ng/transducers';
 
@@ -123,22 +123,19 @@ export const moveCamera = (camera: PerspectiveCamera, opts: CameraUIOpts): Trans
 }
 
 export const orientCamera = (camera: PerspectiveCamera): Transducer<DeviceOrientationEvent, CameraView> => {
-  const up0 = new Vec3();
+  const up = new Vec3();
   const vd = new Vec3();
-  const pos = new Vec3();
-  const mat = identity44([]);
+  const position = new Vec3();
+  const mat = [];
   const rot = rotationX44([], -90 * DEG2RAD);
+  identity44(mat);
 
   return map((e: DeviceOrientationEvent) => {
-    mul44(null, mat44FromEulerYXZ(mat, e.beta, e.alpha, -e.gamma), rot);
+    mulM(null, mat44FromEulerYXZ(mat, e.beta, e.alpha, -e.gamma), rot);
+    mulV344(up, mat, Vec3.Y_AXIS);
+    add(position, camera.target, mulN(null, mulV344(vd, mat, Vec3.Z_AXIS), camera.pivotDistance));
 
-    return {
-      up: mulV(null, mat, set(up0, Vec3.Y_AXIS)),
-      position: add(pos,
-        camera.target,
-        mulN(null, mulV(null, mat, set(vd, Vec3.Z_AXIS)), camera.pivotDistance)),
-      target: camera.target
-    };
+    return { up, position, target: camera.target };
   });
 }
 
